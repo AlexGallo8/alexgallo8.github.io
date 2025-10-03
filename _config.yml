@@ -14,3 +14,7 @@ url: "https://alexgallo8.github.io"
 markdown: kramdown
 paginate: 5
 paginate_path: "page:num"
+
+# Excerpt settings
+excerpt_length: 50
+excerpt_separator: "<!--more-->"
