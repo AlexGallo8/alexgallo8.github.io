@@ -1,15 +1,15 @@
 title: "Statistics Homework"
 tagline: "Assignments for the Statistics course"
-description: "Homework collection for the university course in Statistics, published via Jekyll + Lanyon theme."
+description: "Homework collection for the university course in Statistics"
 author:
-  name: "Tuo Nome"
-  url: "https://github.com/tuo-username"
+  name: "Alessandro Maone - 1945149"
+  url: "https://github.com/alexgallo8"
 
 permalink: /:title/
 
 # URL del sito
 baseurl: ""
-url: "https://tuo-username.github.io"
+url: "https://alexgallo8.github.io"
 
 markdown: kramdown
 paginate: 5
