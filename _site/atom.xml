@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Statistics Homework</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2025-10-04T17:28:07+02:00</updated>
+ <id>http://localhost:4000</id>
+ <author>
+   <name>Alessandro Maone - 1945149</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Homework 2 - Bla bla bla</title>
+   <link href="http://localhost:4000/homework2/"/>
+   <updated>2025-10-03T00:00:00+02:00</updated>
+   <id>http://localhost:4000/homework2</id>
+   <content type="html">&lt;p&gt;Lorem ipsum dolor sit amet. Et voluptas reiciendis aut fugit praesentium sed galisum quaerat in ipsa odit aut consequuntur reprehenderit aut odio natus sed quibusdam itaque. In totam dolor id velit architecto ut aspernatur perferendis nam illo voluptas. &lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Id quia consequatur rem illo debitis nam ipsum ducimus quo numquam dolorem et iste expedita cum dolor quae aut nihil odit. Est quidem autem non magnam dolorum sed similique quisquam et cupiditate dolorum 33 sint eligendi. Ea sequi quasi nam error dolor est laudantium earum sed fugit enim eos enim natus ut illo perferendis est incidunt atque. Aut omnis vero quo nihil natus et neque alias. &lt;/p&gt;
+&lt;p&gt;Ea nihil consequuntur ut soluta quas aut optio laudantium ea laboriosam accusamus. Sed sint nisi et quasi iste et expedita perspiciatis sed pariatur ipsa aut galisum quia ea expedita provident est consequatur voluptas. Ut eius similique et consectetur rerum qui exercitationem veritatis hic placeat facere ad amet corrupti qui odit molestias sit quia voluptatem. Aut nemo dignissimos et esse voluptatibus ad nemo placeat ut maiores ratione est necessitatibus dolorem et nemo commodi cum praesentium accusantium? &lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Homework 1 - Probability Distributions</title>
+   <link href="http://localhost:4000/homework1/"/>
+   <updated>2025-10-03T00:00:00+02:00</updated>
+   <id>http://localhost:4000/homework1</id>
+   <content type="html">&lt;p&gt;In this assignment we studied &lt;strong&gt;probability distributions&lt;/strong&gt; and applied them to practical examples.&lt;/p&gt;
+
+&lt;p&gt;📄 &lt;a href=&quot;assets/hw1.pdf&quot;&gt;Download PDF&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>
