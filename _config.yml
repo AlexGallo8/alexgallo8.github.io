@@ -12,7 +12,7 @@ baseurl: ""
 url: "https://alexgallo8.github.io"
 
 # Theme settings
-theme: jekyll-theme-lanyon
+remote_theme: poole/lanyon
 
 markdown: kramdown
 paginate: 5
@@ -25,4 +25,4 @@ excerpt_separator: "<!--more-->"
 # Plugins
 plugins:
   - jekyll-paginate
-  - jekyll-theme-lanyon
+  - jekyll-remote-theme
