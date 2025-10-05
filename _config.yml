@@ -11,6 +11,9 @@ permalink: /:title/
 baseurl: ""
 url: "https://alexgallo8.github.io"
 
+# Theme settings
+theme: jekyll-theme-lanyon
+
 markdown: kramdown
 paginate: 5
 paginate_path: "page:num"
@@ -18,3 +21,8 @@ paginate_path: "page:num"
 # Excerpt settings
 excerpt_length: 50
 excerpt_separator: "<!--more-->"
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-theme-lanyon
