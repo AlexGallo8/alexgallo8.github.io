@@ -6,7 +6,7 @@ The content is organized and published through [GitHub Pages](https://pages.gith
 ---
 
 ## 📚 Homework List
-- [Homework 1](https://tuo-username.github.io/homework1) – *Title or short description*
+- [Homework 1](https://alexgallo8.github.io/homework1) – *What’s is statistics, and why can it be useful for cybersecurity?*
 - (More will be added as the course progresses)
 
 ---

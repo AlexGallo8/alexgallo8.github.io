@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-10-05T11:21:28+02:00</updated>
+ <updated>2025-10-08T16:57:56+02:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -13,25 +13,90 @@
 
  
  <entry>
-   <title>Homework 2 - Bla bla bla</title>
-   <link href="http://localhost:4000/homework2/"/>
-   <updated>2025-10-03T00:00:00+02:00</updated>
-   <id>http://localhost:4000/homework2</id>
-   <content type="html">&lt;p&gt;Lorem ipsum dolor sit amet. Et voluptas reiciendis aut fugit praesentium sed galisum quaerat in ipsa odit aut consequuntur reprehenderit aut odio natus sed quibusdam itaque. In totam dolor id velit architecto ut aspernatur perferendis nam illo voluptas. &lt;/p&gt;
-&lt;!--more--&gt;
-&lt;p&gt;Id quia consequatur rem illo debitis nam ipsum ducimus quo numquam dolorem et iste expedita cum dolor quae aut nihil odit. Est quidem autem non magnam dolorum sed similique quisquam et cupiditate dolorum 33 sint eligendi. Ea sequi quasi nam error dolor est laudantium earum sed fugit enim eos enim natus ut illo perferendis est incidunt atque. Aut omnis vero quo nihil natus et neque alias. &lt;/p&gt;
-&lt;p&gt;Ea nihil consequuntur ut soluta quas aut optio laudantium ea laboriosam accusamus. Sed sint nisi et quasi iste et expedita perspiciatis sed pariatur ipsa aut galisum quia ea expedita provident est consequatur voluptas. Ut eius similique et consectetur rerum qui exercitationem veritatis hic placeat facere ad amet corrupti qui odit molestias sit quia voluptatem. Aut nemo dignissimos et esse voluptatibus ad nemo placeat ut maiores ratione est necessitatibus dolorem et nemo commodi cum praesentium accusantium? &lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Homework 1 - Probability Distributions</title>
+   <title>Homework 1 - What’s is statistics, and why can it be useful for cybersecurity?</title>
    <link href="http://localhost:4000/homework1/"/>
-   <updated>2025-10-03T00:00:00+02:00</updated>
+   <updated>2025-10-08T00:00:00+02:00</updated>
    <id>http://localhost:4000/homework1</id>
-   <content type="html">&lt;p&gt;In this assignment we studied &lt;strong&gt;probability distributions&lt;/strong&gt; and applied them to practical examples.&lt;/p&gt;
+   <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
-&lt;p&gt;📄 &lt;a href=&quot;assets/hw1.pdf&quot;&gt;Download PDF&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As we begin our journey into the intersection of statistics and cybersecurity, it’s essential to understand why these two disciplines are increasingly intertwined. In an era where cyber threats evolve daily and the cost of data breaches continues to climb, statistical methods have become indispensable tools in the cybersecurity arsenal.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;what-is-statistics&quot;&gt;What is Statistics?&lt;/h2&gt;
+
+&lt;p&gt;Statistics is the science of collecting, analyzing, interpreting, and presenting data. It provides systematic methods for understanding patterns, making predictions, and drawing conclusions from information—even when that information is incomplete or uncertain. At its core, statistics helps us answer questions like: What is normal? What is unusual? What patterns exist in the data? And crucially for cybersecurity: What behaviors indicate a potential threat?&lt;/p&gt;
+
+&lt;h2 id=&quot;the-growing-importance-of-statistics-in-cybersecurity&quot;&gt;The Growing Importance of Statistics in Cybersecurity&lt;/h2&gt;
+
+&lt;p&gt;The cybersecurity landscape in 2024-2025 highlights why statistical approaches are more critical than ever. Recent data shows that the global average cost of a data breach reached $4.88 million in 2024, representing a 10% increase from the previous year&lt;sup&gt;1&lt;/sup&gt;. Organizations now take an average of 277 days to identify and contain a data breach, with credential-related breaches requiring even longer—up to 328 days&lt;sup&gt;1&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;These sobering statistics underscore a fundamental challenge: threats are becoming more sophisticated, more frequent, and more costly. With approximately 4,000 cyber attacks occurring daily worldwide&lt;sup&gt;5&lt;/sup&gt;, the sheer volume of security events makes manual analysis impossible. This is precisely where statistical methods become invaluable.&lt;/p&gt;
+
+&lt;h2 id=&quot;key-applications-of-statistics-in-cybersecurity&quot;&gt;Key Applications of Statistics in Cybersecurity&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-anomaly-detection&quot;&gt;1. Anomaly Detection&lt;/h3&gt;
+
+&lt;p&gt;One of the most powerful applications of statistics in cybersecurity is anomaly detection—the ability to identify unusual patterns that deviate from normal behavior. Statistical approaches like outlier detection use measures such as mean, variance, and standard deviation to establish baselines of “normal” network activity or user behavior.&lt;/p&gt;
+
+&lt;p&gt;When systems observe deviations from these established norms, they can flag potential security incidents. For example, if a user account suddenly accesses an unusual volume of files at 3 AM, statistical models can recognize this as anomalous behavior worthy of investigation. These techniques range from classical statistical methods to more advanced machine learning models that can adapt to changing patterns over time.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-intrusion-detection-systems&quot;&gt;2. Intrusion Detection Systems&lt;/h3&gt;
+
+&lt;p&gt;Intrusion Detection Systems (IDS) heavily rely on statistical techniques to distinguish between legitimate traffic and potential attacks. These systems build behavioral and knowledge profiles based on historical data, using statistical analysis to classify activities as normal or suspicious. Both supervised and unsupervised statistical learning methods help these systems become more accurate over time, reducing false positives while catching genuine threats.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-risk-assessment-and-prediction&quot;&gt;3. Risk Assessment and Prediction&lt;/h3&gt;
+
+&lt;p&gt;Statistics enables cybersecurity professionals to move from reactive to proactive security postures. By analyzing historical attack data, vulnerability assessments, and threat intelligence, statistical models can predict where vulnerabilities are most likely to be exploited and which assets face the highest risk. This allows organizations to allocate security resources more effectively and prioritize remediation efforts.&lt;/p&gt;
+
+&lt;h3 id=&quot;4-pattern-recognition-and-threat-intelligence&quot;&gt;4. Pattern Recognition and Threat Intelligence&lt;/h3&gt;
+
+&lt;p&gt;Statistical pattern recognition helps identify emerging attack vectors and threat trends. For instance, analysis reveals that over 75% of targeted cyberattacks begin with email phishing campaigns&lt;sup&gt;6&lt;/sup&gt;. By applying statistical methods to large datasets of threat indicators, security teams can recognize patterns that signal coordinated attacks, identify malware families, and track threat actor behaviors across different campaigns&lt;sup&gt;2&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;5-performance-measurement&quot;&gt;5. Performance Measurement&lt;/h3&gt;
+
+&lt;p&gt;Statistics also plays a crucial role in measuring the effectiveness of security controls. Metrics such as mean time to detect (MTTD), mean time to respond (MTTR), false positive rates, and detection accuracy all rely on statistical analysis. These measurements help organizations understand whether their security investments are working and where improvements are needed.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-human-element&quot;&gt;The Human Element&lt;/h2&gt;
+
+&lt;p&gt;Interestingly, statistics also helps us understand the human factors in cybersecurity. Data shows that 70% of organizations have users being served malware ads through their browsers&lt;sup&gt;5&lt;/sup&gt;, and that proper education can significantly reduce successful phishing attempts. Multi-factor authentication, for example, prevents 99.9% of phishing attacks&lt;sup&gt;6&lt;/sup&gt;—a statistically significant improvement that highlights the value of combining technical and educational approaches.&lt;/p&gt;
+
+&lt;h2 id=&quot;looking-forward&quot;&gt;Looking Forward&lt;/h2&gt;
+
+&lt;p&gt;As cyber threats continue to evolve, particularly with the emergence of AI-powered attacks, statistical methods will become even more critical. The field is moving toward more sophisticated applications, including predictive analytics, behavioral biometrics, and adaptive security systems that learn and improve over time.&lt;/p&gt;
+
+&lt;p&gt;The integration of statistics with machine learning and artificial intelligence represents the future of cybersecurity defense. However, the fundamental statistical principles—understanding distributions, identifying outliers, testing hypotheses, and quantifying uncertainty—remain at the heart of all these advanced applications.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Statistics is far more than just numbers and graphs in cybersecurity—it’s the foundation for making data-driven security decisions in an environment characterized by uncertainty and rapidly evolving threats. As we progress through this course, we’ll explore how these statistical methods are applied in practice, gaining the analytical skills needed to protect systems and data in an increasingly connected world.&lt;/p&gt;
+
+&lt;p&gt;The marriage of statistics and cybersecurity isn’t just useful—it’s essential. In a domain where threats can materialize in microseconds and the cost of failure is measured in millions, statistical methods provide the clarity, predictive power, and systematic approach needed to stay ahead of adversaries.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;IBM Security. (2024). &lt;a href=&quot;https://www.ibm.com/security/data-breach&quot;&gt;Cost of a Data Breach Report 2024&lt;/a&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Kure, H. I., Islam, S., &amp;amp; Razzaque, M. A. (2019). &lt;a href=&quot;https://cybersecurity.springeropen.com/articles/10.1186/s42400-019-0038-7&quot;&gt;Survey of intrusion detection systems: techniques, datasets and challenges&lt;/a&gt;. &lt;em&gt;Cybersecurity&lt;/em&gt;, 2(1).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;XenonStack. (2024). &lt;a href=&quot;https://www.xenonstack.com/insights/cyber-network-security&quot;&gt;Quick Guide for Anomaly Detection in Cybersecurity Networks&lt;/a&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Exabeam. (2025). &lt;a href=&quot;https://www.exabeam.com/explainers/ueba/behavior-anomaly-detection-techniques-and-best-practices/&quot;&gt;Behavior Anomaly Detection: Techniques and Best Practices&lt;/a&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SentinelOne. (2025). &lt;a href=&quot;https://www.sentinelone.com/cybersecurity-101/cybersecurity/cyber-security-statistics/&quot;&gt;Key Cyber Security Statistics for 2025&lt;/a&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Fortinet. (2025). &lt;a href=&quot;https://www.fortinet.com/resources/cyberglossary/cybersecurity-statistics&quot;&gt;Top Cybersecurity Statistics: Facts, Stats and Breaches for 2025&lt;/a&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 </content>
  </entry>
  
