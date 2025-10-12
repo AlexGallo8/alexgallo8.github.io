@@ -104,9 +104,150 @@
 
 <!--more-->
 
+<h2 id="theoretical-background">Theoretical Background</h2>
+
+<h3 id="understanding-datasets">Understanding Datasets</h3>
+
+<p>A <strong>dataset</strong> is a structured collection of data organized for analysis. In statistics and data science, datasets typically consist of:</p>
+<ul>
+  <li><strong>Observations (rows)</strong>: Individual data points or records</li>
+  <li><strong>Variables (columns)</strong>: Attributes or characteristics measured for each observation</li>
+  <li><strong>Data types</strong>: Different kinds of values (numerical, categorical, temporal, etc.)</li>
+</ul>
+
+<p>Datasets serve as the foundation for statistical analysis, enabling us to identify patterns, test hypotheses, and make data-driven decisions. In the context of cybersecurity, datasets help organizations understand incident patterns and improve their security posture.</p>
+
+<h3 id="statistical-distributions">Statistical Distributions</h3>
+
+<p>A <strong>statistical distribution</strong> describes how values of a variable are spread or distributed across different possible outcomes. Understanding distributions is essential because:</p>
+
+<ol>
+  <li><strong>Pattern Recognition</strong>: Distributions reveal the underlying structure of data</li>
+  <li><strong>Prediction</strong>: They help forecast future events based on historical patterns</li>
+  <li><strong>Comparison</strong>: Distributions allow us to compare different datasets or time periods</li>
+  <li><strong>Decision Making</strong>: They provide a basis for risk assessment and resource allocation</li>
+</ol>
+
+<h4 id="key-distribution-types">Key Distribution Types</h4>
+
+<p>Different phenomena follow different distribution patterns:</p>
+
+<ul>
+  <li>
+    <p><strong>Normal (Gaussian) Distribution</strong>: Symmetrical, bell-shaped curve where data clusters around a central mean. Common in natural phenomena and processes with multiple random factors.</p>
+  </li>
+  <li>
+    <p><strong>Log-normal Distribution</strong>: Right-skewed distribution where the logarithm of the variable is normally distributed. Often appears in scenarios involving multiplicative processes, such as file sizes or monetary values.</p>
+  </li>
+  <li>
+    <p><strong>Exponential Distribution</strong>: Models the time between events in a Poisson process. Commonly used for waiting times, lifetimes, and detection/response scenarios.</p>
+  </li>
+</ul>
+
+<p>Each distribution has specific parameters that define its shape and characteristics, making it suitable for modeling different real-world scenarios.</p>
+
 <h2 id="methodology">Methodology</h2>
 
+<h3 id="database-setup">Database Setup</h3>
+
+<p>To store and manage the security incident data, I created a PostgreSQL database table with appropriate constraints to ensure data integrity:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="k">public</span><span class="p">.</span><span class="n">security_incidents</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">SERIAL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">incident_duration</span> <span class="nb">INTEGER</span> <span class="k">CHECK</span> <span class="p">(</span><span class="n">incident_duration</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">data_leaked</span> <span class="nb">DECIMAL</span> <span class="k">CHECK</span> <span class="p">(</span><span class="n">data_leaked</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">detection_time</span> <span class="nb">DECIMAL</span> <span class="k">CHECK</span> <span class="p">(</span><span class="n">detection_time</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>This schema includes:</p>
+<ul>
+  <li>An auto-incrementing primary key (<code class="language-plaintext highlighter-rouge">id</code>) for unique identification</li>
+  <li><code class="language-plaintext highlighter-rouge">incident_duration</code>: Positive integer values representing minutes</li>
+  <li><code class="language-plaintext highlighter-rouge">data_leaked</code>: Non-negative decimal values representing megabytes</li>
+  <li><code class="language-plaintext highlighter-rouge">detection_time</code>: Non-negative decimal values representing hours</li>
+  <li>CHECK constraints to ensure data validity</li>
+</ul>
+
+<h4 id="initial-testing">Initial Testing</h4>
+
+<p>Before generating the full dataset, I performed a test insertion to verify the table structure:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">public</span><span class="p">.</span><span class="n">security_incidents</span> <span class="p">(</span><span class="n">incident_duration</span><span class="p">,</span> <span class="n">data_leaked</span><span class="p">,</span> <span class="n">detection_time</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="mi">2</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>This test record confirmed that the table was correctly configured and ready to receive the generated data.</p>
+
+<h3 id="dataset-composition">Dataset Composition</h3>
+
+<p>The final dataset consists of <strong>31 security incidents</strong>:</p>
+<ul>
+  <li>1 test record (manually inserted for validation)</li>
+  <li>30 records generated through the Python script</li>
+</ul>
+
+<p>Below is a representative sample of the data stored in the database:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>incident_duration</th>
+      <th>data_leaked</th>
+      <th>detection_time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>45</td>
+      <td>2.50</td>
+      <td>1.50</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>64</td>
+      <td>1.69</td>
+      <td>0.95</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>70</td>
+      <td>0.29</td>
+      <td>0.67</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>55</td>
+      <td>20.08</td>
+      <td>5.38</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>46</td>
+      <td>1.93</td>
+      <td>0.19</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>75</td>
+      <td>5.09</td>
+      <td>4.71</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Note: This table shows a representative sample of the dataset. The complete dataset with all 31 records is available in the project repository as <a href="/assets/data/security_incidents_table.csv">security_incidents_table.csv</a>.</em></p>
+
 <h3 id="data-generation-and-storage">Data Generation and Storage</h3>
+
 <p>To create a realistic dataset, I implemented two Python scripts for data generation and analysis:</p>
 
 <details>
@@ -364,13 +505,12 @@
       <li>Exponential distribution for detection times (rate parameter = 2)</li>
     </ul>
   </li>
-  <li><strong>Data Storage</strong>: Utilized SQLAlchemy to efficiently store the generated data</li>
+  <li><strong>Data Storage</strong>: Utilized psycopg2 to efficiently store the generated data</li>
   <li><strong>Analysis</strong>: Generated distribution plots using Matplotlib and Seaborn, with kernel density estimation (KDE) curves</li>
 </ol>
 
-<p>The scripts are stored in the project’s assets directory and can be examined for implementation details.</p>
-
 <h3 id="visualization">Visualization</h3>
+
 <p>The distributions were visualized using Python’s Matplotlib and Seaborn libraries, creating histograms with kernel density estimation (KDE) curves to better understand the data patterns.</p>
 
 <h2 id="dataset-description-and-analysis">Dataset Description and Analysis</h2>
@@ -378,6 +518,7 @@
 <p>The dataset consists of 31 security incidents, each following specific statistical distributions:</p>
 
 <h3 id="1-incident-duration-normal-distribution">1. Incident Duration (Normal Distribution)</h3>
+
 <p><img src="/assets/images/incident_duration.png" alt="Incident Duration Distribution" /></p>
 
 <p>The incident duration data shows:</p>
@@ -391,6 +532,7 @@
 <p>The distribution appears approximately normal, clustering around the one-hour mark, which aligns with typical security incident patterns.</p>
 
 <h3 id="2-data-leaked-log-normal-distribution">2. Data Leaked (Log-normal Distribution)</h3>
+
 <p><img src="/assets/images/data_leaked.png" alt="Data Leaked Distribution" /></p>
 
 <p>The data leaked measurements reveal:</p>
@@ -404,6 +546,7 @@
 <p>The right-skewed distribution indicates that while most breaches involve smaller amounts of data, there are occasional large-scale data leaks, which is typical in real-world scenarios.</p>
 
 <h3 id="3-detection-time-exponential-distribution">3. Detection Time (Exponential Distribution)</h3>
+
 <p><img src="/assets/images/detection_time.png" alt="Detection Time Distribution" /></p>
 
 <p>Detection time statistics show:</p>
@@ -435,13 +578,14 @@
 <h2 id="conclusion">Conclusion</h2>
 
 <p>The statistical analysis reveals patterns that can inform cybersecurity strategies:</p>
+
 <ol>
-  <li>Incident durations follow a predictable pattern, useful for resource planning</li>
-  <li>Data leaks show a long-tail distribution, highlighting the need for scalable response capabilities</li>
-  <li>Detection times demonstrate the importance of early warning systems</li>
+  <li><strong>Incident durations</strong> follow a predictable normal pattern, useful for resource planning and staffing decisions</li>
+  <li><strong>Data leaks</strong> show a long-tail distribution, highlighting the need for scalable response capabilities to handle both typical and exceptional cases</li>
+  <li><strong>Detection times</strong> demonstrate the importance of early warning systems, as most incidents benefit from rapid detection</li>
 </ol>
 
-<p>These insights can help organizations better prepare for and respond to security incidents, particularly in allocating resources and setting response time targets.</p>
+<p>These insights can help organizations better prepare for and respond to security incidents, particularly in allocating resources and setting response time targets. Understanding these distributions allows security teams to establish realistic benchmarks and identify anomalies that may require special attention.</p>
 
 </div>
 
