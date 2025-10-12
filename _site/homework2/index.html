@@ -20,8 +20,7 @@
   <link rel="stylesheet" href="/public/css/poole.css">
   <link rel="stylesheet" href="/public/css/syntax.css">
   <link rel="stylesheet" href="/public/css/lanyon.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
-
+  <link rel="stylesheet" href="/public/css/custom.css">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
   <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
 
@@ -108,19 +107,268 @@
 <h2 id="methodology">Methodology</h2>
 
 <h3 id="data-generation-and-storage">Data Generation and Storage</h3>
-<p>To create a realistic dataset, I implemented a Python-based data generation system that produces security incident data following specific statistical distributions. The data was stored in a PostgreSQL database using the following approach:</p>
+<p>To create a realistic dataset, I implemented two Python scripts for data generation and analysis:</p>
+
+<details>
+    <summary>View generate_security_data.py</summary>
+    
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+</pre></td><td class="code"><pre>    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+    <span class="kn">import</span> <span class="nn">psycopg2</span>
+    <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+    <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+
+    <span class="n">load_dotenv</span><span class="p">()</span>
+
+    <span class="n">db_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"database"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_NAME'</span><span class="p">),</span>
+        <span class="s">"user"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_USER'</span><span class="p">),</span>
+        <span class="s">"password"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_PASSWORD'</span><span class="p">),</span>
+        <span class="s">"host"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_HOST'</span><span class="p">),</span>
+        <span class="s">"port"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_PORT'</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">generate_security_incidents</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+        <span class="c1"># Generate incident durations (convert to standard Python int)
+</span>        <span class="n">incident_durations</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)]</span>
+        <span class="n">incident_durations</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">incident_durations</span><span class="p">]</span>
+        
+        <span class="c1"># Generate data leaked (convert to float)
+</span>        <span class="n">data_leaked</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">lognormal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span>
+        
+        <span class="c1"># Generate detection times (convert to float)
+</span>        <span class="n">detection_times</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">exponential</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)]</span>
+        
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">incident_durations</span><span class="p">,</span> <span class="n">data_leaked</span><span class="p">,</span> <span class="n">detection_times</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">db_params</span><span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">incidents</span> <span class="o">=</span> <span class="n">generate_security_incidents</span><span class="p">()</span>
+        
+        <span class="k">for</span> <span class="n">incident</span> <span class="ow">in</span> <span class="n">incidents</span><span class="p">:</span>
+            <span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"""
+                INSERT INTO security_incidents 
+                (incident_duration, data_leaked, detection_time)
+                VALUES (%s, %s, %s)
+            """</span><span class="p">,</span> <span class="n">incident</span><span class="p">)</span>
+        
+        <span class="n">conn</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Successfully inserted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">incidents</span><span class="p">)</span><span class="si">}</span><span class="s"> records"</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">cur</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">conn</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+    
+</pre></td></tr></tbody></table></code></pre></figure>
+
+</details>
+
+<details>
+    <summary>View analyze_distributions.py</summary>
+    
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+</pre></td><td class="code"><pre>    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+    <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+    <span class="kn">import</span> <span class="nn">psycopg2</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+    <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+    <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+
+    <span class="n">load_dotenv</span><span class="p">()</span>
+
+    <span class="n">db_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"database"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_NAME'</span><span class="p">),</span>
+        <span class="s">"user"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_USER'</span><span class="p">),</span>
+        <span class="s">"password"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_PASSWORD'</span><span class="p">),</span>
+        <span class="s">"host"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_HOST'</span><span class="p">),</span>
+        <span class="s">"port"</span><span class="p">:</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'DB_PORT'</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">fetch_data</span><span class="p">():</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="sa">f</span><span class="s">'postgresql://</span><span class="si">{</span><span class="n">db_params</span><span class="p">[</span><span class="s">"user"</span><span class="p">]</span><span class="si">}</span><span class="s">:</span><span class="si">{</span><span class="n">db_params</span><span class="p">[</span><span class="s">"password"</span><span class="p">]</span><span class="si">}</span><span class="s">@</span><span class="si">{</span><span class="n">db_params</span><span class="p">[</span><span class="s">"host"</span><span class="p">]</span><span class="si">}</span><span class="s">:</span><span class="si">{</span><span class="n">db_params</span><span class="p">[</span><span class="s">"port"</span><span class="p">]</span><span class="si">}</span><span class="s">/</span><span class="si">{</span><span class="n">db_params</span><span class="p">[</span><span class="s">"database"</span><span class="p">]</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT incident_duration, data_leaked, detection_time FROM security_incidents"</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">def</span> <span class="nf">plot_distributions</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">'assets/images'</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c1"># Plot Incident Duration
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">sns</span><span class="p">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'incident_duration'</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'skyblue'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Distribution of Incident Duration'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Duration (minutes)'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">'assets/images/incident_duration.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="c1"># Plot Data Leaked
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">sns</span><span class="p">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'data_leaked'</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'lightgreen'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Distribution of Data Leaked'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Data Leaked (MB)'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">'assets/images/data_leaked.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="c1"># Plot Detection Time
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">sns</span><span class="p">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'detection_time'</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'salmon'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Distribution of Detection Time'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Detection Time (hours)'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">'assets/images/detection_time.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">fetch_data</span><span class="p">()</span>
+        <span class="n">plot_distributions</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Basic Statistics:"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">()</span>
+    
+</pre></td></tr></tbody></table></code></pre></figure>
+
+</details>
+
+<p>The implementation follows this approach:</p>
 
 <ol>
   <li><strong>Database Setup</strong>: Created a PostgreSQL table <code class="language-plaintext highlighter-rouge">security_incidents</code> with columns for incident duration, data leaked, and detection time</li>
   <li><strong>Data Generation</strong>: Used NumPy to generate statistically realistic data:
     <ul>
-      <li>Normal distribution for incident durations</li>
-      <li>Log-normal distribution for data leaks</li>
-      <li>Exponential distribution for detection times</li>
+      <li>Normal distribution for incident durations (mean = 60 minutes, std = 20)</li>
+      <li>Log-normal distribution for data leaks (scaled by factor of 2)</li>
+      <li>Exponential distribution for detection times (rate parameter = 2)</li>
     </ul>
   </li>
   <li><strong>Data Storage</strong>: Utilized SQLAlchemy to efficiently store the generated data</li>
+  <li><strong>Analysis</strong>: Generated distribution plots using Matplotlib and Seaborn, with kernel density estimation (KDE) curves</li>
 </ol>
+
+<p>The scripts are stored in the project’s assets directory and can be examined for implementation details.</p>
 
 <h3 id="visualization">Visualization</h3>
 <p>The distributions were visualized using Python’s Matplotlib and Seaborn libraries, creating histograms with kernel density estimation (KDE) curves to better understand the data patterns.</p>

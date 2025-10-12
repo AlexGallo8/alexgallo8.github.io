@@ -1,0 +1,45 @@
+/* Code block styling */
+.highlight {
+    margin: 20px 0;
+    border-radius: 4px;
+    background: #f8f9fa;
+}
+
+.highlight pre {
+    padding: 16px;
+    overflow-x: auto;
+    white-space: pre;
+    word-wrap: normal;
+    max-width: 100%;
+}
+
+/* Line numbers styling */
+.highlight .lineno {
+    color: #999;
+    padding-right: 16px;
+    border-right: 1px solid #ddd;
+    margin-right: 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Details/Summary styling */
+details {
+    margin: 1em 0;
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+}
+
+summary {
+    cursor: pointer;
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+summary:hover {
+    background: #f5f5f5;
+}
