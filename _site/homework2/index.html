@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Homework 2 - Analysis of Security Incident Distributions &middot; Statistics Homework
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://localhost:4000/homework2/">
+  
+
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/atom.xml">
+</head>
+
+
+  <body class="theme-base-0b">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Homework collection for the university course in Statistics</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/">Home</a>
+
+    <!-- 
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="http://localhost:4000/about/">About</a>
+        
+      
+    
+      
+     -->
+
+    <a class="sidebar-nav-item" href="https://github.com/alexgallo8">GitHub Profile</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Statistics Homework</a>
+            <small>Alessandro Maone - 1945149</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Homework 2 - Analysis of Security Incident Distributions</h1>
+  <span class="post-date">12 Oct 2025</span>
+  <h2 id="introduction">Introduction</h2>
+
+<p>In this homework, I analyze a dataset of security incidents focusing on three key metrics:</p>
+<ul>
+  <li>Incident Duration (minutes)</li>
+  <li>Data Leaked (MB)</li>
+  <li>Detection Time (hours)</li>
+</ul>
+
+<p>These metrics are crucial for understanding patterns in security breaches and improving response strategies.</p>
+
+<!--more-->
+
+<h2 id="methodology">Methodology</h2>
+
+<h3 id="data-generation-and-storage">Data Generation and Storage</h3>
+<p>To create a realistic dataset, I implemented a Python-based data generation system that produces security incident data following specific statistical distributions. The data was stored in a PostgreSQL database using the following approach:</p>
+
+<ol>
+  <li><strong>Database Setup</strong>: Created a PostgreSQL table <code class="language-plaintext highlighter-rouge">security_incidents</code> with columns for incident duration, data leaked, and detection time</li>
+  <li><strong>Data Generation</strong>: Used NumPy to generate statistically realistic data:
+    <ul>
+      <li>Normal distribution for incident durations</li>
+      <li>Log-normal distribution for data leaks</li>
+      <li>Exponential distribution for detection times</li>
+    </ul>
+  </li>
+  <li><strong>Data Storage</strong>: Utilized SQLAlchemy to efficiently store the generated data</li>
+</ol>
+
+<h3 id="visualization">Visualization</h3>
+<p>The distributions were visualized using Python’s Matplotlib and Seaborn libraries, creating histograms with kernel density estimation (KDE) curves to better understand the data patterns.</p>
+
+<h2 id="dataset-description-and-analysis">Dataset Description and Analysis</h2>
+
+<p>The dataset consists of 31 security incidents, each following specific statistical distributions:</p>
+
+<h3 id="1-incident-duration-normal-distribution">1. Incident Duration (Normal Distribution)</h3>
+<p><img src="/assets/images/incident_duration.png" alt="Incident Duration Distribution" /></p>
+
+<p>The incident duration data shows:</p>
+<ul>
+  <li>Mean duration: 64.32 minutes</li>
+  <li>Standard deviation: 15.29 minutes</li>
+  <li>Range: 37 to 99 minutes</li>
+  <li>Median (50th percentile): 64 minutes</li>
+</ul>
+
+<p>The distribution appears approximately normal, clustering around the one-hour mark, which aligns with typical security incident patterns.</p>
+
+<h3 id="2-data-leaked-log-normal-distribution">2. Data Leaked (Log-normal Distribution)</h3>
+<p><img src="/assets/images/data_leaked.png" alt="Data Leaked Distribution" /></p>
+
+<p>The data leaked measurements reveal:</p>
+<ul>
+  <li>Mean: 3.81 MB</li>
+  <li>Standard deviation: 4.53 MB</li>
+  <li>Range: 0.22 to 20.08 MB</li>
+  <li>Median: 2.34 MB</li>
+</ul>
+
+<p>The right-skewed distribution indicates that while most breaches involve smaller amounts of data, there are occasional large-scale data leaks, which is typical in real-world scenarios.</p>
+
+<h3 id="3-detection-time-exponential-distribution">3. Detection Time (Exponential Distribution)</h3>
+<p><img src="/assets/images/detection_time.png" alt="Detection Time Distribution" /></p>
+
+<p>Detection time statistics show:</p>
+<ul>
+  <li>Mean: 1.26 hours</li>
+  <li>Standard deviation: 1.81 hours</li>
+  <li>Range: 0.10 to 8.38 hours</li>
+  <li>Median: 0.67 hours</li>
+</ul>
+
+<p>The exponential pattern indicates that most incidents are detected relatively quickly, but some take significantly longer, which is consistent with real-world cybersecurity scenarios.</p>
+
+<h2 id="statistical-insights">Statistical Insights</h2>
+
+<p>The quartile analysis reveals important operational insights:</p>
+<ul>
+  <li>75% of incidents are resolved within 75.5 minutes</li>
+  <li>75% of data breaches involve less than 4.7 MB of data</li>
+  <li>75% of incidents are detected within 1.07 hours</li>
+</ul>
+
+<p>These metrics provide valuable benchmarks for:</p>
+<ul>
+  <li>Setting response time objectives</li>
+  <li>Allocating security resources</li>
+  <li>Developing incident response strategies</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The statistical analysis reveals patterns that can inform cybersecurity strategies:</p>
+<ol>
+  <li>Incident durations follow a predictable pattern, useful for resource planning</li>
+  <li>Data leaks show a long-tail distribution, highlighting the need for scalable response capabilities</li>
+  <li>Detection times demonstrate the importance of early warning systems</li>
+</ol>
+
+<p>These insights can help organizations better prepare for and respond to security incidents, particularly in allocating resources and setting response time targets.</p>
+
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/homework1/">
+            Homework 1 - What’s is statistics, and why can it be useful for cybersecurity?
+            <small>08 Oct 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/public/js/script.js'></script>
+  </body>
+</html>

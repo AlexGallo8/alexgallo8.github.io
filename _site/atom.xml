@@ -4,13 +4,123 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-10-08T16:57:56+02:00</updated>
+ <updated>2025-10-12T11:05:34+02:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Homework 2 - Analysis of Security Incident Distributions</title>
+   <link href="http://localhost:4000/homework2/"/>
+   <updated>2025-10-12T00:00:00+02:00</updated>
+   <id>http://localhost:4000/homework2</id>
+   <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In this homework, I analyze a dataset of security incidents focusing on three key metrics:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Incident Duration (minutes)&lt;/li&gt;
+  &lt;li&gt;Data Leaked (MB)&lt;/li&gt;
+  &lt;li&gt;Detection Time (hours)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These metrics are crucial for understanding patterns in security breaches and improving response strategies.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;methodology&quot;&gt;Methodology&lt;/h2&gt;
+
+&lt;h3 id=&quot;data-generation-and-storage&quot;&gt;Data Generation and Storage&lt;/h3&gt;
+&lt;p&gt;To create a realistic dataset, I implemented a Python-based data generation system that produces security incident data following specific statistical distributions. The data was stored in a PostgreSQL database using the following approach:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Database Setup&lt;/strong&gt;: Created a PostgreSQL table &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;security_incidents&lt;/code&gt; with columns for incident duration, data leaked, and detection time&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Data Generation&lt;/strong&gt;: Used NumPy to generate statistically realistic data:
+    &lt;ul&gt;
+      &lt;li&gt;Normal distribution for incident durations&lt;/li&gt;
+      &lt;li&gt;Log-normal distribution for data leaks&lt;/li&gt;
+      &lt;li&gt;Exponential distribution for detection times&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Data Storage&lt;/strong&gt;: Utilized SQLAlchemy to efficiently store the generated data&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;visualization&quot;&gt;Visualization&lt;/h3&gt;
+&lt;p&gt;The distributions were visualized using Python’s Matplotlib and Seaborn libraries, creating histograms with kernel density estimation (KDE) curves to better understand the data patterns.&lt;/p&gt;
+
+&lt;h2 id=&quot;dataset-description-and-analysis&quot;&gt;Dataset Description and Analysis&lt;/h2&gt;
+
+&lt;p&gt;The dataset consists of 31 security incidents, each following specific statistical distributions:&lt;/p&gt;
+
+&lt;h3 id=&quot;1-incident-duration-normal-distribution&quot;&gt;1. Incident Duration (Normal Distribution)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/incident_duration.png&quot; alt=&quot;Incident Duration Distribution&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The incident duration data shows:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Mean duration: 64.32 minutes&lt;/li&gt;
+  &lt;li&gt;Standard deviation: 15.29 minutes&lt;/li&gt;
+  &lt;li&gt;Range: 37 to 99 minutes&lt;/li&gt;
+  &lt;li&gt;Median (50th percentile): 64 minutes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The distribution appears approximately normal, clustering around the one-hour mark, which aligns with typical security incident patterns.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-data-leaked-log-normal-distribution&quot;&gt;2. Data Leaked (Log-normal Distribution)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/data_leaked.png&quot; alt=&quot;Data Leaked Distribution&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The data leaked measurements reveal:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Mean: 3.81 MB&lt;/li&gt;
+  &lt;li&gt;Standard deviation: 4.53 MB&lt;/li&gt;
+  &lt;li&gt;Range: 0.22 to 20.08 MB&lt;/li&gt;
+  &lt;li&gt;Median: 2.34 MB&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The right-skewed distribution indicates that while most breaches involve smaller amounts of data, there are occasional large-scale data leaks, which is typical in real-world scenarios.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-detection-time-exponential-distribution&quot;&gt;3. Detection Time (Exponential Distribution)&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/detection_time.png&quot; alt=&quot;Detection Time Distribution&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Detection time statistics show:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Mean: 1.26 hours&lt;/li&gt;
+  &lt;li&gt;Standard deviation: 1.81 hours&lt;/li&gt;
+  &lt;li&gt;Range: 0.10 to 8.38 hours&lt;/li&gt;
+  &lt;li&gt;Median: 0.67 hours&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The exponential pattern indicates that most incidents are detected relatively quickly, but some take significantly longer, which is consistent with real-world cybersecurity scenarios.&lt;/p&gt;
+
+&lt;h2 id=&quot;statistical-insights&quot;&gt;Statistical Insights&lt;/h2&gt;
+
+&lt;p&gt;The quartile analysis reveals important operational insights:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;75% of incidents are resolved within 75.5 minutes&lt;/li&gt;
+  &lt;li&gt;75% of data breaches involve less than 4.7 MB of data&lt;/li&gt;
+  &lt;li&gt;75% of incidents are detected within 1.07 hours&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These metrics provide valuable benchmarks for:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Setting response time objectives&lt;/li&gt;
+  &lt;li&gt;Allocating security resources&lt;/li&gt;
+  &lt;li&gt;Developing incident response strategies&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;The statistical analysis reveals patterns that can inform cybersecurity strategies:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Incident durations follow a predictable pattern, useful for resource planning&lt;/li&gt;
+  &lt;li&gt;Data leaks show a long-tail distribution, highlighting the need for scalable response capabilities&lt;/li&gt;
+  &lt;li&gt;Detection times demonstrate the importance of early warning systems&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;These insights can help organizations better prepare for and respond to security incidents, particularly in allocating resources and setting response time targets.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Homework 1 - What’s is statistics, and why can it be useful for cybersecurity?</title>
