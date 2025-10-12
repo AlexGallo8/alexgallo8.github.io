@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-10-12T12:48:26+02:00</updated>
+ <updated>2025-10-12T15:11:57+02:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -170,7 +170,7 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;em&gt;Note: This table shows a representative sample of the dataset. The complete dataset with all 31 records is available in the project repository as &lt;a href=&quot;/assets/data/security_incidents_table.csv&quot;&gt;security_incidents_table.csv&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: This table shows a representative sample of the dataset. The complete dataset with all 31 records is available in the project repository as &lt;a href=&quot;/assets/data/homework2/security_incidents_table.csv&quot;&gt;security_incidents_table.csv&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;data-generation-and-storage&quot;&gt;Data Generation and Storage&lt;/h3&gt;
 
@@ -445,7 +445,7 @@
 
 &lt;h3 id=&quot;1-incident-duration-normal-distribution&quot;&gt;1. Incident Duration (Normal Distribution)&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/incident_duration.png&quot; alt=&quot;Incident Duration Distribution&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/homework2/incident_duration.png&quot; alt=&quot;Incident Duration Distribution&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The incident duration data shows:&lt;/p&gt;
 &lt;ul&gt;
@@ -459,7 +459,7 @@
 
 &lt;h3 id=&quot;2-data-leaked-log-normal-distribution&quot;&gt;2. Data Leaked (Log-normal Distribution)&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/data_leaked.png&quot; alt=&quot;Data Leaked Distribution&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/homework2/data_leaked.png&quot; alt=&quot;Data Leaked Distribution&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The data leaked measurements reveal:&lt;/p&gt;
 &lt;ul&gt;
@@ -473,7 +473,7 @@
 
 &lt;h3 id=&quot;3-detection-time-exponential-distribution&quot;&gt;3. Detection Time (Exponential Distribution)&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/detection_time.png&quot; alt=&quot;Detection Time Distribution&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/homework2/detection_time.png&quot; alt=&quot;Detection Time Distribution&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Detection time statistics show:&lt;/p&gt;
 &lt;ul&gt;
