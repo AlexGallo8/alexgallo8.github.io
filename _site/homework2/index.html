@@ -639,7 +639,7 @@
 
 <h3 id="dataset-selection">Dataset Selection</h3>
 
-<p>For this analysis, I selected the first chapter of <a href="https://www.gutenberg.org/files/2852/2852-h/2852-h.htm#chap01"><strong>“The Hound of the Baskervilles”</strong></a> by Sir Arthur Conan Doyle (1902), a public domain work available through Project Gutenberg. The text contains more than 5,400 characters, providing a sufficiently large sample for reliable statistical analysis.</p>
+<p>For this analysis, I selected the first chapter of <a href="https://www.gutenberg.org/files/2852/2852-h/2852-h.htm#chap01"><strong>“The Hound of the Baskervilles”</strong></a> by Sir Arthur Conan Doyle (1902), a public domain work available through Project Gutenberg. The text contains approximately 9,600 characters, providing a sufficiently large sample for reliable statistical analysis.</p>
 
 <p>The choice of a literary text ensures:</p>
 <ul>
@@ -1162,7 +1162,7 @@
 
 <h3 id="original-text-characteristics">Original Text Characteristics</h3>
 
-<p>The selected text excerpt contains 5,423 alphabetic characters. The letter frequency distribution closely matches the expected English language pattern:</p>
+<p>The selected text excerpt contains 9,666 alphabetic characters. The letter frequency distribution closely matches the expected English language pattern:</p>
 
 <p><img src="/assets/images/homework2/original_vs_expected.png" alt="Original vs Expected Distribution" /></p>
 
@@ -1208,32 +1208,151 @@
 
 <h3 id="automated-decryption-chi-squared-test">Automated Decryption: Chi-Squared Test</h3>
 
-<p>The automated decryption algorithm tests all 26 possible shifts and evaluates each using the chi-squared statistic:</p>
+<p>The automated decryption algorithm tests all 26 possible shifts and evaluates each using the chi-squared statistic.</p>
 
-<p><strong>Chi-squared formula:</strong></p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>χ² = Σ [(observed - expected)² / expected]
+<h4 id="chi-squared-test-theoretical-foundation">Chi-Squared Test: Theoretical Foundation</h4>
+
+<p>The <strong>chi-squared (χ²) test</strong> is a statistical hypothesis test used to determine how well observed data fits an expected distribution. Originally developed by Karl Pearson in 1900, it measures the discrepancy between observed and expected frequencies.</p>
+
+<p><strong>Mathematical formula:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>χ² = Σ [(Oᵢ - Eᵢ)² / Eᵢ]
 </code></pre></div></div>
 
-<p>For each potential shift:</p>
+<p>Where:</p>
 <ul>
-  <li>Decrypt the text</li>
-  <li>Calculate letter frequencies</li>
-  <li>Compute χ² score against expected English distribution</li>
-  <li>Lower score indicates better match</li>
+  <li><code class="language-plaintext highlighter-rouge">Oᵢ</code> = Observed frequency for letter i</li>
+  <li><code class="language-plaintext highlighter-rouge">Eᵢ</code> = Expected frequency for letter i (from language model)</li>
+  <li>The sum is computed across all 26 letters</li>
 </ul>
+
+<p><strong>Interpretation:</strong></p>
+<ul>
+  <li><strong>χ² = 0</strong>: Perfect match between observed and expected distributions</li>
+  <li><strong>χ² &lt; 10</strong>: Excellent match (highly likely correct decryption)</li>
+  <li><strong>χ² &gt; 100</strong>: Poor match (incorrect shift)</li>
+  <li><strong>Lower values indicate better fit</strong></li>
+</ul>
+
+<p>The test works by:</p>
+<ol>
+  <li>Squaring the difference between observed and expected frequencies (penalizing deviations)</li>
+  <li>Normalizing by the expected frequency (preventing bias toward high-frequency letters)</li>
+  <li>Summing across all letters (creating a single goodness-of-fit metric)</li>
+</ol>
+
+<p><strong>Why it works for Caesar cipher:</strong>
+When we apply the correct decryption shift, the resulting letter frequencies will closely match the expected English distribution, producing a low χ² score. Incorrect shifts produce gibberish with unnatural letter distributions, resulting in high χ² scores.</p>
+
+<h4 id="decryption-algorithm-implementation">Decryption Algorithm Implementation</h4>
+
+<p><strong>Process:</strong>
+For each potential shift value (0-25):</p>
+<ol>
+  <li>Apply the shift to decrypt the ciphertext</li>
+  <li>Calculate letter frequencies in the decrypted text</li>
+  <li>Compute χ² score against expected English distribution</li>
+  <li>Track the shift with the lowest score</li>
+</ol>
+
+<p>The shift producing the minimum χ² score is selected as the most likely correct decryption.</p>
+
+<h4 id="experimental-results">Experimental Results</h4>
+
+<p>Running the decryption algorithm on our encrypted text produces the following output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=== Caesar Cipher Frequency Analysis ===
+
+Random shift applied: 16
+Encrypted text saved to 'assets/files/encrypted_text.txt'
+
+Analyzing frequencies...
+Total letters in original: 9666
+Total letters in encrypted: 9666
+
+Frequency table saved to assets/data/original_frequencies.csv
+Frequency table saved to assets/data/encrypted_frequencies.csv
+
+Attempting decryption using frequency analysis...
+
+=== RESULTS ===
+Original shift used: 16
+Detected shift: 16
+Chi-squared score: 1.69
+Success: YES
+</code></pre></div></div>
+
+<p><strong>Analysis of results:</strong></p>
+<ul>
+  <li><strong>Text size</strong>: 9,666 alphabetic characters (excellent sample size for statistical analysis)</li>
+  <li><strong>Encryption shift</strong>: 16 (randomly generated)</li>
+  <li><strong>Detected shift</strong>: 16 (100% accurate detection)</li>
+  <li><strong>Chi-squared score</strong>: 1.69 (extremely low, indicating near-perfect match)</li>
+</ul>
+
+<h4 id="comparison-of-all-decryption-attempts">Comparison of All Decryption Attempts</h4>
+
+<p>The algorithm evaluates all 26 possible shifts. The top 5 candidates (ranked by χ² score):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>=== Top 5 Decryption Attempts (by chi-squared score) ===
+
+1. Decrypt shift: 10, Original shift: 16, Score: 1.69
+   Preview: Mr. Sherlock Holmes, who was usually very late in the mornings...
+   
+2. Decrypt shift: 4, Original shift: 22, Score: 282.61
+   Preview: Gl. Mbylfiwe Bifgym, qbi qum omouffs pyls funy ch nby gilhcham...
+   
+3. Decrypt shift: 24, Original shift: 2, Score: 376.84
+   Preview: Af. Gvsfzcqy Vczasg, kvc kog igiozzm jsfm zohs wb hvs acfbwbug...
+   
+4. Decrypt shift: 23, Original shift: 3, Score: 384.19
+   Preview: Ze. Fureybpx Ubyzrf, jub jnf hfhnyyl irel yngr va gur zbeavatf...
+   
+5. Decrypt shift: 25, Original shift: 1, Score: 418.66
+   Preview: Bg. Hwtgadrz Wdabth, lwd lph jhjpaan ktgn apit xc iwt bdgcxcvh...
+</code></pre></div></div>
+
+<p><strong>Key observations:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Dramatic score difference</strong>: The correct shift (score: 1.69) is orders of magnitude better than the second-best attempt (score: 282.61). This 167× difference demonstrates the test’s discriminative power.</p>
+  </li>
+  <li>
+    <p><strong>Clear winner</strong>: The gap between the best and second-best scores is so large that there is no ambiguity about which decryption is correct.</p>
+  </li>
+  <li>
+    <p><strong>Readable vs gibberish</strong>: Only the correct decryption (shift 10) produces readable English text. All other attempts produce nonsensical character sequences.</p>
+  </li>
+  <li>
+    <p><strong>Score distribution</strong>: The χ² scores for incorrect shifts range from 282.61 to 418.66, all clustering far above the correct decryption’s score.</p>
+  </li>
+</ol>
+
+<h4 id="statistical-significance">Statistical Significance</h4>
+
+<p>With a χ² score of 1.69 and 25 degrees of freedom (26 letters - 1), we can consult chi-squared distribution tables:</p>
+<ul>
+  <li><strong>Critical value (95% confidence)</strong>: χ²(25, 0.05) ≈ 37.65</li>
+  <li><strong>Our score</strong>: 1.69 « 37.65</li>
+</ul>
+
+<p>This indicates that the observed letter frequencies in our decrypted text are <strong>not significantly different</strong> from the expected English distribution—exactly what we expect from correct decryption. The extremely low score provides statistical validation that we have recovered the original plaintext.</p>
 
 <p><strong>Results:</strong></p>
 <ul>
-  <li><strong>Original encryption shift</strong>: 18</li>
-  <li><strong>Detected decryption shift</strong>: 8</li>
-  <li><strong>Computed original shift</strong>: (26 - 8) mod 26 = 18 ✓</li>
+  <li><strong>Original encryption shift</strong>: 16</li>
+  <li><strong>Detected decryption shift</strong>: 10</li>
+  <li><strong>Computed original shift</strong>: (26 - 10) mod 26 = 16 ✓</li>
   <li><strong>Chi-squared score</strong>: 1.69 (excellent match)</li>
   <li><strong>Success rate</strong>: 100%</li>
 </ul>
 
 <p>The relationship between encryption and decryption shifts:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>encryption_shift + decryption_shift = 26 (mod 26)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>encryption_shift + decryption_shift ≡ 0 (mod 26)
+decryption_shift = 26 - encryption_shift
 </code></pre></div></div>
+
+<p>In our case: 10 + 16 = 26, confirming that applying shift 10 to text encrypted with shift 16 recovers the original plaintext.</p>
 
 <h3 id="complete-frequency-comparison">Complete Frequency Comparison</h3>
 
