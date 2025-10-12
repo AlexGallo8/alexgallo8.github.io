@@ -9,7 +9,7 @@
 
   <title>
     
-      Homework 2 - Analysis of Security Incident Distributions &middot; Statistics Homework
+      Homework 2 - Explain the concept of Dataset and Distribution &middot; Statistics Homework
     
   </title>
 
@@ -89,9 +89,11 @@
 
       <div class="container content">
         <div class="post">
-  <h1 class="post-title">Homework 2 - Analysis of Security Incident Distributions</h1>
+  <h1 class="post-title">Homework 2 - Explain the concept of Dataset and Distribution</h1>
   <span class="post-date">12 Oct 2025</span>
-  <h2 id="introduction">Introduction</h2>
+  <h2 id="part-1-analysis-of-security-incident-distributions">Part 1: Analysis of Security Incident Distributions</h2>
+
+<h2 id="introduction-to-statistical-analysis">Introduction to Statistical Analysis</h2>
 
 <p>In this homework, I analyze a dataset of security incidents focusing on three key metrics:</p>
 <ul>
@@ -207,27 +209,45 @@
     </tr>
     <tr>
       <td>2</td>
-      <td>64</td>
-      <td>1.69</td>
-      <td>0.95</td>
+      <td>67</td>
+      <td>1.23</td>
+      <td>0.85</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>70</td>
-      <td>0.29</td>
-      <td>0.67</td>
+      <td>52</td>
+      <td>5.67</td>
+      <td>2.34</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>55</td>
-      <td>20.08</td>
-      <td>5.38</td>
+      <td>81</td>
+      <td>0.92</td>
+      <td>0.45</td>
     </tr>
     <tr>
       <td>5</td>
-      <td>46</td>
-      <td>1.93</td>
-      <td>0.19</td>
+      <td>59</td>
+      <td>3.14</td>
+      <td>1.78</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>72</td>
+      <td>4.89</td>
+      <td>2.15</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>38</td>
+      <td>1.56</td>
+      <td>0.33</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>91</td>
+      <td>8.21</td>
+      <td>3.67</td>
     </tr>
     <tr>
       <td>…</td>
@@ -237,14 +257,14 @@
     </tr>
     <tr>
       <td>31</td>
-      <td>75</td>
-      <td>5.09</td>
-      <td>4.71</td>
+      <td>64</td>
+      <td>2.34</td>
+      <td>0.67</td>
     </tr>
   </tbody>
 </table>
 
-<p><em>Note: This table shows a representative sample of the dataset. The complete dataset with all 31 records is available in the project repository as <a href="/assets/data/homework2/security_incidents_table.csv">security_incidents_table.csv</a>.</em></p>
+<p><em>Note: This table shows a representative sample of the dataset. The complete dataset with all 31 records is available in the project repository as <a href="/assets/data/homework2/security_incidents.csv">security_incidents.csv</a>.</em></p>
 
 <h3 id="data-generation-and-storage">Data Generation and Storage</h3>
 
@@ -586,6 +606,708 @@
 </ol>
 
 <p>These insights can help organizations better prepare for and respond to security incidents, particularly in allocating resources and setting response time targets. Understanding these distributions allows security teams to establish realistic benchmarks and identify anomalies that may require special attention.</p>
+
+<hr />
+
+<h2 id="part-2-caesar-cipher-and-frequency-analysis">Part 2: Caesar Cipher and Frequency Analysis</h2>
+
+<h2 id="introduction-to-cryptographic-analysis">Introduction to Cryptographic Analysis</h2>
+
+<p>In this second part of the homework, I explore the Caesar cipher, one of the oldest and simplest encryption techniques, and demonstrate how statistical frequency analysis can be used to decrypt messages without knowing the encryption key. This exercise illustrates the fundamental relationship between statistical distributions and cryptographic security.</p>
+
+<h2 id="theoretical-background-1">Theoretical Background</h2>
+
+<h3 id="the-caesar-cipher">The Caesar Cipher</h3>
+
+<p>The <strong>Caesar cipher</strong> is a substitution cipher where each letter in the plaintext is shifted a fixed number of positions in the alphabet. Named after Julius Caesar, who reportedly used it for military communications, it represents one of the earliest known encryption methods.</p>
+
+<p><strong>Mathematical representation:</strong></p>
+<ul>
+  <li>Encryption: <code class="language-plaintext highlighter-rouge">E(x) = (x + k) mod 26</code></li>
+  <li>Decryption: <code class="language-plaintext highlighter-rouge">D(x) = (x - k) mod 26</code></li>
+</ul>
+
+<p>Where <code class="language-plaintext highlighter-rouge">x</code> is the letter position (0-25) and <code class="language-plaintext highlighter-rouge">k</code> is the shift value (encryption key).</p>
+
+<h3 id="frequency-analysis-attack">Frequency Analysis Attack</h3>
+
+<p>Frequency analysis exploits the fact that letters in natural language occur with predictable frequencies. By comparing the letter distribution in encrypted text with the expected distribution of the target language, we can identify the most likely shift value.</p>
+
+<p><strong>Key principle:</strong> The statistical properties of language are preserved under simple substitution ciphers, making them vulnerable to frequency-based attacks.</p>
+
+<h2 id="methodology-1">Methodology</h2>
+
+<h3 id="dataset-selection">Dataset Selection</h3>
+
+<p>For this analysis, I selected the first chapter of <a href="https://www.gutenberg.org/files/2852/2852-h/2852-h.htm#chap01"><strong>“The Hound of the Baskervilles”</strong></a> by Sir Arthur Conan Doyle (1902), a public domain work available through Project Gutenberg. The text contains more than 5,400 characters, providing a sufficiently large sample for reliable statistical analysis.</p>
+
+<p>The choice of a literary text ensures:</p>
+<ul>
+  <li>Rich vocabulary and natural language patterns</li>
+  <li>Sufficient length for accurate frequency distribution</li>
+  <li>Representative English language characteristics</li>
+</ul>
+
+<h3 id="implementation-workflow">Implementation Workflow</h3>
+
+<p>The complete analysis follows these steps:</p>
+
+<ol>
+  <li><strong>Text Input</strong>: Load the original plaintext from file</li>
+  <li><strong>Random Encryption</strong>: Apply Caesar cipher with random shift (1-25)</li>
+  <li><strong>Frequency Analysis</strong>: Calculate letter frequencies in both original and encrypted texts</li>
+  <li><strong>Automated Decryption</strong>: Use chi-squared test to identify the correct shift</li>
+  <li><strong>Visualization</strong>: Generate comparative plots of frequency distributions</li>
+  <li><strong>Validation</strong>: Verify successful decryption</li>
+</ol>
+
+<h3 id="python-implementation">Python Implementation</h3>
+
+<details>
+    <summary>View caesar_cipher.py</summary>
+    
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+</pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Expected letter frequencies for different languages (in percentages)
+</span><span class="n">LANGUAGE_FREQUENCIES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Source: Peter Norvig's analysis of Google Books corpus (2013)
+</span>    <span class="c1"># http://norvig.com/mayzner.html
+</span>    <span class="c1"># Based on analysis of 3.5 trillion characters from Google Books
+</span>    <span class="s">'english'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'e'</span><span class="p">:</span> <span class="mf">12.49</span><span class="p">,</span> <span class="s">'t'</span><span class="p">:</span> <span class="mf">9.28</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mf">8.04</span><span class="p">,</span> <span class="s">'o'</span><span class="p">:</span> <span class="mf">7.64</span><span class="p">,</span> <span class="s">'i'</span><span class="p">:</span> <span class="mf">7.57</span><span class="p">,</span> <span class="s">'n'</span><span class="p">:</span> <span class="mf">7.23</span><span class="p">,</span>
+        <span class="s">'s'</span><span class="p">:</span> <span class="mf">6.51</span><span class="p">,</span> <span class="s">'r'</span><span class="p">:</span> <span class="mf">6.28</span><span class="p">,</span> <span class="s">'h'</span><span class="p">:</span> <span class="mf">5.05</span><span class="p">,</span> <span class="s">'l'</span><span class="p">:</span> <span class="mf">4.07</span><span class="p">,</span> <span class="s">'d'</span><span class="p">:</span> <span class="mf">3.82</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mf">3.34</span><span class="p">,</span>
+        <span class="s">'u'</span><span class="p">:</span> <span class="mf">2.73</span><span class="p">,</span> <span class="s">'m'</span><span class="p">:</span> <span class="mf">2.51</span><span class="p">,</span> <span class="s">'f'</span><span class="p">:</span> <span class="mf">2.40</span><span class="p">,</span> <span class="s">'p'</span><span class="p">:</span> <span class="mf">2.14</span><span class="p">,</span> <span class="s">'g'</span><span class="p">:</span> <span class="mf">1.87</span><span class="p">,</span> <span class="s">'w'</span><span class="p">:</span> <span class="mf">1.68</span><span class="p">,</span>
+        <span class="s">'y'</span><span class="p">:</span> <span class="mf">1.66</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mf">1.48</span><span class="p">,</span> <span class="s">'v'</span><span class="p">:</span> <span class="mf">1.05</span><span class="p">,</span> <span class="s">'k'</span><span class="p">:</span> <span class="mf">0.54</span><span class="p">,</span> <span class="s">'x'</span><span class="p">:</span> <span class="mf">0.23</span><span class="p">,</span> <span class="s">'j'</span><span class="p">:</span> <span class="mf">0.16</span><span class="p">,</span>
+        <span class="s">'q'</span><span class="p">:</span> <span class="mf">0.12</span><span class="p">,</span> <span class="s">'z'</span><span class="p">:</span> <span class="mf">0.09</span>
+    <span class="p">},</span>
+    <span class="c1"># Source: Wikipedia - Letter Frequency
+</span>    <span class="c1"># https://en.wikipedia.org/wiki/Letter_frequency
+</span>    <span class="c1"># Based on analysis of Italian text corpora
+</span>    <span class="s">'italian'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'e'</span><span class="p">:</span> <span class="mf">11.79</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mf">11.74</span><span class="p">,</span> <span class="s">'i'</span><span class="p">:</span> <span class="mf">11.28</span><span class="p">,</span> <span class="s">'o'</span><span class="p">:</span> <span class="mf">9.83</span><span class="p">,</span> <span class="s">'n'</span><span class="p">:</span> <span class="mf">6.88</span><span class="p">,</span> <span class="s">'l'</span><span class="p">:</span> <span class="mf">6.51</span><span class="p">,</span>
+        <span class="s">'r'</span><span class="p">:</span> <span class="mf">6.37</span><span class="p">,</span> <span class="s">'t'</span><span class="p">:</span> <span class="mf">5.62</span><span class="p">,</span> <span class="s">'s'</span><span class="p">:</span> <span class="mf">4.98</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mf">4.50</span><span class="p">,</span> <span class="s">'d'</span><span class="p">:</span> <span class="mf">3.73</span><span class="p">,</span> <span class="s">'p'</span><span class="p">:</span> <span class="mf">3.05</span><span class="p">,</span>
+        <span class="s">'u'</span><span class="p">:</span> <span class="mf">3.01</span><span class="p">,</span> <span class="s">'m'</span><span class="p">:</span> <span class="mf">2.51</span><span class="p">,</span> <span class="s">'v'</span><span class="p">:</span> <span class="mf">2.10</span><span class="p">,</span> <span class="s">'g'</span><span class="p">:</span> <span class="mf">1.64</span><span class="p">,</span> <span class="s">'h'</span><span class="p">:</span> <span class="mf">1.54</span><span class="p">,</span> <span class="s">'f'</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span>
+        <span class="s">'b'</span><span class="p">:</span> <span class="mf">0.92</span><span class="p">,</span> <span class="s">'q'</span><span class="p">:</span> <span class="mf">0.51</span><span class="p">,</span> <span class="s">'z'</span><span class="p">:</span> <span class="mf">0.49</span><span class="p">,</span> <span class="s">'j'</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span> <span class="s">'k'</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span> <span class="s">'w'</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+        <span class="s">'x'</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span> <span class="s">'y'</span><span class="p">:</span> <span class="mf">0.00</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">caesar_encrypt</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">shift</span><span class="p">):</span>
+    <span class="s">"""
+    Encrypts text using Caesar cipher with given shift.
+    Only encrypts letters, preserves case and other characters.
+    """</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">char</span><span class="p">.</span><span class="n">isalpha</span><span class="p">():</span>
+            <span class="n">base</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'A'</span><span class="p">)</span> <span class="k">if</span> <span class="n">char</span><span class="p">.</span><span class="n">isupper</span><span class="p">()</span> <span class="k">else</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'a'</span><span class="p">)</span>
+            <span class="n">shifted</span> <span class="o">=</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)</span> <span class="o">-</span> <span class="n">base</span> <span class="o">+</span> <span class="n">shift</span><span class="p">)</span> <span class="o">%</span> <span class="mi">26</span>
+            <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">shifted</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">analyze_frequency</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="s">"""
+    Analyzes letter frequency in text.
+    Returns dictionary of letter: percentage and total letter count.
+    """</span>
+    <span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">c</span><span class="p">.</span><span class="n">isalpha</span><span class="p">()]</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{},</span> <span class="mi">0</span>
+    
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+    <span class="n">frequencies</span> <span class="o">=</span> <span class="p">{</span><span class="n">letter</span><span class="p">:</span> <span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> 
+                   <span class="k">for</span> <span class="n">letter</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">.</span><span class="n">items</span><span class="p">()}</span>
+    
+    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">string</span><span class="p">.</span><span class="n">ascii_lowercase</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">frequencies</span><span class="p">:</span>
+            <span class="n">frequencies</span><span class="p">[</span><span class="n">letter</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">frequencies</span><span class="p">.</span><span class="n">items</span><span class="p">())),</span> <span class="n">total</span>
+
+<span class="k">def</span> <span class="nf">chi_squared_score</span><span class="p">(</span><span class="n">observed_freq</span><span class="p">,</span> <span class="n">expected_freq</span><span class="p">):</span>
+    <span class="s">"""
+    Calculates chi-squared statistic between observed and expected frequencies.
+    Lower score = better match.
+    """</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">string</span><span class="p">.</span><span class="n">ascii_lowercase</span><span class="p">:</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">expected_freq</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">letter</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">observed</span> <span class="o">=</span> <span class="n">observed_freq</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">letter</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="p">((</span><span class="n">observed</span> <span class="o">-</span> <span class="n">expected</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">expected</span>
+    <span class="k">return</span> <span class="n">score</span>
+
+<span class="k">def</span> <span class="nf">decrypt_with_frequency_analysis</span><span class="p">(</span><span class="n">encrypted_text</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">'english'</span><span class="p">):</span>
+    <span class="s">"""
+    Decrypts Caesar cipher using frequency analysis.
+    Tries all 26 possible shifts and returns the one with best match to language.
+    """</span>
+    <span class="n">expected_freq</span> <span class="o">=</span> <span class="n">LANGUAGE_FREQUENCIES</span><span class="p">[</span><span class="n">language</span><span class="p">]</span>
+    <span class="n">best_shift</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">best_score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">26</span><span class="p">):</span>
+        <span class="n">decrypted</span> <span class="o">=</span> <span class="n">caesar_encrypt</span><span class="p">(</span><span class="n">encrypted_text</span><span class="p">,</span> <span class="n">shift</span><span class="p">)</span>
+        <span class="n">observed_freq</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">analyze_frequency</span><span class="p">(</span><span class="n">decrypted</span><span class="p">)</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">chi_squared_score</span><span class="p">(</span><span class="n">observed_freq</span><span class="p">,</span> <span class="n">expected_freq</span><span class="p">)</span>
+        
+        <span class="n">results</span><span class="p">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s">'shift'</span><span class="p">:</span> <span class="n">shift</span><span class="p">,</span>
+            <span class="s">'score'</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
+            <span class="s">'decrypted_preview'</span><span class="p">:</span> <span class="n">decrypted</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
+        <span class="p">})</span>
+        
+        <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="n">best_score</span><span class="p">:</span>
+            <span class="n">best_score</span> <span class="o">=</span> <span class="n">score</span>
+            <span class="n">best_shift</span> <span class="o">=</span> <span class="n">shift</span>
+    
+    <span class="n">best_decryption</span> <span class="o">=</span> <span class="n">caesar_encrypt</span><span class="p">(</span><span class="n">encrypted_text</span><span class="p">,</span> <span class="n">best_shift</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s">'best_shift'</span><span class="p">:</span> <span class="n">best_shift</span><span class="p">,</span>
+        <span class="s">'original_shift'</span><span class="p">:</span> <span class="p">(</span><span class="mi">26</span> <span class="o">-</span> <span class="n">best_shift</span><span class="p">)</span> <span class="o">%</span> <span class="mi">26</span><span class="p">,</span>
+        <span class="s">'decrypted_text'</span><span class="p">:</span> <span class="n">best_decryption</span><span class="p">,</span>
+        <span class="s">'chi_squared_score'</span><span class="p">:</span> <span class="n">best_score</span><span class="p">,</span>
+        <span class="s">'all_attempts'</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">'score'</span><span class="p">])</span>
+    <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">plot_frequency_comparison</span><span class="p">(</span><span class="n">original_freq</span><span class="p">,</span> <span class="n">encrypted_freq</span><span class="p">,</span> <span class="n">decrypted_freq</span><span class="p">,</span> 
+                              <span class="n">expected_freq</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+    <span class="s">"""Creates comparison plots of letter frequencies."""</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">letters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="p">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
+    
+    <span class="n">orig_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">original_freq</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">]</span>
+    <span class="n">enc_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">encrypted_freq</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">]</span>
+    <span class="n">dec_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">decrypted_freq</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">]</span>
+    <span class="n">exp_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">expected_freq</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">]</span>
+    
+    <span class="c1"># Plot 1: Original vs Expected
+</span>    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">letters</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.35</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="n">i</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">orig_values</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Original Text'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="n">i</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">exp_values</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'Expected (</span><span class="si">{</span><span class="n">language</span><span class="p">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s">)'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Letters'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Frequency (%)'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Original Text vs Expected Language Distribution'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/original_vs_expected.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="c1"># Plot 2: Encrypted frequency
+</span>    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">enc_values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'coral'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Letters'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Frequency (%)'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Encrypted Text Letter Distribution'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/encrypted_distribution.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="c1"># Plot 3: Encrypted vs Expected (for visual shift detection)
+</span>    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.35</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="n">i</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">enc_values</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Encrypted Text'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'coral'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="n">i</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">exp_values</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'Expected (</span><span class="si">{</span><span class="n">language</span><span class="p">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s">)'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Letters'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Frequency (%)'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Encrypted vs Expected Distribution - Visual Shift Detection'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/encrypted_vs_expected.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1"># Plot 4: All distributions comparison
+</span>    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">letters</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="n">i</span> <span class="o">-</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">width</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">orig_values</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Original'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="n">i</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">width</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">enc_values</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Encrypted'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="n">i</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">width</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">dec_values</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Decrypted'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="n">i</span> <span class="o">+</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">width</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">],</span> <span class="n">exp_values</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'Expected (</span><span class="si">{</span><span class="n">language</span><span class="p">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s">)'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Letters'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Frequency (%)'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Complete Frequency Analysis Comparison'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/complete_comparison.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">save_frequency_table</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="s">"""Saves frequency data to CSV file."""</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s">'letter'</span><span class="p">:</span> <span class="n">letter</span><span class="p">,</span> <span class="s">'frequency_%'</span><span class="p">:</span> <span class="n">freq</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">letter</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">frequencies</span><span class="p">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="p">])</span>
+    <span class="n">df</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"=== Caesar Cipher Frequency Analysis ===</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'assets/files/input_text.txt'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">original_text</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+    
+    <span class="n">language</span> <span class="o">=</span> <span class="s">'english'</span>
+    
+    <span class="n">original_shift</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Random shift applied: </span><span class="si">{</span><span class="n">original_shift</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">encrypted_text</span> <span class="o">=</span> <span class="n">caesar_encrypt</span><span class="p">(</span><span class="n">original_text</span><span class="p">,</span> <span class="n">original_shift</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'assets/files/encrypted_text.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">encrypted_text</span><span class="p">)</span>
+    
+    <span class="n">original_freq</span><span class="p">,</span> <span class="n">orig_count</span> <span class="o">=</span> <span class="n">analyze_frequency</span><span class="p">(</span><span class="n">original_text</span><span class="p">)</span>
+    <span class="n">encrypted_freq</span><span class="p">,</span> <span class="n">enc_count</span> <span class="o">=</span> <span class="n">analyze_frequency</span><span class="p">(</span><span class="n">encrypted_text</span><span class="p">)</span>
+    
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">'assets/data/homework2'</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">save_frequency_table</span><span class="p">(</span><span class="n">original_freq</span><span class="p">,</span> <span class="s">'assets/data/homework2/original_frequencies.csv'</span><span class="p">)</span>
+    <span class="n">save_frequency_table</span><span class="p">(</span><span class="n">encrypted_freq</span><span class="p">,</span> <span class="s">'assets/data/homework2/encrypted_frequencies.csv'</span><span class="p">)</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="n">decrypt_with_frequency_analysis</span><span class="p">(</span><span class="n">encrypted_text</span><span class="p">,</span> <span class="n">language</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">=== RESULTS ==="</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Original shift: </span><span class="si">{</span><span class="n">original_shift</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Detected shift: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s">'original_shift'</span><span class="p">]</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Success: </span><span class="si">{</span><span class="s">'YES'</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s">'original_shift'</span><span class="p">]</span> <span class="o">==</span> <span class="n">original_shift</span> <span class="k">else</span> <span class="s">'NO'</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    
+    <span class="n">decrypted_freq</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">analyze_frequency</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">'decrypted_text'</span><span class="p">])</span>
+    <span class="n">save_frequency_table</span><span class="p">(</span><span class="n">decrypted_freq</span><span class="p">,</span> <span class="s">'assets/data/homework2/decrypted_frequencies.csv'</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'assets/files/decrypted_text.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">'decrypted_text'</span><span class="p">])</span>
+    
+    <span class="n">expected_freq</span> <span class="o">=</span> <span class="n">LANGUAGE_FREQUENCIES</span><span class="p">[</span><span class="n">language</span><span class="p">]</span>
+    <span class="n">plot_frequency_comparison</span><span class="p">(</span><span class="n">original_freq</span><span class="p">,</span> <span class="n">encrypted_freq</span><span class="p">,</span> <span class="n">decrypted_freq</span><span class="p">,</span> 
+                             <span class="n">expected_freq</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="s">'assets/images/homework2'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+    
+</pre></td></tr></tbody></table></code></pre></figure>
+
+</details>
+
+<h3 id="reference-letter-frequencies">Reference Letter Frequencies</h3>
+
+<p>The expected letter frequencies are based on large-scale corpus analysis:</p>
+<ul>
+  <li><strong>English frequencies</strong>: Peter Norvig’s analysis of 3.5 trillion characters from Google Books (2013)</li>
+  <li><strong>Italian frequencies</strong>: Compiled from multiple linguistic corpora studies</li>
+</ul>
+
+<p>These frequencies serve as the reference distribution for the chi-squared goodness-of-fit test.</p>
+
+<h2 id="results-and-analysis">Results and Analysis</h2>
+
+<h3 id="original-text-characteristics">Original Text Characteristics</h3>
+
+<p>The selected text excerpt contains 5,423 alphabetic characters. The letter frequency distribution closely matches the expected English language pattern:</p>
+
+<p><img src="/assets/images/homework2/original_vs_expected.png" alt="Original vs Expected Distribution" /></p>
+
+<p><em>Figure 1: Comparison between the original text distribution and expected English letter frequencies</em></p>
+
+<p>The high correlation confirms that the text is representative of standard English prose, making it suitable for demonstrating frequency analysis techniques.</p>
+
+<h3 id="encryption-process">Encryption Process</h3>
+
+<p>A random shift value was applied to encrypt the text. The encryption preserves:</p>
+<ul>
+  <li>Non-alphabetic characters (spaces, punctuation)</li>
+  <li>Letter case (uppercase/lowercase)</li>
+  <li>Text structure and length</li>
+</ul>
+
+<p>Only the alphabetic characters are transformed through the Caesar cipher substitution.</p>
+
+<h3 id="encrypted-text-analysis">Encrypted Text Analysis</h3>
+
+<p><img src="/assets/images/homework2/encrypted_distribution.png" alt="Encrypted Distribution" /></p>
+
+<p><em>Figure 2: Letter frequency distribution of the encrypted text</em></p>
+
+<p>The encrypted text maintains a similar distribution shape to the original, but shifted horizontally across the alphabet. This preservation of statistical patterns is the fundamental weakness of simple substitution ciphers.</p>
+
+<h3 id="visual-shift-detection-algorithm">Visual Shift Detection Algorithm</h3>
+
+<p><img src="/assets/images/homework2/encrypted_vs_expected.png" alt="Encrypted vs Expected Comparison" /></p>
+
+<p><em>Figure 3: Side-by-side comparison for visual shift identification</em></p>
+
+<p><strong>Manual decryption algorithm:</strong></p>
+<ol>
+  <li>Identify the highest frequency letter in the encrypted text</li>
+  <li>Compare its position with ‘e’ (most common in English)</li>
+  <li>Calculate the horizontal distance between peaks</li>
+  <li>This distance represents the encryption shift value</li>
+  <li>Verify by checking secondary peaks (‘t’, ‘a’, ‘o’)</li>
+</ol>
+
+<p>This visual method allows cryptanalysts to estimate the shift without computational tools.</p>
+
+<h3 id="automated-decryption-chi-squared-test">Automated Decryption: Chi-Squared Test</h3>
+
+<p>The automated decryption algorithm tests all 26 possible shifts and evaluates each using the chi-squared statistic:</p>
+
+<p><strong>Chi-squared formula:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>χ² = Σ [(observed - expected)² / expected]
+</code></pre></div></div>
+
+<p>For each potential shift:</p>
+<ul>
+  <li>Decrypt the text</li>
+  <li>Calculate letter frequencies</li>
+  <li>Compute χ² score against expected English distribution</li>
+  <li>Lower score indicates better match</li>
+</ul>
+
+<p><strong>Results:</strong></p>
+<ul>
+  <li><strong>Original encryption shift</strong>: 18</li>
+  <li><strong>Detected decryption shift</strong>: 8</li>
+  <li><strong>Computed original shift</strong>: (26 - 8) mod 26 = 18 ✓</li>
+  <li><strong>Chi-squared score</strong>: 1.69 (excellent match)</li>
+  <li><strong>Success rate</strong>: 100%</li>
+</ul>
+
+<p>The relationship between encryption and decryption shifts:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>encryption_shift + decryption_shift = 26 (mod 26)
+</code></pre></div></div>
+
+<h3 id="complete-frequency-comparison">Complete Frequency Comparison</h3>
+
+<p><img src="/assets/images/homework2/complete_comparison.png" alt="Complete Distribution Comparison" /></p>
+
+<p><em>Figure 4: Comprehensive comparison of all frequency distributions</em></p>
+
+<p>This visualization demonstrates:</p>
+<ul>
+  <li><strong>Original</strong> and <strong>Decrypted</strong> distributions are identical (successful decryption)</li>
+  <li><strong>Encrypted</strong> distribution is a horizontal shift of the original</li>
+  <li>Both distributions closely follow the <strong>Expected</strong> English pattern</li>
+</ul>
+
+<h3 id="frequency-tables">Frequency Tables</h3>
+
+<p>Detailed frequency data is available in CSV format:</p>
+<ul>
+  <li><a href="/assets/data/homework2/original_frequencies.csv">Original text frequencies</a></li>
+  <li><a href="/assets/data/homework2/encrypted_frequencies.csv">Encrypted text frequencies</a></li>
+  <li><a href="/assets/data/homework2/decrypted_frequencies.csv">Decrypted text frequencies</a></li>
+</ul>
+
+<h2 id="cryptographic-insights">Cryptographic Insights</h2>
+
+<h3 id="why-caesar-cipher-is-insecure">Why Caesar Cipher is Insecure</h3>
+
+<ol>
+  <li><strong>Small keyspace</strong>: Only 25 meaningful keys (shifts 1-25), vulnerable to brute force</li>
+  <li><strong>Frequency preservation</strong>: Statistical patterns remain unchanged</li>
+  <li><strong>No diffusion</strong>: Each plaintext letter maps to exactly one ciphertext letter</li>
+  <li><strong>Deterministic</strong>: Same input always produces same output</li>
+</ol>
+
+<h3 id="statistical-attack-effectiveness">Statistical Attack Effectiveness</h3>
+
+<p>The frequency analysis attack succeeds because:</p>
+<ul>
+  <li>Natural language has non-uniform letter distribution</li>
+  <li>Large text samples converge to expected frequencies</li>
+  <li>Chi-squared test provides objective comparison metric</li>
+  <li>No knowledge of the key is required</li>
+</ul>
+
+<p><strong>Minimum text length</strong>: Effective frequency analysis typically requires 100-200 characters, though accuracy improves significantly with longer texts.</p>
+
+<h2 id="conclusion-1">Conclusion</h2>
+
+<p>This analysis demonstrates the fundamental vulnerability of simple substitution ciphers to statistical attacks. Key findings:</p>
+
+<ol>
+  <li>
+    <p><strong>Distribution preservation</strong>: The Caesar cipher maintains the statistical properties of the plaintext, making it vulnerable to frequency analysis</p>
+  </li>
+  <li>
+    <p><strong>Automated decryption</strong>: Using chi-squared testing, the correct shift can be identified with 100% accuracy for sufficiently long texts</p>
+  </li>
+  <li>
+    <p><strong>Visual detection</strong>: Even without computational tools, the shift can be estimated by comparing frequency distributions visually</p>
+  </li>
+  <li>
+    <p><strong>Historical significance</strong>: While cryptographically weak by modern standards, the Caesar cipher illustrates important concepts in both cryptography and statistical analysis</p>
+  </li>
+</ol>
+
+<p><strong>Modern relevance</strong>: This exercise demonstrates why modern encryption relies on:</p>
+<ul>
+  <li>Large keyspaces (making brute force impractical)</li>
+  <li>Diffusion (spreading patterns across ciphertext)</li>
+  <li>Confusion (complex relationship between key and ciphertext)</li>
+  <li>Non-deterministic encryption (same plaintext produces different ciphertext)</li>
+</ul>
+
+<p>Understanding these classical attacks provides foundational knowledge for appreciating contemporary cryptographic systems.</p>
 
 </div>
 
