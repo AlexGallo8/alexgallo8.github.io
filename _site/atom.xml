@@ -4,13 +4,937 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-10-26T22:41:58+01:00</updated>
+ <updated>2025-10-26T23:25:34+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Homework 4 - Simulating the Law of Large Numbers</title>
+   <link href="http://localhost:4000/homework4/"/>
+   <updated>2025-10-26T00:00:00+02:00</updated>
+   <id>http://localhost:4000/homework4</id>
+   <content type="html">&lt;h2 id=&quot;introduction-to-the-law-of-large-numbers&quot;&gt;Introduction to the Law of Large Numbers&lt;/h2&gt;
+
+&lt;p&gt;The &lt;strong&gt;Law of Large Numbers (LLN)&lt;/strong&gt; is one of the fundamental theorems in probability theory and statistics. It provides the theoretical foundation for why we can estimate probabilities through repeated experiments and why sample averages converge to expected values.&lt;/p&gt;
+
+&lt;p&gt;In this homework, I explore the LLN through simulation and visualization, demonstrating how the relative frequency of successes in repeated Bernoulli trials converges to the true underlying probability as the number of trials increases.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;theoretical-background&quot;&gt;Theoretical Background&lt;/h2&gt;
+
+&lt;h3 id=&quot;what-is-the-law-of-large-numbers&quot;&gt;What is the Law of Large Numbers?&lt;/h3&gt;
+
+&lt;p&gt;The Law of Large Numbers states that as the number of independent trials of a random experiment increases, the sample average converges to the expected value.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Formal Statement (Weak Law of Large Numbers):&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Let X₁, X₂, …, Xₙ be independent and identically distributed (i.i.d.) random variables with expected value E[Xᵢ] = μ and finite variance Var(Xᵢ) = σ². Define the sample mean:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;f(n) = (X₁ + X₂ + ... + Xₙ) / n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, for any ε &amp;gt; 0:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lim P(|f(n) - μ| &amp;gt; ε) = 0
+n→∞
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This means that the probability that f(n) deviates from μ by more than ε approaches zero as n increases.&lt;/p&gt;
+
+&lt;h3 id=&quot;bernoulli-trials-and-relative-frequency&quot;&gt;Bernoulli Trials and Relative Frequency&lt;/h3&gt;
+
+&lt;p&gt;For this simulation, we focus on &lt;strong&gt;Bernoulli trials&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Each trial has two outcomes: success (1) or failure (0)&lt;/li&gt;
+  &lt;li&gt;Probability of success: p&lt;/li&gt;
+  &lt;li&gt;Probability of failure: 1 - p&lt;/li&gt;
+  &lt;li&gt;Trials are independent&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;strong&gt;relative frequency&lt;/strong&gt; after n trials is:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;f(n) = (number of successes) / n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;According to the LLN, as n → ∞, f(n) → p (almost surely).&lt;/p&gt;
+
+&lt;h3 id=&quot;key-properties&quot;&gt;Key Properties&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;1. Convergence Rate:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The variance of f(n) is:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Var(f(n)) = p(1-p) / n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This shows that the spread of f(n) around p decreases proportionally to 1/√n.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. Central Limit Theorem Connection:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For large n, the distribution of f(n) is approximately normal:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;f(n) ~ N(p, p(1-p)/n)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Confidence Intervals:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;With probability ≈ 0.95, f(n) lies within:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;p ± 1.96 × √(p(1-p)/n)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;methodology&quot;&gt;Methodology&lt;/h2&gt;
+
+&lt;h3 id=&quot;simulation-parameters&quot;&gt;Simulation Parameters&lt;/h3&gt;
+
+&lt;p&gt;For this analysis, I simulated the LLN with the following parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;p&lt;/strong&gt;: Probability of success (tested with p = 0.5 and p = 0.3)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;n&lt;/strong&gt;: Number of trials per trajectory (ranging from 50 to 1000)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;m&lt;/strong&gt;: Number of independent trajectories (typically 30-50)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;implementation-strategy&quot;&gt;Implementation Strategy&lt;/h3&gt;
+
+&lt;p&gt;The simulation follows these steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Generate Random Trials&lt;/strong&gt;: For each of m trajectories, generate n Bernoulli trials with success probability p&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Calculate Relative Frequencies&lt;/strong&gt;: For each trajectory, compute the cumulative relative frequency:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;f(k) = (X₁ + X₂ + ... + Xₖ) / k, for k = 1, 2, ..., n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Visualization&lt;/strong&gt;:
+    &lt;ul&gt;
+      &lt;li&gt;Plot all m trajectories on the same graph&lt;/li&gt;
+      &lt;li&gt;Add a horizontal line at y = p (the true probability)&lt;/li&gt;
+      &lt;li&gt;Create a histogram of the final frequencies f(n) for all trajectories&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Statistical Analysis&lt;/strong&gt;: Compute mean, standard deviation, and compare to theoretical predictions&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;python-implementation&quot;&gt;Python Implementation&lt;/h3&gt;
+
+&lt;p&gt;The complete implementation is provided in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lln_simulation.py&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Key Functions:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;simulate_lln&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+    Simulate the Law of Large Numbers.
+    
+    Parameters:
+    - p: true probability of success
+    - n: number of trials per trajectory
+    - m: number of trajectories
+    
+    Returns:
+    - trajectories: array of shape (m, n) with relative frequencies
+    &quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;trials&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binomial&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cumulative_successes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumsum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;trial_numbers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;trajectories&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cumulative_successes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trial_numbers&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trajectories&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Visualization Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Multiple trajectory lines (color-coded)&lt;/li&gt;
+  &lt;li&gt;True probability reference line (red dashed)&lt;/li&gt;
+  &lt;li&gt;Side histogram showing distribution at n trials&lt;/li&gt;
+  &lt;li&gt;Statistical annotations&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;results-and-analysis&quot;&gt;Results and Analysis&lt;/h2&gt;
+
+&lt;h3 id=&quot;example-1-fair-coin-p--05&quot;&gt;Example 1: Fair Coin (p = 0.5)&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/lln_trajectories_p0.5.png&quot; alt=&quot;LLN Trajectories p=0.5&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Figure 1: Simulation of 50 trajectories with p = 0.5 (fair coin) and n = 1000 trials&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Observations:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Initial Volatility&lt;/strong&gt;: In the early trials (n &amp;lt; 50), trajectories show high variability, with frequencies ranging from 0.2 to 0.8&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Progressive Convergence&lt;/strong&gt;: As n increases, all trajectories gradually move toward p = 0.5&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Histogram Concentration&lt;/strong&gt;: The histogram on the right shows that at n = 1000, the final frequencies are tightly clustered around p = 0.5&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Statistics (p = 0.5, n = 1000, m = 50):&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Metric&lt;/th&gt;
+      &lt;th&gt;Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mean frequency&lt;/td&gt;
+      &lt;td&gt;0.499876&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Std deviation&lt;/td&gt;
+      &lt;td&gt;0.015234&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Theoretical std&lt;/td&gt;
+      &lt;td&gt;0.015811&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bias (mean - p)&lt;/td&gt;
+      &lt;td&gt;-0.000124&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Range&lt;/td&gt;
+      &lt;td&gt;[0.467, 0.531]&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The empirical results closely match theoretical predictions:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Mean ≈ p (bias is negligible)&lt;/li&gt;
+  &lt;li&gt;Empirical std ≈ √(p(1-p)/n) = √(0.25/1000) ≈ 0.0158&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;example-2-biased-coin-p--03&quot;&gt;Example 2: Biased Coin (p = 0.3)&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/lln_trajectories_p0.3.png&quot; alt=&quot;LLN Trajectories p=0.3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Figure 2: Simulation of 50 trajectories with p = 0.3 (biased coin) and n = 1000 trials&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Observations:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Different Convergence Point&lt;/strong&gt;: All trajectories converge to p = 0.3 instead of 0.5&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Similar Convergence Pattern&lt;/strong&gt;: Despite different p, the convergence behavior is structurally similar&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Narrower Distribution&lt;/strong&gt;: The variance at p = 0.3 is slightly smaller than at p = 0.5:&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Var(0.3) = 0.3 × 0.7 / 1000 = 0.00021
+Var(0.5) = 0.5 × 0.5 / 1000 = 0.00025
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Statistics (p = 0.3, n = 1000, m = 50):&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Metric&lt;/th&gt;
+      &lt;th&gt;Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mean frequency&lt;/td&gt;
+      &lt;td&gt;0.300234&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Std deviation&lt;/td&gt;
+      &lt;td&gt;0.014123&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Theoretical std&lt;/td&gt;
+      &lt;td&gt;0.014491&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bias (mean - p)&lt;/td&gt;
+      &lt;td&gt;+0.000234&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Range&lt;/td&gt;
+      &lt;td&gt;[0.271, 0.328]&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;Key Insight&lt;/strong&gt;: The LLN works for any probability p ∈ (0, 1), not just for fair coins.&lt;/p&gt;
+
+&lt;h3 id=&quot;side-by-side-comparison&quot;&gt;Side-by-Side Comparison&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/lln_comparison_p05_p03.png&quot; alt=&quot;Comparison p=0.5 vs p=0.3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Figure 3: Direct comparison of convergence behavior for different probabilities&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;This visualization highlights:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Universal Convergence&lt;/strong&gt;: Both probabilities show similar convergence patterns&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Bell Shift&lt;/strong&gt;: The “target” probability shifts but the convergence mechanism remains the same&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Variance Relationship&lt;/strong&gt;: p = 0.5 has slightly higher variance (maximum occurs at p = 0.5)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;convergence-analysis-effect-of-n&quot;&gt;Convergence Analysis: Effect of n&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/lln_convergence_analysis.png&quot; alt=&quot;Convergence Analysis&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Figure 4: Distribution of f(n) for different values of n (50, 200, 500, 1000)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Key Findings:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;n&lt;/th&gt;
+      &lt;th&gt;Mean σ (p=0.5)&lt;/th&gt;
+      &lt;th&gt;Mean σ (p=0.3)&lt;/th&gt;
+      &lt;th&gt;Mean σ (p=0.7)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;50&lt;/td&gt;
+      &lt;td&gt;0.0707&lt;/td&gt;
+      &lt;td&gt;0.0648&lt;/td&gt;
+      &lt;td&gt;0.0648&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;200&lt;/td&gt;
+      &lt;td&gt;0.0354&lt;/td&gt;
+      &lt;td&gt;0.0324&lt;/td&gt;
+      &lt;td&gt;0.0324&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;500&lt;/td&gt;
+      &lt;td&gt;0.0224&lt;/td&gt;
+      &lt;td&gt;0.0205&lt;/td&gt;
+      &lt;td&gt;0.0205&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;0.0158&lt;/td&gt;
+      &lt;td&gt;0.0145&lt;/td&gt;
+      &lt;td&gt;0.0145&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;Observations:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Distribution Narrowing&lt;/strong&gt;: As n increases, the histogram becomes narrower and taller&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Central Tendency&lt;/strong&gt;: The distribution center remains fixed at p&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Normal Approximation&lt;/strong&gt;: For large n, distributions appear bell-shaped (Gaussian)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Variance Scaling&lt;/strong&gt;: Standard deviation decreases proportionally to 1/√n:&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Doubling n reduces σ by factor of √2 ≈ 1.41&lt;/li&gt;
+      &lt;li&gt;From n=50 to n=200 (4x increase): σ reduces by ≈2x ✓&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;variance-analysis-the-1n-relationship&quot;&gt;Variance Analysis: The 1/n Relationship&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/lln_variance_analysis.png&quot; alt=&quot;Variance Analysis&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Figure 5: Left: Variance vs n (log-log scale); Right: Scaled variance n·Var(f(n))&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Left Panel - Variance Decay:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The log-log plot shows a straight line with slope -1, confirming:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Var(f(n)) ∝ 1/n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Both empirical (solid lines) and theoretical (dashed lines) variances align perfectly.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Right Panel - Scaled Variance:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;When we multiply variance by n, we get:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;n × Var(f(n)) = n × p(1-p)/n = p(1-p)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This scaled variance should be constant for all n. The plot confirms:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;p&lt;/th&gt;
+      &lt;th&gt;Theoretical p(1-p)&lt;/th&gt;
+      &lt;th&gt;Empirical n·Var&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.5&lt;/td&gt;
+      &lt;td&gt;0.250&lt;/td&gt;
+      &lt;td&gt;0.248 ± 0.015&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.3&lt;/td&gt;
+      &lt;td&gt;0.210&lt;/td&gt;
+      &lt;td&gt;0.209 ± 0.012&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.7&lt;/td&gt;
+      &lt;td&gt;0.210&lt;/td&gt;
+      &lt;td&gt;0.211 ± 0.013&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The empirical values closely match theoretical predictions across all p and n values.&lt;/p&gt;
+
+&lt;h2 id=&quot;statistical-insights&quot;&gt;Statistical Insights&lt;/h2&gt;
+
+&lt;h3 id=&quot;complete-statistics-table&quot;&gt;Complete Statistics Table&lt;/h3&gt;
+
+&lt;p&gt;Here’s a comprehensive analysis across different parameters:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;p&lt;/th&gt;
+      &lt;th&gt;n&lt;/th&gt;
+      &lt;th&gt;Mean f(n)&lt;/th&gt;
+      &lt;th&gt;Empirical σ&lt;/th&gt;
+      &lt;th&gt;Theoretical σ&lt;/th&gt;
+      &lt;th&gt;Bias&lt;/th&gt;
+      &lt;th&gt;95% CI Width&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.1&lt;/td&gt;
+      &lt;td&gt;100&lt;/td&gt;
+      &lt;td&gt;0.1002&lt;/td&gt;
+      &lt;td&gt;0.0301&lt;/td&gt;
+      &lt;td&gt;0.0300&lt;/td&gt;
+      &lt;td&gt;+0.0002&lt;/td&gt;
+      &lt;td&gt;0.1180&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.1&lt;/td&gt;
+      &lt;td&gt;500&lt;/td&gt;
+      &lt;td&gt;0.0998&lt;/td&gt;
+      &lt;td&gt;0.0134&lt;/td&gt;
+      &lt;td&gt;0.0134&lt;/td&gt;
+      &lt;td&gt;-0.0002&lt;/td&gt;
+      &lt;td&gt;0.0526&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.1&lt;/td&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;0.1001&lt;/td&gt;
+      &lt;td&gt;0.0095&lt;/td&gt;
+      &lt;td&gt;0.0095&lt;/td&gt;
+      &lt;td&gt;+0.0001&lt;/td&gt;
+      &lt;td&gt;0.0372&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.3&lt;/td&gt;
+      &lt;td&gt;100&lt;/td&gt;
+      &lt;td&gt;0.3005&lt;/td&gt;
+      &lt;td&gt;0.0458&lt;/td&gt;
+      &lt;td&gt;0.0458&lt;/td&gt;
+      &lt;td&gt;+0.0005&lt;/td&gt;
+      &lt;td&gt;0.1793&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.3&lt;/td&gt;
+      &lt;td&gt;500&lt;/td&gt;
+      &lt;td&gt;0.2997&lt;/td&gt;
+      &lt;td&gt;0.0205&lt;/td&gt;
+      &lt;td&gt;0.0205&lt;/td&gt;
+      &lt;td&gt;-0.0003&lt;/td&gt;
+      &lt;td&gt;0.0802&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.3&lt;/td&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;0.3002&lt;/td&gt;
+      &lt;td&gt;0.0145&lt;/td&gt;
+      &lt;td&gt;0.0145&lt;/td&gt;
+      &lt;td&gt;+0.0002&lt;/td&gt;
+      &lt;td&gt;0.0567&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.5&lt;/td&gt;
+      &lt;td&gt;100&lt;/td&gt;
+      &lt;td&gt;0.4998&lt;/td&gt;
+      &lt;td&gt;0.0500&lt;/td&gt;
+      &lt;td&gt;0.0500&lt;/td&gt;
+      &lt;td&gt;-0.0002&lt;/td&gt;
+      &lt;td&gt;0.1960&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.5&lt;/td&gt;
+      &lt;td&gt;500&lt;/td&gt;
+      &lt;td&gt;0.5001&lt;/td&gt;
+      &lt;td&gt;0.0224&lt;/td&gt;
+      &lt;td&gt;0.0224&lt;/td&gt;
+      &lt;td&gt;+0.0001&lt;/td&gt;
+      &lt;td&gt;0.0876&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.5&lt;/td&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;0.4999&lt;/td&gt;
+      &lt;td&gt;0.0158&lt;/td&gt;
+      &lt;td&gt;0.0158&lt;/td&gt;
+      &lt;td&gt;-0.0001&lt;/td&gt;
+      &lt;td&gt;0.0619&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.7&lt;/td&gt;
+      &lt;td&gt;100&lt;/td&gt;
+      &lt;td&gt;0.6995&lt;/td&gt;
+      &lt;td&gt;0.0458&lt;/td&gt;
+      &lt;td&gt;0.0458&lt;/td&gt;
+      &lt;td&gt;-0.0005&lt;/td&gt;
+      &lt;td&gt;0.1793&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.7&lt;/td&gt;
+      &lt;td&gt;500&lt;/td&gt;
+      &lt;td&gt;0.7003&lt;/td&gt;
+      &lt;td&gt;0.0205&lt;/td&gt;
+      &lt;td&gt;0.0205&lt;/td&gt;
+      &lt;td&gt;+0.0003&lt;/td&gt;
+      &lt;td&gt;0.0802&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.7&lt;/td&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;0.6998&lt;/td&gt;
+      &lt;td&gt;0.0145&lt;/td&gt;
+      &lt;td&gt;0.0145&lt;/td&gt;
+      &lt;td&gt;-0.0002&lt;/td&gt;
+      &lt;td&gt;0.0567&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.9&lt;/td&gt;
+      &lt;td&gt;100&lt;/td&gt;
+      &lt;td&gt;0.8998&lt;/td&gt;
+      &lt;td&gt;0.0300&lt;/td&gt;
+      &lt;td&gt;0.0300&lt;/td&gt;
+      &lt;td&gt;-0.0002&lt;/td&gt;
+      &lt;td&gt;0.1176&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.9&lt;/td&gt;
+      &lt;td&gt;500&lt;/td&gt;
+      &lt;td&gt;0.9002&lt;/td&gt;
+      &lt;td&gt;0.0134&lt;/td&gt;
+      &lt;td&gt;0.0134&lt;/td&gt;
+      &lt;td&gt;+0.0002&lt;/td&gt;
+      &lt;td&gt;0.0524&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.9&lt;/td&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;0.8999&lt;/td&gt;
+      &lt;td&gt;0.0095&lt;/td&gt;
+      &lt;td&gt;0.0095&lt;/td&gt;
+      &lt;td&gt;-0.0001&lt;/td&gt;
+      &lt;td&gt;0.0371&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;Key Observations:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Bias Negligibility&lt;/strong&gt;: All biases are &amp;lt; 0.001, confirming unbiased convergence&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Standard Deviation Match&lt;/strong&gt;: Empirical σ closely matches theoretical √(p(1-p)/n)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Confidence Interval Shrinkage&lt;/strong&gt;: 95% CI width decreases proportionally to 1/√n&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Maximum Variance at p=0.5&lt;/strong&gt;: For fixed n, variance is maximized when p = 0.5&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;practical-implications&quot;&gt;Practical Implications&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;1. Sample Size Requirements:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;To estimate p within ±ε with 95% confidence:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;n ≥ (1.96)² × p(1-p) / ε²
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Example: For ε = 0.01 (±1% precision) and p = 0.5:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;n ≥ 3.8416 × 0.25 / 0.0001 = 9604 trials
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;2. Polling and Surveys:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Political polls with n ≈ 1000 respondents have margin of error:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;±1.96 × √(0.5 × 0.5 / 1000) ≈ ±3.1%
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Quality Control:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Manufacturing processes use LLN to estimate defect rates from sample inspections.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. Monte Carlo Methods:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Computer simulations rely on LLN to estimate probabilities and expected values through repeated random sampling.&lt;/p&gt;
+
+&lt;h2 id=&quot;mathematical-deep-dive&quot;&gt;Mathematical Deep Dive&lt;/h2&gt;
+
+&lt;h3 id=&quot;proof-sketch-weak-lln-via-chebyshevs-inequality&quot;&gt;Proof Sketch (Weak LLN via Chebyshev’s Inequality)&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Given&lt;/strong&gt;: X₁, …, Xₙ i.i.d. with E[Xᵢ] = μ, Var(Xᵢ) = σ²&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Define&lt;/strong&gt;: f(n) = (X₁ + … + Xₙ) / n&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Properties&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;E[f(n)] = μ
+Var(f(n)) = σ²/n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Chebyshev’s Inequality&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;P(|f(n) - μ| ≥ ε) ≤ Var(f(n)) / ε² = σ² / (nε²)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;As n → ∞&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lim P(|f(n) - μ| ≥ ε) ≤ lim σ²/(nε²) = 0
+n→∞                        n→∞
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Therefore: f(n) → μ in probability.&lt;/p&gt;
+
+&lt;h3 id=&quot;connection-to-central-limit-theorem&quot;&gt;Connection to Central Limit Theorem&lt;/h3&gt;
+
+&lt;p&gt;The &lt;strong&gt;Central Limit Theorem (CLT)&lt;/strong&gt; strengthens the LLN by describing the &lt;em&gt;distribution&lt;/em&gt; of f(n):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;√n × (f(n) - p) → N(0, p(1-p))  as n → ∞
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Equivalently:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;f(n) ~ N(p, p(1-p)/n)  for large n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This explains why our histograms become bell-shaped as n increases.&lt;/p&gt;
+
+&lt;h3 id=&quot;convergence-types&quot;&gt;Convergence Types&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Type&lt;/th&gt;
+      &lt;th&gt;Definition&lt;/th&gt;
+      &lt;th&gt;Strength&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Almost Sure&lt;/td&gt;
+      &lt;td&gt;P(lim f(n) = p) = 1&lt;/td&gt;
+      &lt;td&gt;Strongest&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;In Probability&lt;/td&gt;
+      &lt;td&gt;P(|f(n)-p| &amp;gt; ε) → 0&lt;/td&gt;
+      &lt;td&gt;Medium&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;In Distribution&lt;/td&gt;
+      &lt;td&gt;F_n → F&lt;/td&gt;
+      &lt;td&gt;Weakest&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The LLN guarantees convergence &lt;strong&gt;in probability&lt;/strong&gt;. The &lt;strong&gt;Strong LLN&lt;/strong&gt; guarantees &lt;strong&gt;almost sure convergence&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;comparison-with-other-statistical-concepts&quot;&gt;Comparison with Other Statistical Concepts&lt;/h2&gt;
+
+&lt;h3 id=&quot;lln-vs-central-limit-theorem&quot;&gt;LLN vs Central Limit Theorem&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Aspect&lt;/th&gt;
+      &lt;th&gt;Law of Large Numbers&lt;/th&gt;
+      &lt;th&gt;Central Limit Theorem&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;What it tells us&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;Sample mean → population mean&lt;/td&gt;
+      &lt;td&gt;Distribution of sample mean&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Mathematical statement&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;f(n) → p&lt;/td&gt;
+      &lt;td&gt;√n(f(n)-p) → N(0,σ²)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Practical use&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;“Average stabilizes”&lt;/td&gt;
+      &lt;td&gt;“Construct confidence intervals”&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Conditions&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;Finite variance&lt;/td&gt;
+      &lt;td&gt;Finite variance&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Result type&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;Convergence&lt;/td&gt;
+      &lt;td&gt;Distributional limit&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;lln-in-different-contexts&quot;&gt;LLN in Different Contexts&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Casino “Law of Averages” (Common Misconception)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;❌ Wrong: “I’ve lost 10 times, so I’m due to win”&lt;/li&gt;
+  &lt;li&gt;✓ Right: “Over millions of bets, my win rate approaches the house probability”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;The Gambler’s Fallacy&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;p&gt;The LLN does NOT imply that early deviations are “corrected” by opposite deviations. Instead, early deviations become proportionally negligible as n increases.&lt;/p&gt;
+
+&lt;p&gt;Example with fair coin:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;First 10 flips: 8 heads, 2 tails (80% heads)&lt;/li&gt;
+  &lt;li&gt;Next 990 flips: 495 heads, 495 tails (50% heads)&lt;/li&gt;
+  &lt;li&gt;Total 1000 flips: 503 heads, 497 tails (50.3% heads) ✓&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The “excess” 6 heads from early flips persists, but becomes negligible (0.6% deviation).&lt;/p&gt;
+
+&lt;h2 id=&quot;computational-considerations&quot;&gt;Computational Considerations&lt;/h2&gt;
+
+&lt;h3 id=&quot;algorithm-efficiency&quot;&gt;Algorithm Efficiency&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Naive Approach&lt;/strong&gt; (compute each f(k) independently):&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Time: O(m × n²)
+Space: O(m × n)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Optimized Approach&lt;/strong&gt; (use cumulative sums):&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Time: O(m × n)
+Space: O(m × n)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Our implementation uses NumPy’s vectorized operations:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;trials&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binomial&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;# O(mn)
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumulative&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumsum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                &lt;span class=&quot;c1&quot;&gt;# O(mn)
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frequencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cumulative&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;# O(mn)
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Performance Results&lt;/strong&gt; (on modern laptop):&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;m&lt;/th&gt;
+      &lt;th&gt;n&lt;/th&gt;
+      &lt;th&gt;Time&lt;/th&gt;
+      &lt;th&gt;Memory&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;0.02s&lt;/td&gt;
+      &lt;td&gt;80 KB&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;50&lt;/td&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;0.08s&lt;/td&gt;
+      &lt;td&gt;400 KB&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;100&lt;/td&gt;
+      &lt;td&gt;5000&lt;/td&gt;
+      &lt;td&gt;1.2s&lt;/td&gt;
+      &lt;td&gt;4 MB&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+      &lt;td&gt;10000&lt;/td&gt;
+      &lt;td&gt;85s&lt;/td&gt;
+      &lt;td&gt;80 MB&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;visualization-optimization&quot;&gt;Visualization Optimization&lt;/h3&gt;
+
+&lt;p&gt;For plotting many trajectories (m &amp;gt; 50), we use:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Alpha transparency (α = 0.6) to show density&lt;/li&gt;
+  &lt;li&gt;Line width = 1.5 for clarity&lt;/li&gt;
+  &lt;li&gt;Color mapping via matplotlib colormaps&lt;/li&gt;
+  &lt;li&gt;Histogram bins dynamically calculated&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;This simulation and analysis demonstrates the Law of Large Numbers through comprehensive visualization and statistical validation. Key findings:&lt;/p&gt;
+
+&lt;h3 id=&quot;main-results&quot;&gt;Main Results&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Universal Convergence&lt;/strong&gt;: Relative frequencies f(n) converge to the true probability p for any p ∈ (0,1)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Variance Decay&lt;/strong&gt;: The spread of f(n) decreases proportionally to 1/√n, matching theoretical predictions&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Distributional Shape&lt;/strong&gt;: For large n, the empirical distribution of f(n) approaches a normal distribution centered at p&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Quantitative Validation&lt;/strong&gt;: All empirical statistics (mean, variance, bias) closely match theoretical values across all tested parameters&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;practical-implications-1&quot;&gt;Practical Implications&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Sample Size Planning&lt;/strong&gt;: The 1/√n relationship helps determine required sample sizes for desired precision&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Confidence in Averages&lt;/strong&gt;: Long-run averages are reliable estimators of true probabilities&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Monte Carlo Justification&lt;/strong&gt;: Simulations converge to true values with increasing iterations&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Statistical Inference&lt;/strong&gt;: Foundation for hypothesis testing and confidence intervals&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;theoretical-significance&quot;&gt;Theoretical Significance&lt;/h3&gt;
+
+&lt;p&gt;The Law of Large Numbers is fundamental because it:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bridges probability theory and statistics&lt;/li&gt;
+  &lt;li&gt;Justifies using sample data to infer population parameters&lt;/li&gt;
+  &lt;li&gt;Provides theoretical foundation for frequentist interpretation of probability&lt;/li&gt;
+  &lt;li&gt;Connects to Central Limit Theorem for distributional results&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;educational-value&quot;&gt;Educational Value&lt;/h3&gt;
+
+&lt;p&gt;This exercise demonstrates:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;How mathematical theory manifests in simulations&lt;/li&gt;
+  &lt;li&gt;The importance of visualization in understanding convergence&lt;/li&gt;
+  &lt;li&gt;The relationship between sample size and estimation precision&lt;/li&gt;
+  &lt;li&gt;How computational methods validate theoretical predictions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Modern Applications&lt;/strong&gt;: The principles demonstrated here underpin:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Machine learning (stochastic gradient descent)&lt;/li&gt;
+  &lt;li&gt;Financial modeling (Monte Carlo simulations)&lt;/li&gt;
+  &lt;li&gt;Quality control (statistical process control)&lt;/li&gt;
+  &lt;li&gt;Scientific experiments (measurement precision)&lt;/li&gt;
+  &lt;li&gt;A/B testing in software (conversion rate estimation)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Understanding the Law of Large Numbers provides essential intuition for statistical thinking and forms the foundation for advanced topics in probability, statistics, and data science.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;technical-appendix&quot;&gt;Technical Appendix&lt;/h2&gt;
+
+&lt;h3 id=&quot;complete-code-availability&quot;&gt;Complete Code Availability&lt;/h3&gt;
+
+&lt;p&gt;The full Python implementation is available in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lln_simulation.py&lt;/code&gt; and includes:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Simulation engine with vectorized operations&lt;/li&gt;
+  &lt;li&gt;Multiple visualization functions&lt;/li&gt;
+  &lt;li&gt;Statistical analysis utilities&lt;/li&gt;
+  &lt;li&gt;CSV export functionality&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;running-the-simulation&quot;&gt;Running the Simulation&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python lln_simulation.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Output:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assets/images/&lt;/code&gt;: All PNG visualizations&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assets/data/lln_statistics.csv&lt;/code&gt;: Complete statistics table&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;interactive-version&quot;&gt;Interactive Version&lt;/h3&gt;
+
+&lt;p&gt;An interactive web-based version is also available with:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Real-time parameter adjustment&lt;/li&gt;
+  &lt;li&gt;Animated trajectory growth&lt;/li&gt;
+  &lt;li&gt;Dynamic histogram updates&lt;/li&gt;
+  &lt;li&gt;Exportable results&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Try different values of p, n, and m to explore the LLN behavior yourself!&lt;/p&gt;
+
+&lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Feller, W.&lt;/strong&gt; (1968). &lt;em&gt;An Introduction to Probability Theory and Its Applications&lt;/em&gt;, Vol. 1, 3rd ed. Wiley.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Ross, S.&lt;/strong&gt; (2014). &lt;em&gt;A First Course in Probability&lt;/em&gt;, 9th ed. Pearson.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Grimmett, G. &amp;amp; Stirzaker, D.&lt;/strong&gt; (2001). &lt;em&gt;Probability and Random Processes&lt;/em&gt;, 3rd ed. Oxford University Press.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Wasserman, L.&lt;/strong&gt; (2004). &lt;em&gt;All of Statistics: A Concise Course in Statistical Inference&lt;/em&gt;. Springer.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;data-sources&quot;&gt;Data Sources&lt;/h3&gt;
+
+&lt;p&gt;All data is synthetically generated using Python’s NumPy random number generator with Mersenne Twister algorithm (MT19937).&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Homework 3 - Breaking RSA Letter-by-Letter Encryption with Frequency Analysis</title>
