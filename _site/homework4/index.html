@@ -90,7 +90,7 @@
       <div class="container content">
         <div class="post">
   <h1 class="post-title">Homework 4 - Simulating the Law of Large Numbers</h1>
-  <span class="post-date">27 Oct 2025</span>
+  <span class="post-date">28 Oct 2025</span>
   <h2 id="introduction-to-the-law-of-large-numbers">Introduction to the Law of Large Numbers</h2>
 
 <p>The <strong>Law of Large Numbers (LLN)</strong> is one of the fundamental theorems in probability theory and statistics. It provides the theoretical foundation for why we can estimate probabilities through repeated experiments and why sample averages converge to expected values.</p>
@@ -233,9 +233,9 @@ n→∞
 
 <h3 id="example-1-fair-coin-p--05">Example 1: Fair Coin (p = 0.5)</h3>
 
-<p><img src="/assets/images/lln_trajectories_p0.5.png" alt="LLN Trajectories p=0.5" /></p>
+<p><img src="/assets/images/homework4/lln_with_histogram_p0.5.png" alt="LLN Trajectories p=0.5" /></p>
 
-<p><em>Figure 1: Simulation of 50 trajectories with p = 0.5 (fair coin) and n = 1000 trials</em></p>
+<p><em>Figure 1: Simulation of 50 trajectories with p = 0.5 (fair coin) and n = 1000 trials. The histogram on the right shows the distribution of final frequencies f(n), demonstrating concentration around the true probability.</em></p>
 
 <p><strong>Observations:</strong></p>
 
@@ -292,7 +292,7 @@ n→∞
 
 <h3 id="example-2-biased-coin-p--03">Example 2: Biased Coin (p = 0.3)</h3>
 
-<p><img src="/assets/images/lln_trajectories_p0.3.png" alt="LLN Trajectories p=0.3" /></p>
+<p><img src="/assets/images/homework4/lln_trajectories_p0.3.png" alt="LLN Trajectories p=0.3" /></p>
 
 <p><em>Figure 2: Simulation of 50 trajectories with p = 0.3 (biased coin) and n = 1000 trials</em></p>
 
@@ -350,7 +350,7 @@ Var(0.5) = 0.5 × 0.5 / 1000 = 0.00025
 
 <h3 id="side-by-side-comparison">Side-by-Side Comparison</h3>
 
-<p><img src="/assets/images/lln_comparison_p05_p03.png" alt="Comparison p=0.5 vs p=0.3" /></p>
+<p><img src="/assets/images/homework4/lln_comparison_p05_p03.png" alt="Comparison p=0.5 vs p=0.3" /></p>
 
 <p><em>Figure 3: Direct comparison of convergence behavior for different probabilities</em></p>
 
@@ -363,7 +363,7 @@ Var(0.5) = 0.5 × 0.5 / 1000 = 0.00025
 
 <h3 id="convergence-analysis-effect-of-n">Convergence Analysis: Effect of n</h3>
 
-<p><img src="/assets/images/lln_convergence_analysis.png" alt="Convergence Analysis" /></p>
+<p><img src="/assets/images/homework4/lln_convergence_analysis.png" alt="Convergence Analysis" /></p>
 
 <p><em>Figure 4: Distribution of f(n) for different values of n (50, 200, 500, 1000)</em></p>
 
@@ -429,7 +429,7 @@ Var(0.5) = 0.5 × 0.5 / 1000 = 0.00025
 
 <h3 id="variance-analysis-the-1n-relationship">Variance Analysis: The 1/n Relationship</h3>
 
-<p><img src="/assets/images/lln_variance_analysis.png" alt="Variance Analysis" /></p>
+<p><img src="/assets/images/homework4/lln_variance_analysis.png" alt="Variance Analysis" /></p>
 
 <p><em>Figure 5: Left: Variance vs n (log-log scale); Right: Scaled variance n·Var(f(n))</em></p>
 

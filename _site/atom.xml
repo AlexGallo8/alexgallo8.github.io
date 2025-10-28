@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-10-27T13:52:17+01:00</updated>
+ <updated>2025-10-28T12:38:37+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>Homework 4 - Simulating the Law of Large Numbers</title>
    <link href="http://localhost:4000/homework4/"/>
-   <updated>2025-10-27T00:00:00+01:00</updated>
+   <updated>2025-10-28T00:00:00+01:00</updated>
    <id>http://localhost:4000/homework4</id>
    <content type="html">&lt;h2 id=&quot;introduction-to-the-law-of-large-numbers&quot;&gt;Introduction to the Law of Large Numbers&lt;/h2&gt;
 
@@ -159,9 +159,9 @@ n→∞
 
 &lt;h3 id=&quot;example-1-fair-coin-p--05&quot;&gt;Example 1: Fair Coin (p = 0.5)&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/lln_trajectories_p0.5.png&quot; alt=&quot;LLN Trajectories p=0.5&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/homework4/lln_with_histogram_p0.5.png&quot; alt=&quot;LLN Trajectories p=0.5&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Figure 1: Simulation of 50 trajectories with p = 0.5 (fair coin) and n = 1000 trials&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Figure 1: Simulation of 50 trajectories with p = 0.5 (fair coin) and n = 1000 trials. The histogram on the right shows the distribution of final frequencies f(n), demonstrating concentration around the true probability.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Observations:&lt;/strong&gt;&lt;/p&gt;
 
@@ -218,7 +218,7 @@ n→∞
 
 &lt;h3 id=&quot;example-2-biased-coin-p--03&quot;&gt;Example 2: Biased Coin (p = 0.3)&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/lln_trajectories_p0.3.png&quot; alt=&quot;LLN Trajectories p=0.3&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/homework4/lln_trajectories_p0.3.png&quot; alt=&quot;LLN Trajectories p=0.3&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Figure 2: Simulation of 50 trajectories with p = 0.3 (biased coin) and n = 1000 trials&lt;/em&gt;&lt;/p&gt;
 
@@ -276,7 +276,7 @@ Var(0.5) = 0.5 × 0.5 / 1000 = 0.00025
 
 &lt;h3 id=&quot;side-by-side-comparison&quot;&gt;Side-by-Side Comparison&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/lln_comparison_p05_p03.png&quot; alt=&quot;Comparison p=0.5 vs p=0.3&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/homework4/lln_comparison_p05_p03.png&quot; alt=&quot;Comparison p=0.5 vs p=0.3&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Figure 3: Direct comparison of convergence behavior for different probabilities&lt;/em&gt;&lt;/p&gt;
 
@@ -289,7 +289,7 @@ Var(0.5) = 0.5 × 0.5 / 1000 = 0.00025
 
 &lt;h3 id=&quot;convergence-analysis-effect-of-n&quot;&gt;Convergence Analysis: Effect of n&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/lln_convergence_analysis.png&quot; alt=&quot;Convergence Analysis&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/homework4/lln_convergence_analysis.png&quot; alt=&quot;Convergence Analysis&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Figure 4: Distribution of f(n) for different values of n (50, 200, 500, 1000)&lt;/em&gt;&lt;/p&gt;
 
@@ -355,7 +355,7 @@ Var(0.5) = 0.5 × 0.5 / 1000 = 0.00025
 
 &lt;h3 id=&quot;variance-analysis-the-1n-relationship&quot;&gt;Variance Analysis: The 1/n Relationship&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/lln_variance_analysis.png&quot; alt=&quot;Variance Analysis&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/homework4/lln_variance_analysis.png&quot; alt=&quot;Variance Analysis&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Figure 5: Left: Variance vs n (log-log scale); Right: Scaled variance n·Var(f(n))&lt;/em&gt;&lt;/p&gt;
 
