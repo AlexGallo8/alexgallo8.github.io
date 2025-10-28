@@ -132,7 +132,6 @@ def plot_lln_trajectories(p, n, m, output_dir='assets/images'):
 def plot_lln_with_side_histogram(p, n, m, output_dir='assets/images'):
     """
     Create LLN visualization with vertical histogram on the right side.
-    Similar to the professor's example with histogram showing distribution at n.
     """
     os.makedirs(output_dir, exist_ok=True)
     
@@ -427,7 +426,7 @@ def main():
 
     # Example with side histogram
     print("\n" + "="*70)
-    print("VISUALIZATION WITH SIDE HISTOGRAM (Professor's Style)")
+    print("VISUALIZATION WITH SIDE HISTOGRAM")
     print("="*70)
     plot_lln_with_side_histogram(p=0.5, n=1000, m=50)
     plot_lln_with_side_histogram(p=0.3, n=1000, m=50)
