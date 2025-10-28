@@ -1836,76 +1836,6 @@ n→∞                        n→∞
 
 <p>The “excess” 6 heads from early flips persists, but becomes negligible (0.6% deviation).</p>
 
-<h2 id="computational-considerations">Computational Considerations</h2>
-
-<h3 id="algorithm-efficiency">Algorithm Efficiency</h3>
-
-<p><strong>Naive Approach</strong> (compute each f(k) independently):</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Time: O(m × n²)
-Space: O(m × n)
-</code></pre></div></div>
-
-<p><strong>Optimized Approach</strong> (use cumulative sums):</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Time: O(m × n)
-Space: O(m × n)
-</code></pre></div></div>
-
-<p>Our implementation uses NumPy’s vectorized operations:</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">trials</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>        <span class="c1"># O(mn)
-</span><span class="n">cumulative</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">trials</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                <span class="c1"># O(mn)
-</span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">cumulative</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>         <span class="c1"># O(mn)
-</span></code></pre></div></div>
-
-<p><strong>Performance Results</strong> (on modern laptop):</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>m</th>
-      <th>n</th>
-      <th>Time</th>
-      <th>Memory</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>10</td>
-      <td>1000</td>
-      <td>0.02s</td>
-      <td>80 KB</td>
-    </tr>
-    <tr>
-      <td>50</td>
-      <td>1000</td>
-      <td>0.08s</td>
-      <td>400 KB</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>5000</td>
-      <td>1.2s</td>
-      <td>4 MB</td>
-    </tr>
-    <tr>
-      <td>1000</td>
-      <td>10000</td>
-      <td>85s</td>
-      <td>80 MB</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="visualization-optimization">Visualization Optimization</h3>
-
-<p>For plotting many trajectories (m &gt; 50), we use:</p>
-<ul>
-  <li>Alpha transparency (α = 0.6) to show density</li>
-  <li>Line width = 1.5 for clarity</li>
-  <li>Color mapping via matplotlib colormaps</li>
-  <li>Histogram bins dynamically calculated</li>
-</ul>
-
 <h2 id="conclusion">Conclusion</h2>
 
 <p>This simulation and analysis demonstrates the Law of Large Numbers through comprehensive visualization and statistical validation. Key findings:</p>
@@ -1954,16 +1884,6 @@ Space: O(m × n)
   <li>Connects to Central Limit Theorem for distributional results</li>
 </ul>
 
-<h3 id="educational-value">Educational Value</h3>
-
-<p>This exercise demonstrates:</p>
-<ul>
-  <li>How mathematical theory manifests in simulations</li>
-  <li>The importance of visualization in understanding convergence</li>
-  <li>The relationship between sample size and estimation precision</li>
-  <li>How computational methods validate theoretical predictions</li>
-</ul>
-
 <p><strong>Modern Applications</strong>: The principles demonstrated here underpin:</p>
 <ul>
   <li>Machine learning (stochastic gradient descent)</li>
@@ -1977,41 +1897,6 @@ Space: O(m × n)
 
 <hr />
 
-<h2 id="technical-appendix">Technical Appendix</h2>
-
-<h3 id="complete-code-availability">Complete Code Availability</h3>
-
-<p>The full Python implementation is available in <code class="language-plaintext highlighter-rouge">lln_simulation.py</code> and includes:</p>
-<ul>
-  <li>Simulation engine with vectorized operations</li>
-  <li>Multiple visualization functions</li>
-  <li>Statistical analysis utilities</li>
-  <li>CSV export functionality</li>
-</ul>
-
-<h3 id="running-the-simulation">Running the Simulation</h3>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python lln_simulation.py
-</code></pre></div></div>
-
-<p><strong>Output:</strong></p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">assets/images/</code>: All PNG visualizations</li>
-  <li><code class="language-plaintext highlighter-rouge">assets/data/lln_statistics.csv</code>: Complete statistics table</li>
-</ul>
-
-<h3 id="interactive-version">Interactive Version</h3>
-
-<p>An interactive web-based version is also available with:</p>
-<ul>
-  <li>Real-time parameter adjustment</li>
-  <li>Animated trajectory growth</li>
-  <li>Dynamic histogram updates</li>
-  <li>Exportable results</li>
-</ul>
-
-<p>Try different values of p, n, and m to explore the LLN behavior yourself!</p>
-
 <h3 id="references">References</h3>
 
 <ol>
@@ -2019,7 +1904,7 @@ Space: O(m × n)
     <p><strong>Feller, W.</strong> (1968). <em>An Introduction to Probability Theory and Its Applications</em>, Vol. 1, 3rd ed. Wiley.</p>
   </li>
   <li>
-    <p><strong>Ross, S.</strong> (2014). <em>A First Course in Probability</em>, 9th ed. Pearson.</p>
+    <p><strong>Ross, M. S.</strong> (2014). <em>A First Course in Probability</em>, 9th ed. Pearson.</p>
   </li>
   <li>
     <p><strong>Grimmett, G. &amp; Stirzaker, D.</strong> (2001). <em>Probability and Random Processes</em>, 3rd ed. Oxford University Press.</p>
@@ -2028,10 +1913,6 @@ Space: O(m × n)
     <p><strong>Wasserman, L.</strong> (2004). <em>All of Statistics: A Concise Course in Statistical Inference</em>. Springer.</p>
   </li>
 </ol>
-
-<h3 id="data-sources">Data Sources</h3>
-
-<p>All data is synthetically generated using Python’s NumPy random number generator with Mersenne Twister algorithm (MT19937).</p>
 
 </div>
 

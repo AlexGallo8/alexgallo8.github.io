@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-10-28T12:59:01+01:00</updated>
+ <updated>2025-10-28T13:26:42+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -1762,76 +1762,6 @@ n→∞                        n→∞
 
 &lt;p&gt;The “excess” 6 heads from early flips persists, but becomes negligible (0.6% deviation).&lt;/p&gt;
 
-&lt;h2 id=&quot;computational-considerations&quot;&gt;Computational Considerations&lt;/h2&gt;
-
-&lt;h3 id=&quot;algorithm-efficiency&quot;&gt;Algorithm Efficiency&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Naive Approach&lt;/strong&gt; (compute each f(k) independently):&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Time: O(m × n²)
-Space: O(m × n)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Optimized Approach&lt;/strong&gt; (use cumulative sums):&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Time: O(m × n)
-Space: O(m × n)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Our implementation uses NumPy’s vectorized operations:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;trials&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binomial&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;# O(mn)
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumulative&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumsum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                &lt;span class=&quot;c1&quot;&gt;# O(mn)
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frequencies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cumulative&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;# O(mn)
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Performance Results&lt;/strong&gt; (on modern laptop):&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;m&lt;/th&gt;
-      &lt;th&gt;n&lt;/th&gt;
-      &lt;th&gt;Time&lt;/th&gt;
-      &lt;th&gt;Memory&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;10&lt;/td&gt;
-      &lt;td&gt;1000&lt;/td&gt;
-      &lt;td&gt;0.02s&lt;/td&gt;
-      &lt;td&gt;80 KB&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;50&lt;/td&gt;
-      &lt;td&gt;1000&lt;/td&gt;
-      &lt;td&gt;0.08s&lt;/td&gt;
-      &lt;td&gt;400 KB&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;100&lt;/td&gt;
-      &lt;td&gt;5000&lt;/td&gt;
-      &lt;td&gt;1.2s&lt;/td&gt;
-      &lt;td&gt;4 MB&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;1000&lt;/td&gt;
-      &lt;td&gt;10000&lt;/td&gt;
-      &lt;td&gt;85s&lt;/td&gt;
-      &lt;td&gt;80 MB&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;visualization-optimization&quot;&gt;Visualization Optimization&lt;/h3&gt;
-
-&lt;p&gt;For plotting many trajectories (m &amp;gt; 50), we use:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Alpha transparency (α = 0.6) to show density&lt;/li&gt;
-  &lt;li&gt;Line width = 1.5 for clarity&lt;/li&gt;
-  &lt;li&gt;Color mapping via matplotlib colormaps&lt;/li&gt;
-  &lt;li&gt;Histogram bins dynamically calculated&lt;/li&gt;
-&lt;/ul&gt;
-
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 
 &lt;p&gt;This simulation and analysis demonstrates the Law of Large Numbers through comprehensive visualization and statistical validation. Key findings:&lt;/p&gt;
@@ -1880,16 +1810,6 @@ Space: O(m × n)
   &lt;li&gt;Connects to Central Limit Theorem for distributional results&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;educational-value&quot;&gt;Educational Value&lt;/h3&gt;
-
-&lt;p&gt;This exercise demonstrates:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;How mathematical theory manifests in simulations&lt;/li&gt;
-  &lt;li&gt;The importance of visualization in understanding convergence&lt;/li&gt;
-  &lt;li&gt;The relationship between sample size and estimation precision&lt;/li&gt;
-  &lt;li&gt;How computational methods validate theoretical predictions&lt;/li&gt;
-&lt;/ul&gt;
-
 &lt;p&gt;&lt;strong&gt;Modern Applications&lt;/strong&gt;: The principles demonstrated here underpin:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Machine learning (stochastic gradient descent)&lt;/li&gt;
@@ -1903,41 +1823,6 @@ Space: O(m × n)
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;technical-appendix&quot;&gt;Technical Appendix&lt;/h2&gt;
-
-&lt;h3 id=&quot;complete-code-availability&quot;&gt;Complete Code Availability&lt;/h3&gt;
-
-&lt;p&gt;The full Python implementation is available in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lln_simulation.py&lt;/code&gt; and includes:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Simulation engine with vectorized operations&lt;/li&gt;
-  &lt;li&gt;Multiple visualization functions&lt;/li&gt;
-  &lt;li&gt;Statistical analysis utilities&lt;/li&gt;
-  &lt;li&gt;CSV export functionality&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;running-the-simulation&quot;&gt;Running the Simulation&lt;/h3&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python lln_simulation.py
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Output:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assets/images/&lt;/code&gt;: All PNG visualizations&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assets/data/lln_statistics.csv&lt;/code&gt;: Complete statistics table&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;interactive-version&quot;&gt;Interactive Version&lt;/h3&gt;
-
-&lt;p&gt;An interactive web-based version is also available with:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Real-time parameter adjustment&lt;/li&gt;
-  &lt;li&gt;Animated trajectory growth&lt;/li&gt;
-  &lt;li&gt;Dynamic histogram updates&lt;/li&gt;
-  &lt;li&gt;Exportable results&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Try different values of p, n, and m to explore the LLN behavior yourself!&lt;/p&gt;
-
 &lt;h3 id=&quot;references&quot;&gt;References&lt;/h3&gt;
 
 &lt;ol&gt;
@@ -1945,7 +1830,7 @@ Space: O(m × n)
     &lt;p&gt;&lt;strong&gt;Feller, W.&lt;/strong&gt; (1968). &lt;em&gt;An Introduction to Probability Theory and Its Applications&lt;/em&gt;, Vol. 1, 3rd ed. Wiley.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Ross, S.&lt;/strong&gt; (2014). &lt;em&gt;A First Course in Probability&lt;/em&gt;, 9th ed. Pearson.&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Ross, M. S.&lt;/strong&gt; (2014). &lt;em&gt;A First Course in Probability&lt;/em&gt;, 9th ed. Pearson.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Grimmett, G. &amp;amp; Stirzaker, D.&lt;/strong&gt; (2001). &lt;em&gt;Probability and Random Processes&lt;/em&gt;, 3rd ed. Oxford University Press.&lt;/p&gt;
@@ -1954,10 +1839,6 @@ Space: O(m × n)
     &lt;p&gt;&lt;strong&gt;Wasserman, L.&lt;/strong&gt; (2004). &lt;em&gt;All of Statistics: A Concise Course in Statistical Inference&lt;/em&gt;. Springer.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
-
-&lt;h3 id=&quot;data-sources&quot;&gt;Data Sources&lt;/h3&gt;
-
-&lt;p&gt;All data is synthetically generated using Python’s NumPy random number generator with Mersenne Twister algorithm (MT19937).&lt;/p&gt;
 </content>
  </entry>
  
