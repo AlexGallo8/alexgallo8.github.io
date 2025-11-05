@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Homework 5 - Measures of Location and Dispersion &middot; Statistics Homework
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://localhost:4000/homework5/">
+  
+
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/custom.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/atom.xml">
+</head>
+
+
+  <body class="theme-base-0b">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Homework collection for the university course in Statistics</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/">Home</a>
+
+    <!-- 
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="http://localhost:4000/about/">About</a>
+        
+      
+    
+      
+    
+      
+        
+      
+     -->
+
+    <a class="sidebar-nav-item" href="https://github.com/alexgallo8">GitHub Profile</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Statistics Homework</a>
+            <small>Alessandro Maone - 1945149</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Homework 5 - Measures of Location and Dispersion</h1>
+  <span class="post-date">05 Nov 2025</span>
+  <h2 id="introduction-to-statistical-measures">Introduction to Statistical Measures</h2>
+
+<p>Statistical analysis relies fundamentally on two types of descriptive measures: <strong>measures of location</strong> (or central tendency) and <strong>measures of dispersion</strong> (or spread). These measures provide complementary information about data distributions—location measures tell us where the data is centered, while dispersion measures tell us how spread out the data is around that center.</p>
+
+<p>Understanding these measures is essential for data analysis across all scientific disciplines, from experimental physics to social sciences, finance and machine learning.</p>
+
+<!--more-->
+
+<h2 id="measures-of-location-and-central-tendency">Measures of Location and Central Tendency</h2>
+
+<p>Measures of location describe the “typical” or “central” value in a dataset. The three most common measures are the arithmetic mean, median, and mode.</p>
+
+<h3 id="1-arithmetic-mean">1. Arithmetic Mean</h3>
+
+<p><strong>Definition:</strong></p>
+
+<p>The arithmetic mean (or simply “mean”) is the sum of all values divided by the number of observations.</p>
+
+<p>For a sample of n observations x₁, x₂, …, xₙ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x̄ = (x₁ + x₂ + ... + xₙ) / n = (1/n) Σxᵢ
+</code></pre></div></div>
+
+<p>For a population with N values:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>μ = (1/N) Σxᵢ
+</code></pre></div></div>
+
+<p><strong>Properties:</strong></p>
+
+<ol>
+  <li><strong>Balance Point</strong>: The mean is the point where the sum of deviations equals zero:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ(xᵢ - x̄) = 0
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Minimizes Squared Deviations</strong>: The mean minimizes the sum of squared deviations:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x̄ = argmin Σ(xᵢ - c)²
+      c
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Linear Transformation</strong>: If Y = aX + b, then:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ȳ = ax̄ + b
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Algebraic</strong>: The mean uses all data values in its calculation</li>
+</ol>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+  <li>Uses all available information (every data point contributes)</li>
+  <li>Has well-defined mathematical properties</li>
+  <li>Foundation for many statistical procedures (t-tests, ANOVA, regression)</li>
+  <li>Optimal for normally distributed data</li>
+  <li>Easily computed and understood</li>
+  <li>Sample mean is an unbiased estimator of population mean</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+
+<ul>
+  <li>Highly sensitive to outliers and extreme values</li>
+  <li>Can be misleading for skewed distributions</li>
+  <li>May not correspond to any actual data value</li>
+  <li>Not robust—a single extreme value can dramatically shift it</li>
+  <li>Can be affected by measurement errors</li>
+  <li>May not make sense for ordinal or categorical data</li>
+</ul>
+
+<p><strong>Practical Applications:</strong></p>
+
+<ol>
+  <li><strong>Finance</strong>: Average returns, mean portfolio value</li>
+  <li><strong>Manufacturing</strong>: Average product dimensions for quality control</li>
+  <li><strong>Education</strong>: Mean test scores, GPA calculations</li>
+  <li><strong>Economics</strong>: GDP per capita, average income</li>
+  <li><strong>Science</strong>: Mean experimental measurements</li>
+  <li><strong>Weather</strong>: Average temperature, rainfall</li>
+</ol>
+
+<p><strong>Example:</strong></p>
+
+<p>Consider five household incomes: $30,000, $35,000, $40,000, $45,000, $500,000</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mean = (30 + 35 + 40 + 45 + 500) / 5 = $130,000
+</code></pre></div></div>
+
+<p>The mean of $130,000 is misleading—four of five households earn far less. The outlier ($500,000) pulls the mean upward.</p>
+
+<hr />
+
+<h3 id="2-median">2. Median</h3>
+
+<p><strong>Definition:</strong></p>
+
+<p>The median is the middle value when data is arranged in order. It divides the dataset into two equal halves.</p>
+
+<p>For ordered data x₍₁₎ ≤ x₍₂₎ ≤ … ≤ x₍ₙ₎:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>         ⎧ x₍₍ₙ₊₁₎/₂₎              if n is odd
+Median = ⎨
+         ⎩ (x₍ₙ/₂₎ + x₍ₙ/₂₊₁₎)/2   if n is even
+</code></pre></div></div>
+
+<p><strong>Properties:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Resistant to Outliers</strong>: Extreme values don’t affect the median’s position</p>
+  </li>
+  <li><strong>Minimizes Absolute Deviations</strong>: The median minimizes the sum of absolute deviations:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Median = argmin Σ|xᵢ - c|
+           c
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>50th Percentile</strong>: Exactly 50% of data falls below the median</p>
+  </li>
+  <li><strong>Positional</strong>: Only depends on the middle value(s), not all data points</li>
+</ol>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+  <li>Robust to outliers and extreme values</li>
+  <li>Better represents “typical” value for skewed distributions</li>
+  <li>Always corresponds to an actual data point (when n is odd)</li>
+  <li>Meaningful for ordinal data (e.g., survey responses: poor, fair, good, excellent)</li>
+  <li>Less affected by data errors</li>
+  <li>Easy to interpret</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+
+<ul>
+  <li>Ignores much of the data (doesn’t use all information)</li>
+  <li>Computationally intensive for large datasets (requires sorting)</li>
+  <li>Less amenable to further algebraic manipulation</li>
+  <li>Not efficient for normally distributed data</li>
+  <li>Sample median has higher variance than sample mean</li>
+  <li>Difficult to combine medians from different samples</li>
+</ul>
+
+<p><strong>Practical Applications:</strong></p>
+
+<ol>
+  <li><strong>Real Estate</strong>: Median home prices (not distorted by luxury mansions)</li>
+  <li><strong>Income Statistics</strong>: Median household income (better than mean for skewed income distributions)</li>
+  <li><strong>Healthcare</strong>: Median survival times in clinical trials</li>
+  <li><strong>Education</strong>: Median test scores when distribution is skewed</li>
+  <li><strong>Market Research</strong>: Median customer satisfaction ratings</li>
+  <li><strong>Property Valuation</strong>: Median assessed values</li>
+</ol>
+
+<p><strong>Example (continued):</strong></p>
+
+<p>Same five household incomes: $30,000, $35,000, $40,000, $45,000, $500,000</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Median = $40,000 (middle value)
+</code></pre></div></div>
+
+<p>The median of $40,000 better represents the “typical” household—it’s resistant to the outlier.</p>
+
+<hr />
+
+<h3 id="3-mode">3. Mode</h3>
+
+<p><strong>Definition:</strong></p>
+
+<p>The mode is the value that occurs most frequently in the dataset.</p>
+
+<p><strong>Properties:</strong></p>
+
+<ol>
+  <li><strong>Multiple Modes</strong>: A distribution can be:
+    <ul>
+      <li><strong>Unimodal</strong>: One mode</li>
+      <li><strong>Bimodal</strong>: Two modes</li>
+      <li><strong>Multimodal</strong>: More than two modes</li>
+      <li><strong>Uniform</strong>: No mode (all values equally frequent)</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Applicable to All Data Types</strong>: Can be used with nominal, ordinal, or numerical data</p>
+  </li>
+  <li><strong>Local Property</strong>: Based entirely on frequency counts</li>
+</ol>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+  <li>Only measure applicable to nominal (categorical) data</li>
+  <li>Not affected by extreme values</li>
+  <li>Easy to identify and understand</li>
+  <li>Can identify multiple peaks in distribution</li>
+  <li>Useful for identifying most common category</li>
+  <li>No computation required—just counting</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+
+<ul>
+  <li>May not exist (uniform distribution)</li>
+  <li>May not be unique (multiple modes)</li>
+  <li>Ignores most of the data</li>
+  <li>Can be erratic with small samples</li>
+  <li>Highly dependent on class intervals (for grouped data)</li>
+  <li>Rarely used as sole measure of location</li>
+  <li>Sample mode is often a poor estimator</li>
+</ul>
+
+<p><strong>Practical Applications:</strong></p>
+
+<ol>
+  <li><strong>Retail</strong>: Most popular shoe size, clothing size</li>
+  <li><strong>Manufacturing</strong>: Most common defect type</li>
+  <li><strong>Marketing</strong>: Most frequently purchased product</li>
+  <li><strong>Transportation</strong>: Most common commute method</li>
+  <li><strong>Demographics</strong>: Most common age group, family size</li>
+  <li><strong>Quality Control</strong>: Most frequent failure mode</li>
+</ol>
+
+<p><strong>Example:</strong></p>
+
+<p>Shoe sizes in a sample: 7, 8, 8, 8, 9, 9, 10, 11</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mode = 8 (appears three times)
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="comparison-of-mean-median-and-mode">Comparison of Mean, Median, and Mode</h3>
+
+<p><strong>Relationship in Different Distributions:</strong></p>
+
+<ol>
+  <li><strong>Symmetric Distribution</strong> (e.g., Normal):
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mean = Median = Mode
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Right-Skewed Distribution</strong> (positive skew):
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mode &lt; Median &lt; Mean
+</code></pre></div>    </div>
+    <p>Example: Income distributions, housing prices</p>
+  </li>
+  <li><strong>Left-Skewed Distribution</strong> (negative skew):
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mean &lt; Median &lt; Mode
+</code></pre></div>    </div>
+    <p>Example: Age at retirement, test scores with ceiling effect</p>
+  </li>
+</ol>
+
+<p><strong>Decision Guide:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Use Case</th>
+      <th>Best Measure</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Normally distributed data</td>
+      <td>Mean</td>
+      <td>Most efficient, uses all data</td>
+    </tr>
+    <tr>
+      <td>Skewed data</td>
+      <td>Median</td>
+      <td>Robust to outliers</td>
+    </tr>
+    <tr>
+      <td>Presence of outliers</td>
+      <td>Median</td>
+      <td>Not influenced by extremes</td>
+    </tr>
+    <tr>
+      <td>Categorical data</td>
+      <td>Mode</td>
+      <td>Only applicable measure</td>
+    </tr>
+    <tr>
+      <td>Need mathematical properties</td>
+      <td>Mean</td>
+      <td>Algebraic manipulations</td>
+    </tr>
+    <tr>
+      <td>Income/wealth data</td>
+      <td>Median</td>
+      <td>Typically right-skewed</td>
+    </tr>
+    <tr>
+      <td>Quality control</td>
+      <td>Mean or Mode</td>
+      <td>Depends on context</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="measures-of-dispersion">Measures of Dispersion</h2>
+
+<p>Measures of dispersion quantify the spread or variability in a dataset. They answer: “How far do values deviate from the center?”</p>
+
+<h3 id="1-variance">1. Variance</h3>
+
+<p><strong>Definition:</strong></p>
+
+<p>Variance measures the average squared deviation from the mean.</p>
+
+<p><strong>Sample variance</strong> (with Bessel’s correction):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s² = (1/(n-1)) Σ(xᵢ - x̄)²
+</code></pre></div></div>
+
+<p><strong>Population variance</strong>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>σ² = (1/N) Σ(xᵢ - μ)²
+</code></pre></div></div>
+
+<p><strong>Why (n-1)?</strong> Bessel’s correction makes s² an unbiased estimator of σ². Using n would systematically underestimate population variance.</p>
+
+<p><strong>Properties:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Non-negative</strong>: σ² ≥ 0, equals zero only when all values are identical</p>
+  </li>
+  <li>
+    <p><strong>Units</strong>: Squared units of original data (problem for interpretation)</p>
+  </li>
+  <li><strong>Decomposition</strong>:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>σ² = E[X²] - (E[X])² = E[X²] - μ²
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Scaling</strong>: If Y = aX + b, then Var(Y) = a²Var(X)</p>
+  </li>
+  <li><strong>Addition</strong> (for independent variables):
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Var(X + Y) = Var(X) + Var(Y)
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+  <li>Mathematically tractable (used in many statistical formulas)</li>
+  <li>Uses all data points</li>
+  <li>Foundation for many statistical tests</li>
+  <li>Well-defined theoretical properties</li>
+  <li>Optimal for normally distributed data</li>
+  <li>Additive for independent variables</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+
+<ul>
+  <li>Squared units make interpretation difficult</li>
+  <li>Heavily influenced by outliers (squared deviations)</li>
+  <li>Not robust</li>
+  <li>Can be large even when data seems relatively concentrated</li>
+  <li>Requires mean calculation first</li>
+</ul>
+
+<p><strong>Practical Applications:</strong></p>
+
+<ol>
+  <li><strong>Finance</strong>: Portfolio variance, risk measurement</li>
+  <li><strong>Quality Control</strong>: Process variability assessment</li>
+  <li><strong>ANOVA</strong>: Partitioning variance between/within groups</li>
+  <li><strong>Regression</strong>: Explaining variance in dependent variable</li>
+  <li><strong>Experimental Design</strong>: Measuring measurement error</li>
+  <li><strong>Signal Processing</strong>: Noise variance estimation</li>
+</ol>
+
+<hr />
+
+<h3 id="2-standard-deviation">2. Standard Deviation</h3>
+
+<p><strong>Definition:</strong></p>
+
+<p>Standard deviation is the square root of variance, returning to original units.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s = √s²    (sample)
+σ = √σ²    (population)
+</code></pre></div></div>
+
+<p><strong>Properties:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Same Units</strong>: Same units as original data (interpretable)</p>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>Scaling</strong>: If Y = aX + b, then SD(Y) =</td>
+          <td>a</td>
+          <td>·SD(X)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li><strong>Empirical Rule</strong> (for normal distributions):
+    <ul>
+      <li>~68% of data within μ ± σ</li>
+      <li>~95% of data within μ ± 2σ</li>
+      <li>~99.7% of data within μ ± 3σ</li>
+    </ul>
+  </li>
+  <li><strong>Coefficient of Variation</strong>: CV = σ/μ (relative variability)</li>
+</ol>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+  <li>Same units as original data (interpretable)</li>
+  <li>Widely used and understood</li>
+  <li>Natural connection to normal distribution</li>
+  <li>Used in z-scores: z = (x - μ)/σ</li>
+  <li>Foundation for confidence intervals</li>
+  <li>Easy to communicate to non-statisticians</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+
+<ul>
+  <li>Still sensitive to outliers (though less than variance)</li>
+  <li>Not robust</li>
+  <li>Assumes interval/ratio scale data</li>
+  <li>Can be misleading with multimodal distributions</li>
+  <li>Less mathematically convenient than variance</li>
+</ul>
+
+<p><strong>Practical Applications:</strong></p>
+
+<ol>
+  <li><strong>Finance</strong>: Volatility measurement (stock returns)</li>
+  <li><strong>Manufacturing</strong>: Six Sigma quality programs</li>
+  <li><strong>Education</strong>: Standardized test score interpretation</li>
+  <li><strong>Healthcare</strong>: Normal ranges for biological measurements</li>
+  <li><strong>Climate Science</strong>: Temperature variability</li>
+  <li><strong>Process Control</strong>: Control chart limits</li>
+</ol>
+
+<p><strong>Example:</strong></p>
+
+<p>Dataset: [2, 4, 4, 4, 5, 5, 7, 9]</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mean x̄ = 40/8 = 5
+Variance s² = [(2-5)² + (4-5)² + ... + (9-5)²] / 7 = 30/7 ≈ 4.29
+Standard Deviation s = √4.29 ≈ 2.07
+</code></pre></div></div>
+
+<p>Interpretation: Values typically deviate by about 2.07 units from the mean.</p>
+
+<hr />
+
+<h3 id="3-range">3. Range</h3>
+
+<p><strong>Definition:</strong></p>
+
+<p>The range is the difference between maximum and minimum values.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Range = max(xᵢ) - min(xᵢ)
+</code></pre></div></div>
+
+<p><strong>Properties:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Simple</strong>: Easiest measure to compute and understand</p>
+  </li>
+  <li>
+    <p><strong>Extreme Values</strong>: Uses only two data points</p>
+  </li>
+  <li>
+    <p><strong>Sample Dependent</strong>: Highly variable between samples</p>
+  </li>
+</ol>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+  <li>Extremely simple to calculate and understand</li>
+  <li>Gives quick sense of data spread</li>
+  <li>Useful for preliminary data exploration</li>
+  <li>Same units as original data</li>
+  <li>Appropriate for small samples</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+
+<ul>
+  <li>Uses only two values (wastes information)</li>
+  <li>Extremely sensitive to outliers</li>
+  <li>Increases with sample size (never decreases)</li>
+  <li>High variability between samples</li>
+  <li>Not useful for inferential statistics</li>
+  <li>No information about data between extremes</li>
+</ul>
+
+<p><strong>Practical Applications:</strong></p>
+
+<ol>
+  <li><strong>Quality Control</strong>: Quick checks (e.g., R-charts)</li>
+  <li><strong>Weather</strong>: Daily temperature range</li>
+  <li><strong>Finance</strong>: Day’s trading range (high - low)</li>
+  <li><strong>Education</strong>: Score ranges on tests</li>
+  <li><strong>Manufacturing</strong>: Measurement ranges for specifications</li>
+</ol>
+
+<hr />
+
+<h3 id="4-interquartile-range-iqr">4. Interquartile Range (IQR)</h3>
+
+<p><strong>Definition:</strong></p>
+
+<p>The IQR is the range of the middle 50% of data, measuring spread of the central portion.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IQR = Q₃ - Q₁
+</code></pre></div></div>
+
+<p>Where:</p>
+<ul>
+  <li>Q₁ = 25th percentile (first quartile)</li>
+  <li>Q₃ = 75th percentile (third quartile)</li>
+</ul>
+
+<p><strong>Properties:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Robust</strong>: Not affected by outliers or extreme values</p>
+  </li>
+  <li>
+    <p><strong>Central Spread</strong>: Focuses on middle 50% of data</p>
+  </li>
+  <li>
+    <p><strong>Outlier Detection</strong>: Values beyond Q₁ - 1.5×IQR or Q₃ + 1.5×IQR are potential outliers</p>
+  </li>
+  <li>
+    <p><strong>Box Plot</strong>: IQR is the height of the box in box plots</p>
+  </li>
+</ol>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+  <li>Robust to outliers (uses quartiles, not extremes)</li>
+  <li>Better than range for skewed distributions</li>
+  <li>Foundation for box plots</li>
+  <li>Less variable than range</li>
+  <li>Meaningful for ordinal data</li>
+  <li>Easy to interpret (middle 50% spread)</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+
+<ul>
+  <li>Ignores 50% of the data (tails)</li>
+  <li>Less efficient than SD for normal data</li>
+  <li>Requires sorting (computational cost)</li>
+  <li>Not as widely used in inferential statistics</li>
+  <li>Less mathematically tractable than variance</li>
+</ul>
+
+<p><strong>Practical Applications:</strong></p>
+
+<ol>
+  <li><strong>Exploratory Data Analysis</strong>: Box plots, outlier detection</li>
+  <li><strong>Robust Statistics</strong>: Resistant measures of spread</li>
+  <li><strong>Income Analysis</strong>: Spread of middle-class incomes</li>
+  <li><strong>Test Score Analysis</strong>: Central performance spread</li>
+  <li><strong>Real Estate</strong>: Middle 50% of home prices</li>
+  <li><strong>Healthcare</strong>: Normal ranges for lab values</li>
+</ol>
+
+<p><strong>Example:</strong></p>
+
+<p>Dataset: [1, 3, 5, 7, 9, 11, 13, 15, 17, 100]</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Q₁ = 5 (25th percentile)
+Q₃ = 15 (75th percentile)
+IQR = 15 - 5 = 10
+
+Note: The outlier (100) doesn't affect IQR, but would greatly affect standard deviation.
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="5-mean-absolute-deviation-mad">5. Mean Absolute Deviation (MAD)</h3>
+
+<p><strong>Definition:</strong></p>
+
+<p>MAD is the average absolute deviation from the mean (or median).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MAD = (1/n) Σ|xᵢ - x̄|    (from mean)
+MAD = (1/n) Σ|xᵢ - M|     (from median)
+</code></pre></div></div>
+
+<p><strong>Properties:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Linear Scale</strong>: Uses absolute values (not squares)</p>
+  </li>
+  <li>
+    <p><strong>Less Sensitive</strong>: Less affected by outliers than variance</p>
+  </li>
+  <li>
+    <p><strong>Same Units</strong>: Same units as original data</p>
+  </li>
+</ol>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+  <li>More robust than standard deviation</li>
+  <li>Same units as original data</li>
+  <li>Easier to interpret than variance</li>
+  <li>Less influenced by extreme values</li>
+  <li>Conceptually simpler than variance</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+
+<ul>
+  <li>Less mathematically tractable (absolute values harder to work with)</li>
+  <li>Not as widely used in traditional statistics</li>
+  <li>Less efficient for normal distributions</li>
+  <li>Fewer theoretical results compared to variance</li>
+  <li>Not commonly taught or used</li>
+</ul>
+
+<p><strong>Practical Applications:</strong></p>
+
+<ol>
+  <li><strong>Forecasting</strong>: Forecast error measurement</li>
+  <li><strong>Robust Statistics</strong>: Alternative to standard deviation</li>
+  <li><strong>Machine Learning</strong>: Loss functions (L1 vs L2)</li>
+  <li><strong>Economics</strong>: Average deviation in economic indicators</li>
+  <li><strong>Quality Control</strong>: Alternative process variability measure</li>
+</ol>
+
+<hr />
+
+<h2 id="comparison-of-dispersion-measures">Comparison of Dispersion Measures</h2>
+
+<h3 id="sensitivity-to-outliers">Sensitivity to Outliers</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Measure</th>
+      <th>Sensitivity</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Range</td>
+      <td>Extremely high</td>
+      <td>Uses only min and max</td>
+    </tr>
+    <tr>
+      <td>Variance/SD</td>
+      <td>High</td>
+      <td>Squares deviations</td>
+    </tr>
+    <tr>
+      <td>MAD</td>
+      <td>Moderate</td>
+      <td>Linear scale</td>
+    </tr>
+    <tr>
+      <td>IQR</td>
+      <td>Low</td>
+      <td>Uses quartiles only</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Example Demonstrating Sensitivity:</strong></p>
+
+<p>Dataset A: [1, 2, 3, 4, 5]</p>
+<ul>
+  <li>Range = 4</li>
+  <li>SD ≈ 1.58</li>
+  <li>IQR = 2</li>
+</ul>
+
+<p>Dataset B: [1, 2, 3, 4, 50] (one outlier)</p>
+<ul>
+  <li>Range = 49 (↑ 1125%)</li>
+  <li>SD ≈ 19.48 (↑ 1133%)</li>
+  <li>IQR = 2 (unchanged)</li>
+</ul>
+
+<hr />
+
+<h2 id="advanced-considerations">Advanced Considerations</h2>
+
+<h3 id="relationship-between-measures">Relationship Between Measures</h3>
+
+<p><strong>For Normal Distribution:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IQR ≈ 1.35σ
+MAD ≈ 0.798σ
+Range ≈ 4σ (for moderate n)
+</code></pre></div></div>
+
+<h3 id="standardization">Standardization</h3>
+
+<p><strong>Z-score transformation</strong>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>z = (x - μ)/σ
+</code></pre></div></div>
+
+<p>Creates standardized distribution with mean = 0, SD = 1.</p>
+
+<p><strong>Applications:</strong></p>
+<ul>
+  <li>Comparing values from different distributions</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>Identifying outliers (</td>
+          <td>z</td>
+          <td>&gt; 3)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>Standardized test scores</li>
+  <li>Feature scaling in machine learning</li>
+</ul>
+
+<hr />
+
+<h2 id="choosing-appropriate-measures">Choosing Appropriate Measures</h2>
+
+<h3 id="decision-framework">Decision Framework</h3>
+
+<p><strong>Consider:</strong></p>
+
+<ol>
+  <li><strong>Data Type</strong>
+    <ul>
+      <li>Nominal → Mode</li>
+      <li>Ordinal → Median, Mode</li>
+      <li>Interval/Ratio → Any measure</li>
+    </ul>
+  </li>
+  <li><strong>Distribution Shape</strong>
+    <ul>
+      <li>Symmetric → Mean, SD</li>
+      <li>Skewed → Median, IQR</li>
+      <li>Multimodal → Mode</li>
+    </ul>
+  </li>
+  <li><strong>Presence of Outliers</strong>
+    <ul>
+      <li>Yes → Median, IQR</li>
+      <li>No → Mean, SD</li>
+    </ul>
+  </li>
+  <li><strong>Sample Size</strong>
+    <ul>
+      <li>Small → Median, Range</li>
+      <li>Large → Mean, SD</li>
+    </ul>
+  </li>
+  <li><strong>Purpose</strong>
+    <ul>
+      <li>Descriptive → Any appropriate measure</li>
+      <li>Inferential → Usually Mean, SD</li>
+      <li>Robust analysis → Median, IQR</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="industry-standards">Industry Standards</h3>
+
+<p><strong>Finance</strong>: Mean and SD for returns, VaR for risk
+<strong>Healthcare</strong>: Median for survival times, Mean for lab values
+<strong>Education</strong>: Mean for grades (if symmetric), Median for skewed scores
+<strong>Manufacturing</strong>: Mean and SD for Six Sigma, Range for quick checks
+<strong>Social Sciences</strong>: Often Median due to skewed distributions
+<strong>Machine Learning</strong>: Various measures depending on context</p>
+
+<hr />
+
+<h2 id="practical-example-complete-analysis">Practical Example: Complete Analysis</h2>
+
+<p>Consider hourly wages ($) in a company: 
+[15, 18, 20, 22, 22, 25, 28, 30, 35, 150]</p>
+
+<p><strong>Location Measures:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mean = 36.5 (pulled up by outlier)
+Median = 23.5 (between 22 and 25)
+Mode = 22 (appears twice)
+</code></pre></div></div>
+
+<p><strong>Dispersion Measures:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Range = 135 (150 - 15)
+IQR = 30 - 20 = 10
+Variance ≈ 1599.61
+SD ≈ 40.00
+MAD ≈ 15.85
+</code></pre></div></div>
+
+<p><strong>Interpretation:</strong></p>
+
+<p>The median ($23.50) better represents typical wage than the mean ($36.50), which is inflated by one executive earning $150/hr. The IQR of $10 shows the middle 50% of workers earn within a $10 range, while the SD of $40 is heavily influenced by the outlier. For reporting purposes, using median and IQR provides a more accurate picture of typical worker compensation.</p>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Measures of location and dispersion work together to provide a complete description of data distributions. Location measures answer “Where is the center?” while dispersion measures answer “How spread out are the values?”</p>
+
+<h3 id="key-takeaways">Key Takeaways</h3>
+
+<ol>
+  <li>
+    <p><strong>No Single Best Measure</strong>: Choice depends on data characteristics, distribution shape, and analytical goals</p>
+  </li>
+  <li>
+    <p><strong>Robustness Trade-off</strong>: Robust measures (median, IQR) sacrifice efficiency but resist outliers</p>
+  </li>
+  <li>
+    <p><strong>Complementary Nature</strong>: Always report both location and dispersion measures</p>
+  </li>
+  <li>
+    <p><strong>Context Matters</strong>: Different fields and applications have standard practices</p>
+  </li>
+  <li>
+    <p><strong>Visualization</strong>: Always visualize data—measures alone can be misleading</p>
+  </li>
+</ol>
+
+<h3 id="modern-considerations">Modern Considerations</h3>
+
+<p>With big data and machine learning:</p>
+<ul>
+  <li>Computational efficiency matters (online algorithms)</li>
+  <li>Robustness increasingly important</li>
+  <li>Multiple measures often reported</li>
+  <li>Automated outlier detection</li>
+  <li>Distributional assumptions relaxed</li>
+</ul>
+
+<p>Understanding these fundamental measures provides the foundation for advanced statistical analysis, hypothesis testing, and data-driven decision making across all quantitative fields.</p>
+
+<hr />
+
+<h3 id="references">References</h3>
+
+<ol>
+  <li>
+    <p><strong>Hogg, R. V., McKean, J. W., &amp; Craig, A. T.</strong> (2019). <em>Introduction to Mathematical Statistics</em>, 8th ed. Pearson.</p>
+  </li>
+  <li>
+    <p><strong>Rousseeuw, P. J. &amp; Croux, C.</strong> (1993). “Alternatives to the Median Absolute Deviation.” <em>Journal of the American Statistical Association</em>, 88(424), 1273-1283.</p>
+  </li>
+  <li>
+    <p><strong>Tukey, J. W.</strong> (1977). <em>Exploratory Data Analysis</em>. Addison-Wesley.</p>
+  </li>
+  <li>
+    <p><strong>Huber, P. J. &amp; Ronchetti, E. M.</strong> (2009). <em>Robust Statistics</em>, 2nd ed. Wiley.</p>
+  </li>
+  <li>
+    <p><strong>Wilcox, R. R.</strong> (2017). <em>Introduction to Robust Estimation and Hypothesis Testing</em>, 4th ed. Academic Press.</p>
+  </li>
+</ol>
+
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/homework6/">
+            Homework 6 - Online Algorithms for Statistical Measures
+            <small>05 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework4/">
+            Homework 4 - Simulating the Law of Large Numbers
+            <small>28 Oct 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework3/">
+            Homework 3 - Breaking RSA Letter-by-Letter Encryption with Frequency Analysis
+            <small>26 Oct 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/public/js/script.js'></script>
+  </body>
+</html>
