@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-11-05T16:44:48+01:00</updated>
+ <updated>2025-11-05T17:06:51+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -1406,11 +1406,11 @@ Sₙ₊₁ = Sₙ + δₙ₊₁(xₙ₊₁ - μₙ₊₁)
 
 &lt;p&gt;The median is the middle value when data is arranged in order. It divides the dataset into two equal halves.&lt;/p&gt;
 
-&lt;p&gt;For ordered data x₍₁₎ ≤ x₍₂₎ ≤ … ≤ x₍ₙ₎:&lt;/p&gt;
+&lt;p&gt;For ordered data x₁ ≤ x₂ ≤ … ≤ xₙ:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;         ⎧ x₍₍ₙ₊₁₎/₂₎              if n is odd
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;         ⎧ xₙ₊₁/₂              if n is odd
 Median = ⎨
-         ⎩ (x₍ₙ/₂₎ + x₍ₙ/₂₊₁₎)/2   if n is even
+         ⎩ (xₙ/₂ + xₙ/₂₊₁)/2   if n is even
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Properties:&lt;/strong&gt;&lt;/p&gt;
