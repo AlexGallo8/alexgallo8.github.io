@@ -364,380 +364,760 @@ S = 0
 
 <h3 id="python-implementation">Python Implementation</h3>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<details>
+   <summary>View welford.py</summary>
+   
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+</pre></td><td class="code"><pre>   <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+   <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+   <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="k">class</span> <span class="nc">OnlineStatistics</span><span class="p">:</span>
-    <span class="s">"""
-    Online algorithm for computing mean and variance using Welford's method.
-    
-    This implementation uses O(1) memory and provides numerically stable
-    updates for streaming data.
-    """</span>
-    
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="s">"""Initialize the online statistics tracker."""</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>          <span class="c1"># Number of observations
-</span>        <span class="bp">self</span><span class="p">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">0.0</span>     <span class="c1"># Running mean
-</span>        <span class="bp">self</span><span class="p">.</span><span class="n">M2</span> <span class="o">=</span> <span class="mf">0.0</span>       <span class="c1"># Sum of squared deviations (S in derivation)
-</span>        
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="s">"""
-        Update statistics with a new observation.
-        
-        Parameters:
-        -----------
-        x : float
-            New observation value
-        """</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">delta</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">mean</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">mean</span> <span class="o">+=</span> <span class="n">delta</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">n</span>
-        <span class="n">delta2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">mean</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">M2</span> <span class="o">+=</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">delta2</span>
-        
-    <span class="k">def</span> <span class="nf">get_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="s">"""Return the current mean."""</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">mean</span>
-    
-    <span class="k">def</span> <span class="nf">get_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="s">"""
-        Return the current variance.
-        
-        Parameters:
-        -----------
-        ddof : int, default=1
-            Degrees of freedom (0 for population, 1 for sample variance)
-        
-        Returns:
-        --------
-        float
-            Variance estimate
-        """</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mf">0.0</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">M2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">n</span> <span class="o">-</span> <span class="n">ddof</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">get_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="s">"""Return the current standard deviation."""</span>
-        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">get_variance</span><span class="p">(</span><span class="n">ddof</span><span class="p">))</span>
-    
-    <span class="k">def</span> <span class="nf">get_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="s">"""Return the number of observations processed."""</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">n</span>
-    
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="s">"""String representation of current statistics."""</span>
-        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s">"OnlineStatistics(n=</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">n</span><span class="si">}</span><span class="s">, mean=</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">mean</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, "</span>
-                <span class="sa">f</span><span class="s">"variance=</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, std=</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">)"</span><span class="p">)</span>
+   <span class="k">class</span> <span class="nc">OnlineStatistics</span><span class="p">:</span>
+      <span class="s">"""
+      Online algorithm for computing mean and variance using Welford's method.
+      
+      This implementation uses O(1) memory and provides numerically stable
+      updates for streaming data.
+      """</span>
+      
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="s">"""Initialize the online statistics tracker."""</span>
+         <span class="bp">self</span><span class="p">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>          <span class="c1"># Number of observations
+</span>         <span class="bp">self</span><span class="p">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">0.0</span>     <span class="c1"># Running mean
+</span>         <span class="bp">self</span><span class="p">.</span><span class="n">M2</span> <span class="o">=</span> <span class="mf">0.0</span>       <span class="c1"># Sum of squared deviations (S in derivation)
+</span>         
+      <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+         <span class="s">"""
+         Update statistics with a new observation.
+         
+         Parameters:
+         -----------
+         x : float
+               New observation value
+         """</span>
+         <span class="bp">self</span><span class="p">.</span><span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+         <span class="n">delta</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">mean</span>
+         <span class="bp">self</span><span class="p">.</span><span class="n">mean</span> <span class="o">+=</span> <span class="n">delta</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">n</span>
+         <span class="n">delta2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">mean</span>
+         <span class="bp">self</span><span class="p">.</span><span class="n">M2</span> <span class="o">+=</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">delta2</span>
+         
+      <span class="k">def</span> <span class="nf">get_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+         <span class="s">"""Return the current mean."""</span>
+         <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">mean</span>
+      
+      <span class="k">def</span> <span class="nf">get_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+         <span class="s">"""
+         Return the current variance.
+         
+         Parameters:
+         -----------
+         ddof : int, default=1
+               Degrees of freedom (0 for population, 1 for sample variance)
+         
+         Returns:
+         --------
+         float
+               Variance estimate
+         """</span>
+         <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+               <span class="k">return</span> <span class="mf">0.0</span>
+         <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">M2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">n</span> <span class="o">-</span> <span class="n">ddof</span><span class="p">)</span>
+      
+      <span class="k">def</span> <span class="nf">get_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+         <span class="s">"""Return the current standard deviation."""</span>
+         <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">get_variance</span><span class="p">(</span><span class="n">ddof</span><span class="p">))</span>
+      
+      <span class="k">def</span> <span class="nf">get_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+         <span class="s">"""Return the number of observations processed."""</span>
+         <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">n</span>
+      
+      <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+         <span class="s">"""String representation of current statistics."""</span>
+         <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s">"OnlineStatistics(n=</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">n</span><span class="si">}</span><span class="s">, mean=</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">mean</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, "</span>
+                  <span class="sa">f</span><span class="s">"variance=</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, std=</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">)"</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">BatchStatistics</span><span class="p">:</span>
-    <span class="s">"""
-    Traditional batch algorithm for comparison (LESS STABLE).
-    
-    WARNING: This naive implementation stores all data and uses
-    the numerically unstable formula: Var(X) = E[X²] - (E[X])²
-    """</span>
-    
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="s">"""Initialize the batch statistics tracker."""</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-        
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="s">"""Store new observation."""</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">get_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="s">"""Compute mean from all stored data."""</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mf">0.0</span>
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">get_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="s">"""Compute variance using naive (unstable) formula."""</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mf">0.0</span>
-        
-        <span class="n">mean</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
-        
-        <span class="c1"># Unstable formula: Var = E[X²] - (E[X])²
-</span>        <span class="n">sum_squares</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">variance</span> <span class="o">=</span> <span class="p">(</span><span class="n">sum_squares</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">mean</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-        
-        <span class="c1"># Apply Bessel's correction if needed
-</span>        <span class="k">if</span> <span class="n">ddof</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">variance</span> <span class="o">*=</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        
-        <span class="k">return</span> <span class="n">variance</span>
-    
-    <span class="k">def</span> <span class="nf">get_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="s">"""Return standard deviation."""</span>
-        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_variance</span><span class="p">(</span><span class="n">ddof</span><span class="p">)))</span>
-    
-    <span class="k">def</span> <span class="nf">get_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="s">"""Return number of observations."""</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+   <span class="k">class</span> <span class="nc">BatchStatistics</span><span class="p">:</span>
+      <span class="s">"""
+      Traditional batch algorithm for comparison (LESS STABLE).
+      
+      WARNING: This naive implementation stores all data and uses
+      the numerically unstable formula: Var(X) = E[X²] - (E[X])²
+      """</span>
+      
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="s">"""Initialize the batch statistics tracker."""</span>
+         <span class="bp">self</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+         
+      <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+         <span class="s">"""Store new observation."""</span>
+         <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+         
+      <span class="k">def</span> <span class="nf">get_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+         <span class="s">"""Compute mean from all stored data."""</span>
+         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">:</span>
+               <span class="k">return</span> <span class="mf">0.0</span>
+         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+      
+      <span class="k">def</span> <span class="nf">get_variance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+         <span class="s">"""Compute variance using naive (unstable) formula."""</span>
+         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+               <span class="k">return</span> <span class="mf">0.0</span>
+         
+         <span class="n">mean</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span>
+         <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+         
+         <span class="c1"># Unstable formula: Var = E[X²] - (E[X])²
+</span>         <span class="n">sum_squares</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+         <span class="n">variance</span> <span class="o">=</span> <span class="p">(</span><span class="n">sum_squares</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">mean</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+         
+         <span class="c1"># Apply Bessel's correction if needed
+</span>         <span class="k">if</span> <span class="n">ddof</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+               <span class="n">variance</span> <span class="o">*=</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+         
+         <span class="k">return</span> <span class="n">variance</span>
+      
+      <span class="k">def</span> <span class="nf">get_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ddof</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+         <span class="s">"""Return standard deviation."""</span>
+         <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_variance</span><span class="p">(</span><span class="n">ddof</span><span class="p">)))</span>
+      
+      <span class="k">def</span> <span class="nf">get_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+         <span class="s">"""Return number of observations."""</span>
+         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">compare_algorithms</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">OnlineStatistics</span><span class="p">,</span> <span class="n">BatchStatistics</span><span class="p">]:</span>
-    <span class="s">"""
-    Compare online and batch algorithms on the same data.
-    
-    Parameters:
-    -----------
-    data : list of float
-        Input data sequence
-    
-    Returns:
-    --------
-    tuple
-        (online_stats, batch_stats) objects
-    """</span>
-    <span class="n">online</span> <span class="o">=</span> <span class="n">OnlineStatistics</span><span class="p">()</span>
-    <span class="n">batch</span> <span class="o">=</span> <span class="n">BatchStatistics</span><span class="p">()</span>
-    
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">online</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">batch</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">online</span><span class="p">,</span> <span class="n">batch</span>
+   <span class="k">def</span> <span class="nf">compare_algorithms</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">OnlineStatistics</span><span class="p">,</span> <span class="n">BatchStatistics</span><span class="p">]:</span>
+      <span class="s">"""
+      Compare online and batch algorithms on the same data.
+      
+      Parameters:
+      -----------
+      data : list of float
+         Input data sequence
+      
+      Returns:
+      --------
+      tuple
+         (online_stats, batch_stats) objects
+      """</span>
+      <span class="n">online</span> <span class="o">=</span> <span class="n">OnlineStatistics</span><span class="p">()</span>
+      <span class="n">batch</span> <span class="o">=</span> <span class="n">BatchStatistics</span><span class="p">()</span>
+      
+      <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+         <span class="n">online</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+         <span class="n">batch</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      
+      <span class="k">return</span> <span class="n">online</span><span class="p">,</span> <span class="n">batch</span>
 
 
-<span class="k">def</span> <span class="nf">test_numerical_stability</span><span class="p">():</span>
-    <span class="s">"""
-    Test numerical stability with data that has large mean and small variance.
-    
-    This is where naive algorithms often fail due to catastrophic cancellation.
-    """</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"TEST 1: NUMERICAL STABILITY"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Data: [1e9, 1e9 + 1, 1e9 + 2, ..., 1e9 + 99]"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"(Large mean ~1e9, small variance ~833.33)"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    
-    <span class="c1"># Generate data with large mean, small variance
-</span>    <span class="n">base</span> <span class="o">=</span> <span class="mf">1e9</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">base</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
-    
-    <span class="c1"># True statistics
-</span>    <span class="n">true_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">true_var</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">true_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    
-    <span class="c1"># Online algorithm (Welford)
-</span>    <span class="n">online</span> <span class="o">=</span> <span class="n">OnlineStatistics</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">online</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    
-    <span class="c1"># Batch algorithm (naive)
-</span>    <span class="n">batch</span> <span class="o">=</span> <span class="n">BatchStatistics</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">batch</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    
-    <span class="c1"># Compare results
-</span>    <span class="k">print</span><span class="p">(</span><span class="s">"TRUE VALUES (numpy with higher precision):"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Mean:     </span><span class="si">{</span><span class="n">true_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Variance: </span><span class="si">{</span><span class="n">true_var</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Std Dev:  </span><span class="si">{</span><span class="n">true_std</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="s">"ONLINE ALGORITHM (Welford):"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Mean:     </span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Variance: </span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Std Dev:  </span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="s">"BATCH ALGORITHM (Naive E[X²]-(E[X])²):"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Mean:     </span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Variance: </span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Std Dev:  </span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="s">"ERRORS:"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Online mean error:  </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_mean</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Batch mean error:   </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_mean</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Online var error:   </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_var</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Batch var error:    </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_var</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    
-    <span class="c1"># Verdict
-</span>    <span class="n">online_var_error</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_var</span><span class="p">)</span>
-    <span class="n">batch_var_error</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_var</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">batch_var_error</span> <span class="o">&gt;</span> <span class="n">online_var_error</span> <span class="o">*</span> <span class="mi">10</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"âš ï¸  CATASTROPHIC CANCELLATION DETECTED in batch algorithm!"</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"   Batch algorithm variance error is </span><span class="si">{</span><span class="n">batch_var_error</span><span class="o">/</span><span class="n">online_var_error</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">x larger"</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"âœ… Both algorithms performed similarly on this test"</span><span class="p">)</span>
+   <span class="k">def</span> <span class="nf">test_numerical_stability</span><span class="p">():</span>
+      <span class="s">"""
+      Test numerical stability with data that has large mean and small variance.
+      
+      This is where naive algorithms often fail due to catastrophic cancellation.
+      """</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"TEST 1: NUMERICAL STABILITY"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Data: [1e9, 1e9 + 1, 1e9 + 2, ..., 1e9 + 99]"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"(Large mean ~1e9, small variance ~833.33)"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      
+      <span class="c1"># Generate data with large mean, small variance
+</span>      <span class="n">base</span> <span class="o">=</span> <span class="mf">1e9</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">base</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+      
+      <span class="c1"># True statistics
+</span>      <span class="n">true_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+      <span class="n">true_var</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      <span class="n">true_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      
+      <span class="c1"># Online algorithm (Welford)
+</span>      <span class="n">online</span> <span class="o">=</span> <span class="n">OnlineStatistics</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+         <span class="n">online</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      
+      <span class="c1"># Batch algorithm (naive)
+</span>      <span class="n">batch</span> <span class="o">=</span> <span class="n">BatchStatistics</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+         <span class="n">batch</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      
+      <span class="c1"># Compare results
+</span>      <span class="k">print</span><span class="p">(</span><span class="s">"TRUE VALUES (numpy with higher precision):"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Mean:     </span><span class="si">{</span><span class="n">true_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Variance: </span><span class="si">{</span><span class="n">true_var</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Std Dev:  </span><span class="si">{</span><span class="n">true_std</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      
+      <span class="k">print</span><span class="p">(</span><span class="s">"ONLINE ALGORITHM (Welford):"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Mean:     </span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Variance: </span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Std Dev:  </span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      
+      <span class="k">print</span><span class="p">(</span><span class="s">"BATCH ALGORITHM (Naive E[X²]-(E[X])²):"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Mean:     </span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Variance: </span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Std Dev:  </span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">10</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      
+      <span class="k">print</span><span class="p">(</span><span class="s">"ERRORS:"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Online mean error:  </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_mean</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Batch mean error:   </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_mean</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Online var error:   </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_var</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Batch var error:    </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_var</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      
+      <span class="c1"># Verdict
+</span>      <span class="n">online_var_error</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_var</span><span class="p">)</span>
+      <span class="n">batch_var_error</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">true_var</span><span class="p">)</span>
+      
+      <span class="k">if</span> <span class="n">batch_var_error</span> <span class="o">&gt;</span> <span class="n">online_var_error</span> <span class="o">*</span> <span class="mi">10</span><span class="p">:</span>
+         <span class="k">print</span><span class="p">(</span><span class="s">"âš ï¸  CATASTROPHIC CANCELLATION DETECTED in batch algorithm!"</span><span class="p">)</span>
+         <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"   Batch algorithm variance error is </span><span class="si">{</span><span class="n">batch_var_error</span><span class="o">/</span><span class="n">online_var_error</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">x larger"</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="k">print</span><span class="p">(</span><span class="s">"âœ… Both algorithms performed similarly on this test"</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">test_correctness</span><span class="p">():</span>
-    <span class="s">"""Test correctness on simple known data."""</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"TEST 2: CORRECTNESS ON SIMPLE DATA"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    
-    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    
-    <span class="c1"># NumPy (ground truth)
-</span>    <span class="n">np_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">np_var</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">np_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    
-    <span class="c1"># Our algorithms
-</span>    <span class="n">online</span><span class="p">,</span> <span class="n">batch</span> <span class="o">=</span> <span class="n">compare_algorithms</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="s">"RESULTS:"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  NumPy:   mean=</span><span class="si">{</span><span class="n">np_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, var=</span><span class="si">{</span><span class="n">np_var</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, std=</span><span class="si">{</span><span class="n">np_std</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Online:  mean=</span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, var=</span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, std=</span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Batch:   mean=</span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, var=</span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, std=</span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    
-    <span class="c1"># Check accuracy
-</span>    <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-10</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">np_mean</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">,</span> <span class="s">"Online mean incorrect"</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">np_var</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">,</span> <span class="s">"Online variance incorrect"</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"âœ… All correctness tests passed!"</span><span class="p">)</span>
+   <span class="k">def</span> <span class="nf">test_correctness</span><span class="p">():</span>
+      <span class="s">"""Test correctness on simple known data."""</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"TEST 2: CORRECTNESS ON SIMPLE DATA"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      
+      <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+      
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      
+      <span class="c1"># NumPy (ground truth)
+</span>      <span class="n">np_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+      <span class="n">np_var</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      <span class="n">np_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      
+      <span class="c1"># Our algorithms
+</span>      <span class="n">online</span><span class="p">,</span> <span class="n">batch</span> <span class="o">=</span> <span class="n">compare_algorithms</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+      
+      <span class="k">print</span><span class="p">(</span><span class="s">"RESULTS:"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  NumPy:   mean=</span><span class="si">{</span><span class="n">np_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, var=</span><span class="si">{</span><span class="n">np_var</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, std=</span><span class="si">{</span><span class="n">np_std</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Online:  mean=</span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, var=</span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, std=</span><span class="si">{</span><span class="n">online</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Batch:   mean=</span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, var=</span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">, std=</span><span class="si">{</span><span class="n">batch</span><span class="p">.</span><span class="n">get_std</span><span class="p">()</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      
+      <span class="c1"># Check accuracy
+</span>      <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-10</span>
+      <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">np_mean</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">,</span> <span class="s">"Online mean incorrect"</span>
+      <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_variance</span><span class="p">()</span> <span class="o">-</span> <span class="n">np_var</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">,</span> <span class="s">"Online variance incorrect"</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"âœ… All correctness tests passed!"</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">test_incremental_updates</span><span class="p">():</span>
-    <span class="s">"""Visualize how statistics evolve as data arrives."""</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"TEST 3: INCREMENTAL UPDATES VISUALIZATION"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    
-    <span class="c1"># Generate data with changing mean and variance
-</span>    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-    <span class="n">n_points</span> <span class="o">=</span> <span class="mi">100</span>
-    
-    <span class="c1"># Phase 1: Low variance around 5
-</span>    <span class="n">data1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="c1"># Phase 2: Higher variance around 10
-</span>    <span class="n">data2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
-    
-    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
-    
-    <span class="c1"># Track statistics at each step
-</span>    <span class="n">online</span> <span class="o">=</span> <span class="n">OnlineStatistics</span><span class="p">()</span>
-    <span class="n">means</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">stds</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">online</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">means</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">())</span>
-        <span class="n">stds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_std</span><span class="p">())</span>
-    
-    <span class="c1"># Plot results
-</span>    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-    
-    <span class="c1"># Plot 1: Data points
-</span>    <span class="n">ax1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">'o-'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Data points'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase change'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Observation number'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Value'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Incoming Data Stream'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">ax1</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-    
-    <span class="c1"># Plot 2: Running mean
-</span>    <span class="n">ax2</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="s">'b-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Running mean'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase 1 true mean'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'orange'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase 2 true mean'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Observation number'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Mean'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Evolution of Running Mean'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">ax2</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-    
-    <span class="c1"># Plot 3: Running standard deviation
-</span>    <span class="n">ax3</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">stds</span><span class="p">,</span> <span class="s">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Running std dev'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase 1 true std'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'orange'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase 2 true std'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Observation number'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Standard Deviation'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Evolution of Running Standard Deviation'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">ax3</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-    
-    <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
-    <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">'assets/images/online_statistics_evolution.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">âœ… Visualization saved: assets/images/online_statistics_evolution.png"</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+   <span class="k">def</span> <span class="nf">test_incremental_updates</span><span class="p">():</span>
+      <span class="s">"""Visualize how statistics evolve as data arrives."""</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"TEST 3: INCREMENTAL UPDATES VISUALIZATION"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      
+      <span class="c1"># Generate data with changing mean and variance
+</span>      <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+      <span class="n">n_points</span> <span class="o">=</span> <span class="mi">100</span>
+      
+      <span class="c1"># Phase 1: Low variance around 5
+</span>      <span class="n">data1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+      <span class="c1"># Phase 2: Higher variance around 10
+</span>      <span class="n">data2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+      
+      <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
+      
+      <span class="c1"># Track statistics at each step
+</span>      <span class="n">online</span> <span class="o">=</span> <span class="n">OnlineStatistics</span><span class="p">()</span>
+      <span class="n">means</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">stds</span> <span class="o">=</span> <span class="p">[]</span>
+      
+      <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+         <span class="n">online</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+         <span class="n">means</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_mean</span><span class="p">())</span>
+         <span class="n">stds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">get_std</span><span class="p">())</span>
+      
+      <span class="c1"># Plot results
+</span>      <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+      
+      <span class="c1"># Plot 1: Data points
+</span>      <span class="n">ax1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">'o-'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Data points'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase change'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Observation number'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Value'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Incoming Data Stream'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+      
+      <span class="c1"># Plot 2: Running mean
+</span>      <span class="n">ax2</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="s">'b-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Running mean'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase 1 true mean'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'orange'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase 2 true mean'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Observation number'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Mean'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Evolution of Running Mean'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+      
+      <span class="c1"># Plot 3: Running standard deviation
+</span>      <span class="n">ax3</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">stds</span><span class="p">,</span> <span class="s">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Running std dev'</span><span class="p">)</span>
+      <span class="n">ax3</span><span class="p">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">n_points</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+      <span class="n">ax3</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase 1 true std'</span><span class="p">)</span>
+      <span class="n">ax3</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'orange'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Phase 2 true std'</span><span class="p">)</span>
+      <span class="n">ax3</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Observation number'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax3</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Standard Deviation'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax3</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Evolution of Running Standard Deviation'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax3</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+      <span class="n">ax3</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+      
+      <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">'assets/images/online_statistics_evolution.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">âœ… Visualization saved: assets/images/online_statistics_evolution.png"</span><span class="p">)</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">test_memory_efficiency</span><span class="p">():</span>
-    <span class="s">"""Compare memory usage between online and batch methods."""</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"TEST 4: MEMORY EFFICIENCY"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    
-    <span class="kn">import</span> <span class="nn">sys</span>
-    
-    <span class="n">n</span> <span class="o">=</span> <span class="mi">1000000</span>  <span class="c1"># 1 million points
-</span>    
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Processing </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="s"> data points..."</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    
-    <span class="c1"># Online algorithm
-</span>    <span class="n">online</span> <span class="o">=</span> <span class="n">OnlineStatistics</span><span class="p">()</span>
-    <span class="n">online_memory_before</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">online</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-    
-    <span class="n">online_memory_after</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
-    
-    <span class="c1"># Batch algorithm
-</span>    <span class="n">batch</span> <span class="o">=</span> <span class="n">BatchStatistics</span><span class="p">()</span>
-    <span class="n">batch_memory_before</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">batch</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-    
-    <span class="n">batch_memory_after</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="s">"MEMORY USAGE:"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Online algorithm: ~</span><span class="si">{</span><span class="n">online_memory_after</span> <span class="o">-</span> <span class="n">online_memory_before</span><span class="si">}</span><span class="s"> bytes (constant)"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Batch algorithm:  ~</span><span class="si">{</span><span class="p">(</span><span class="n">batch_memory_after</span> <span class="o">-</span> <span class="n">batch_memory_before</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> MB (linear growth)"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Memory ratio: </span><span class="si">{</span><span class="p">(</span><span class="n">batch_memory_after</span> <span class="o">-</span> <span class="n">batch_memory_before</span><span class="p">)</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">online_memory_after</span> <span class="o">-</span> <span class="n">online_memory_before</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="si">}</span><span class="s">:1"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"âš ï¸  Batch algorithm memory scales with n; online algorithm uses O(1) memory!"</span><span class="p">)</span>
+   <span class="k">def</span> <span class="nf">test_memory_efficiency</span><span class="p">():</span>
+      <span class="s">"""Compare memory usage between online and batch methods."""</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"TEST 4: MEMORY EFFICIENCY"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      
+      <span class="kn">import</span> <span class="nn">sys</span>
+      
+      <span class="n">n</span> <span class="o">=</span> <span class="mi">1000000</span>  <span class="c1"># 1 million points
+</span>      
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Processing </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="p">,</span><span class="si">}</span><span class="s"> data points..."</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      
+      <span class="c1"># Online algorithm
+</span>      <span class="n">online</span> <span class="o">=</span> <span class="n">OnlineStatistics</span><span class="p">()</span>
+      <span class="n">online_memory_before</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+      
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+         <span class="n">online</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+      
+      <span class="n">online_memory_after</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">online</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+      
+      <span class="c1"># Batch algorithm
+</span>      <span class="n">batch</span> <span class="o">=</span> <span class="n">BatchStatistics</span><span class="p">()</span>
+      <span class="n">batch_memory_before</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+      
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+         <span class="n">batch</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+      
+      <span class="n">batch_memory_after</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">batch</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+      
+      <span class="k">print</span><span class="p">(</span><span class="s">"MEMORY USAGE:"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Online algorithm: ~</span><span class="si">{</span><span class="n">online_memory_after</span> <span class="o">-</span> <span class="n">online_memory_before</span><span class="si">}</span><span class="s"> bytes (constant)"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Batch algorithm:  ~</span><span class="si">{</span><span class="p">(</span><span class="n">batch_memory_after</span> <span class="o">-</span> <span class="n">batch_memory_before</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> MB (linear growth)"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Memory ratio: </span><span class="si">{</span><span class="p">(</span><span class="n">batch_memory_after</span> <span class="o">-</span> <span class="n">batch_memory_before</span><span class="p">)</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">online_memory_after</span> <span class="o">-</span> <span class="n">online_memory_before</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="si">}</span><span class="s">:1"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">()</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"âš ï¸  Batch algorithm memory scales with n; online algorithm uses O(1) memory!"</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="s">"""Run all tests."""</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"ONLINE ALGORITHMS FOR MEAN AND VARIANCE"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    
-    <span class="c1"># Create output directory
-</span>    <span class="kn">import</span> <span class="nn">os</span>
-    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">'assets/images'</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    
-    <span class="c1"># Run tests
-</span>    <span class="n">test_correctness</span><span class="p">()</span>
-    <span class="n">test_numerical_stability</span><span class="p">()</span>
-    <span class="n">test_incremental_updates</span><span class="p">()</span>
-    <span class="n">test_memory_efficiency</span><span class="p">()</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"ALL TESTS COMPLETED"</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+   <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+      <span class="s">"""Run all tests."""</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"ONLINE ALGORITHMS FOR MEAN AND VARIANCE"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      
+      <span class="c1"># Create output directory
+</span>      <span class="kn">import</span> <span class="nn">os</span>
+      <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">'assets/images'</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+      
+      <span class="c1"># Run tests
+</span>      <span class="n">test_correctness</span><span class="p">()</span>
+      <span class="n">test_numerical_stability</span><span class="p">()</span>
+      <span class="n">test_incremental_updates</span><span class="p">()</span>
+      <span class="n">test_memory_efficiency</span><span class="p">()</span>
+      
+      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"ALL TESTS COMPLETED"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
-</code></pre></div></div>
+   <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+      <span class="n">main</span><span class="p">()</span>
+   
+</pre></td></tr></tbody></table></code></pre></figure>
+
+</details>
 
 <hr />
 
@@ -1102,7 +1482,7 @@ ERRORS:
 
 <h3 id="test-3-incremental-updates-visualization">Test 3: Incremental Updates Visualization</h3>
 
-<p><img src="assets/images/online_statistics_evolution.png" alt="Online Statistics Evolution" /></p>
+<p><img src="/assets/images/homework6/online_statistics_evolution.png" alt="Online Statistics Evolution" /></p>
 
 <p><em>Figure: Evolution of running mean and standard deviation as data arrives. The algorithm adapts in real-time to changes in the data distribution.</em></p>
 
