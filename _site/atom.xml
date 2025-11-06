@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-11-06T01:04:59+01:00</updated>
+ <updated>2025-11-06T16:33:53+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -1788,9 +1788,9 @@ Sₙ₊₁ = Sₙ + δₙ₊₁(xₙ₊₁ - μₙ₊₁)
 
 &lt;p&gt;For ordered data x₁ ≤ x₂ ≤ … ≤ xₙ:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;         ⎧ xₙ₊₁/₂              if n is odd
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;         ⎧ x₍ₙ₊₁⁄₂₎              if n is odd
 Median = ⎨
-         ⎩ (xₙ/₂ + xₙ/₂₊₁)/2   if n is even
+         ⎩ (x₍ₙ/₂₎ + x₍ₙ/₂₊₁₎)/2   if n is even
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Properties:&lt;/strong&gt;&lt;/p&gt;
@@ -2414,17 +2414,7 @@ Range ≈ 4σ (for moderate n)
 &lt;p&gt;&lt;strong&gt;Applications:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Comparing values from different distributions&lt;/li&gt;
-  &lt;li&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;Identifying outliers (&lt;/td&gt;
-          &lt;td&gt;z&lt;/td&gt;
-          &lt;td&gt;&amp;gt; 3)&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/li&gt;
+  &lt;li&gt;Identifying outliers (|z| &amp;gt; 3)&lt;/li&gt;
   &lt;li&gt;Standardized test scores&lt;/li&gt;
   &lt;li&gt;Feature scaling in machine learning&lt;/li&gt;
 &lt;/ul&gt;
