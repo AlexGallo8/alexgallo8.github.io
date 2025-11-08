@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Homework 7 -  &middot; Statistics Homework
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://localhost:4000/assets/files/homework7/hmwk7_note.txt">
+  
+
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/custom.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/atom.xml">
+</head>
+
+
+  <body class="theme-base-0b">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Homework collection for the university course in Statistics</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/">Home</a>
+
+    <!-- 
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="http://localhost:4000/about/">About</a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+     -->
+
+    <a class="sidebar-nav-item" href="https://github.com/alexgallo8">GitHub Profile</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Statistics Homework</a>
+            <small>Alessandro Maone - 1945149</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Homework 7 - </h1>
+  <span class="post-date"></span>
+  in case you didn't demostrate Welford
+
+
+HMWK 7: continue of LLN
+
+Consider a server that is upgraded every week. Consider m attackers who have a probability p (ex. 0.5) of penetrating the machine. We assign +1 as a good score if the machine has not been hacked and -1 as a bad score if the machine has been hacked.
+Represent all possible trajectories of scores.
+How many trajectories reach each level right after n steps? Compute them.
+
+   ^
+   |
+   |
+   |                   .
+   |              .  
+   |         .         .
+   |    .         . 
+___|____|____.____|____.____|____|__>
+   |    .         .  
+   |         .         .
+
+We can almost use the homework 4 code with some adjustments:
+   - the main difference is in the step that you can take (random walk).
+
+We have 2^n possible trajectories (2 for each step), the same of the homework 4.
+
+HMWK 4 case:
+
+result|              trajectory                 |number of trajectories
+_______________________________________________________________________
+   0  |  (0,0,...,0)                            |   1
+   1  |  (1,0,...,0) (0,1,...,0) ... (,0,...,1) |   n
+   2  |                                         | (n 2) binomial coefficient
+   3  |                                         | (n 3) binomial coefficient
+   .  |                                         |   .
+   .  |                                         |   .
+   .  |                                         |   .
+  n-1 |                                         |   1
+
+  (A + B)^n = (A + B)(A + B) ... (A + B) = sum(n k)A^kB^(n-k) = (  k     n-k )
+  (A + B)^2 = (A + B)(A + B) = AA + AB + AB + BB                (A...A  B...B)
+
+Remember the hmwk4 style of graph: if you want to count the number of trajectories that reach each point, you must consider the fact that each one can be reached by only 2 previous points:
+Cn,k = C(n-1,k) + C(n-1,k-1), that is a recurrent relation (the same that exist between combinations).
+
+Combination Formula: (n k) = (n-1 k) + (n-1 k-1)
+
+When we consider the distribution from 0 to n it is a binomial distribution.
+In the case of the hmwk7 we have two possbile steps, so the result is similar but spread in two directions instead of one. One is used in statistic while the other is used in stocastic.
+
+- You have to just modify the previous code to consider this case.
+- Another interesting point is that at each step you can obtain the coefficient of the binomial expansion by the graph that represent the Tartaglia's triangle.
+- Find ou all the relationships with combinatorial concepts and math in general (Fibonacci's sequence, Tartaglia's triangle, ...).
+</div>
+
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/public/js/script.js'></script>
+  </body>
+</html>

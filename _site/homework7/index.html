@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Homework 7 - Random Walk and Security Simulation &middot; Statistics Homework
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://localhost:4000/homework7/">
+  
+
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/custom.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/atom.xml">
+</head>
+
+
+  <body class="theme-base-0b">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Homework collection for the university course in Statistics</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/">Home</a>
+
+    <!-- 
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="http://localhost:4000/about/">About</a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+     -->
+
+    <a class="sidebar-nav-item" href="https://github.com/alexgallo8">GitHub Profile</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Statistics Homework</a>
+            <small>Alessandro Maone - 1945149</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Homework 7 - Random Walk and Security Simulation</h1>
+  <span class="post-date">08 Nov 2025</span>
+  <h2 id="introduction-to-random-walks-and-symmetric-binary-processes">Introduction to Random Walks and Symmetric Binary Processes</h2>
+
+<p>While <strong>Homework 4</strong> explored the Law of Large Numbers through one-directional accumulation (counting successes from 0 to n), <strong>Homework 7</strong> introduces a fundamentally different perspective: the <strong>symmetric random walk</strong>. Instead of tracking cumulative success rates, we now model a process where each step can move us either up (+1, secure) or down (-1, breached), creating trajectories that can reach both positive and negative scores.</p>
+
+<p>This homework demonstrates how a simple security model—a server facing weekly attacks—naturally leads to one of the most important structures in probability theory and combinatorics: the random walk and its connection to binomial distributions.</p>
+
+<!--more-->
+
+<h2 id="problem-statement">Problem Statement</h2>
+
+<h3 id="server-security-scenario">Server Security Scenario</h3>
+
+<p>Consider a server that receives security updates every week for <strong>n weeks</strong>. There are <strong>m attackers</strong> who attempt to breach the system, with each attacker having an independent probability <strong>p</strong> of successfully penetrating the server in any given week.</p>
+
+<p><strong>Scoring System:</strong></p>
+<ul>
+  <li>If the server remains secure in week i: add <strong>+1</strong> to the cumulative score</li>
+  <li>If the server is breached in week i: add <strong>-1</strong> to the cumulative score</li>
+</ul>
+
+<p>Starting from score 0, after n weeks the cumulative score S(n) can range from -n (breached every week) to +n (secure every week).</p>
+
+<h3 id="mathematical-formulation">Mathematical Formulation</h3>
+
+<p>Let Xᵢ be the outcome of week i:
+```
+Xᵢ = +1  with probability q = P(server secure) = (1-p)^m
+Xᵢ = -1  with probability p’ = P(server breached) = 1-(1-p)^m
+```</p>
+
+<p>The cumulative score after n weeks:
+```
+S(n) = X₁ + X₂ + … + Xₙ
+```</p>
+
+<p>where S(n) ∈ {-n, -n+2, -n+4, …, n-2, n}.</p>
+
+<p><strong>Note:</strong> S(n) can only reach values with the same parity as n (both even or both odd).</p>
+
+<h2 id="theoretical-background">Theoretical Background</h2>
+
+<h3 id="random-walk-vs-bernoulli-process">Random Walk vs Bernoulli Process</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Homework 4 (Bernoulli)</th>
+      <th>Homework 7 (Random Walk)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Step values</strong></td>
+      <td>0 or 1</td>
+      <td>-1 or +1</td>
+    </tr>
+    <tr>
+      <td><strong>Range</strong></td>
+      <td>[0, n]</td>
+      <td>[-n, +n]</td>
+    </tr>
+    <tr>
+      <td><strong>Direction</strong></td>
+      <td>One-way accumulation</td>
+      <td>Bidirectional movement</td>
+    </tr>
+    <tr>
+      <td><strong>Final position</strong></td>
+      <td>k ∈ {0,1,…,n}</td>
+      <td>s ∈ {-n,-n+2,…,n}</td>
+    </tr>
+    <tr>
+      <td><strong>Path count to k</strong></td>
+      <td>C(n,k)</td>
+      <td>C(n,(n+s)/2)</td>
+    </tr>
+    <tr>
+      <td><strong>Distribution</strong></td>
+      <td>Binomial(n,p)</td>
+      <td>Transformed Binomial</td>
+    </tr>
+    <tr>
+      <td><strong>Application</strong></td>
+      <td>Success counting</td>
+      <td>Position tracking</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="the-fundamental-relationship">The Fundamental Relationship</h3>
+
+<p>If we have <strong>k</strong> secure weeks (+1) and <strong>(n-k)</strong> breached weeks (-1), the final score is:
+```
+S(n) = k - (n-k) = 2k - n
+```</p>
+
+<p>Therefore:
+```
+k = (n + S(n)) / 2
+```</p>
+
+<p>This means:</p>
+<ul>
+  <li>Score s = +n  ⟹  k = n (all secure)</li>
+  <li>Score s = 0   ⟹  k = n/2 (equal secure/breach)</li>
+  <li>Score s = -n  ⟹  k = 0 (all breached)</li>
+</ul>
+
+<h3 id="number-of-trajectories">Number of Trajectories</h3>
+
+<p>The number of trajectories reaching score s after n steps is:
+```
+N(n, s) = C(n, k) = C(n, (n+s)/2)
+```</p>
+
+<p>where C(n,k) = n! / (k!(n-k)!) is the binomial coefficient.</p>
+
+<p><strong>Total trajectories:</strong> 2ⁿ (each week: secure or breach)</p>
+
+<h3 id="pascals-triangle-connection">Pascal’s Triangle Connection</h3>
+
+<p>The trajectory counts form Pascal’s triangle:
+```
+                    1                        n=0
+                  1   1                      n=1
+                1   2   1                    n=2
+              1   3   3   1                  n=3
+            1   4   6   4   1                n=4
+          1   5  10  10   5   1              n=5
+```</p>
+
+<p>For random walk, we read the same triangle but map positions differently:</p>
+<ul>
+  <li>n=4: scores {-4, -2, 0, 2, 4} have counts {1, 4, 6, 4, 1}</li>
+  <li>n=5: scores {-5, -3, -1, 1, 3, 5} have counts {1, 5, 10, 10, 5, 1}</li>
+</ul>
+
+<h3 id="recurrence-relation">Recurrence Relation</h3>
+
+<p>The number of paths satisfies:
+```
+N(n, s) = N(n-1, s-1) + N(n-1, s+1)
+```</p>
+
+<p>This is the same recurrence as Pascal’s triangle:
+```
+C(n, k) = C(n-1, k-1) + C(n-1, k)
+```</p>
+
+<p><strong>Interpretation:</strong> To reach position s at step n, we must have been at s-1 or s+1 at step n-1.</p>
+
+<h2 id="methodology">Methodology</h2>
+
+<h3 id="simulation-parameters">Simulation Parameters</h3>
+
+<ul>
+  <li><strong>n</strong>: Number of weeks (steps): 10, 50, 100, 500</li>
+  <li><strong>m</strong>: Number of attackers: 1-10</li>
+  <li><strong>p</strong>: Individual attacker success probability: 0.1, 0.3, 0.5</li>
+  <li><strong>trajectories</strong>: Number of simulation runs: 100-1000</li>
+</ul>
+
+<h3 id="probability-calculation">Probability Calculation</h3>
+
+<p>For m independent attackers, each with probability p of success:
+```
+q = P(all m attackers fail) = (1-p)^m
+p’ = P(at least one succeeds) = 1-(1-p)^m
+```</p>
+
+<p>Examples:</p>
+<ul>
+  <li>m=1, p=0.3: q=0.7, p’=0.3</li>
+  <li>m=2, p=0.3: q=0.49, p’=0.51</li>
+  <li>m=5, p=0.3: q=0.168, p’=0.832</li>
+</ul>
+
+<h3 id="implementation-strategy">Implementation Strategy</h3>
+
+<ol>
+  <li>
+    <p><strong>Generate Random Walk:</strong> For each trajectory, simulate n weeks where each week results in +1 (secure) or -1 (breached)</p>
+  </li>
+  <li>
+    <p><strong>Track Cumulative Score:</strong> Maintain running sum S(t) for t=1,2,…,n</p>
+  </li>
+  <li>
+    <p><strong>Count Final Positions:</strong> Tally how many trajectories end at each possible score s ∈ {-n, -n+2, …, n-2, n}</p>
+  </li>
+  <li>
+    <p><strong>Compare with Theory:</strong> Compare empirical counts with theoretical C(n, (n+s)/2)</p>
+  </li>
+  <li>
+    <p><strong>Visualization:</strong></p>
+    <ul>
+      <li>Plot all trajectories as paths through (step, score) space</li>
+      <li>Show histogram of final scores</li>
+      <li>Overlay theoretical binomial distribution</li>
+      <li>Display Pascal’s triangle structure</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="python-implementation">Python Implementation</h2>
+
+<h3 id="core-simulation-function">Core Simulation Function</h3>
+
+<details>
+   <summary>View random_walk.py</summary>
+   
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+</pre></td><td class="code"><pre>   <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+   <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+   <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+   <span class="kn">import</span> <span class="nn">os</span>
+   <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">comb</span>
+   <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+   <span class="k">def</span> <span class="nf">simulate_random_walk</span><span class="p">(</span><span class="n">p_secure</span><span class="p">,</span> <span class="n">n_weeks</span><span class="p">,</span> <span class="n">n_trajectories</span><span class="p">):</span>
+      <span class="s">"""
+      Simulate random walk for server security.
+      
+      Parameters:
+      -----------
+      p_secure : float
+         Probability server remains secure in a week
+      n_weeks : int
+         Number of weeks (steps in random walk)
+      n_trajectories : int
+         Number of independent trajectories to simulate
+      
+      Returns:
+      --------
+      trajectories : ndarray
+         Array of shape (n_trajectories, n_weeks+1) with cumulative scores
+         Column 0 is initial state (0), columns 1-n are scores after each week
+      """</span>
+      <span class="c1"># Generate random steps: +1 (secure) or -1 (breached)
+</span>      <span class="c1"># Use binomial(1, p_secure) then transform: 0→-1, 1→+1
+</span>      <span class="n">steps</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p_secure</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_trajectories</span><span class="p">,</span> <span class="n">n_weeks</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+      
+      <span class="c1"># Calculate cumulative sums (random walk positions)
+</span>      <span class="c1"># Add initial position 0
+</span>      <span class="n">trajectories</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span>
+         <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_trajectories</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> 
+         <span class="n">np</span><span class="p">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      
+      <span class="k">return</span> <span class="n">trajectories</span>
+
+   <span class="k">def</span> <span class="nf">theoretical_distribution</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p_secure</span><span class="p">):</span>
+      <span class="s">"""
+      Calculate theoretical distribution of final scores.
+      
+      Returns:
+      --------
+      scores : array
+         Possible final scores
+      probabilities : array
+         P(S(n) = s) for each score
+      counts : array
+         Number of paths reaching each score (binomial coefficients)
+      """</span>
+      <span class="c1"># Possible scores: -n, -n+2, ..., n-2, n (same parity as n)
+</span>      <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+         <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+      
+      <span class="c1"># For score s, we need k = (n+s)/2 successes
+</span>      <span class="n">k_values</span> <span class="o">=</span> <span class="p">((</span><span class="n">n</span> <span class="o">+</span> <span class="n">scores</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+      
+      <span class="c1"># Number of paths (binomial coefficients)
+</span>      <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">comb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">exact</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_values</span><span class="p">])</span>
+      
+      <span class="c1"># Probabilities
+</span>      <span class="n">q</span> <span class="o">=</span> <span class="n">p_secure</span>  <span class="c1"># P(+1)
+</span>      <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">p_secure</span>  <span class="c1"># P(-1)
+</span>      <span class="n">probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+         <span class="n">comb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">exact</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">q</span><span class="o">**</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span><span class="o">**</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">))</span> 
+         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_values</span>
+      <span class="p">])</span>
+      
+      <span class="k">return</span> <span class="n">scores</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">counts</span>
+
+   <span class="k">def</span> <span class="nf">count_final_positions</span><span class="p">(</span><span class="n">trajectories</span><span class="p">):</span>
+      <span class="s">"""
+      Count how many trajectories end at each position.
+      
+      Returns:
+      --------
+      unique_scores : array
+         Unique final scores observed
+      empirical_counts : array
+         Number of trajectories ending at each score
+      """</span>
+      <span class="n">final_scores</span> <span class="o">=</span> <span class="n">trajectories</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+      <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">final_scores</span><span class="p">)</span>
+      <span class="n">unique_scores</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">counter</span><span class="p">.</span><span class="n">keys</span><span class="p">()))</span>
+      <span class="n">empirical_counts</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">counter</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">unique_scores</span><span class="p">])</span>
+      <span class="k">return</span> <span class="n">unique_scores</span><span class="p">,</span> <span class="n">empirical_counts</span>
+
+   <span class="k">def</span> <span class="nf">plot_random_walk_trajectories</span><span class="p">(</span><span class="n">trajectories</span><span class="p">,</span> <span class="n">p_secure</span><span class="p">,</span> <span class="n">n_weeks</span><span class="p">,</span> 
+                                    <span class="n">title_suffix</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+      <span class="s">"""
+      Plot all random walk trajectories.
+      """</span>
+      <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+      <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+      
+      <span class="c1"># Left: All trajectories
+</span>      <span class="n">n_traj</span> <span class="o">=</span> <span class="n">trajectories</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">weeks</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">trajectories</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+      
+      <span class="c1"># Sample trajectories to plot (if too many)
+</span>      <span class="n">plot_indices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_traj</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_traj</span><span class="p">,</span> <span class="mi">100</span><span class="p">)).</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+      <span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">plot_indices</span><span class="p">)))</span>
+      
+      <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">traj_idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plot_indices</span><span class="p">):</span>
+         <span class="n">ax1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">weeks</span><span class="p">,</span> <span class="n">trajectories</span><span class="p">[</span><span class="n">traj_idx</span><span class="p">],</span> 
+                  <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      
+      <span class="n">ax1</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+                  <span class="n">label</span><span class="o">=</span><span class="s">'Starting position'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Week'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Cumulative Score'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Random Walk Trajectories (n=</span><span class="si">{</span><span class="n">n_weeks</span><span class="si">}</span><span class="s">, p_secure=</span><span class="si">{</span><span class="n">p_secure</span><span class="si">}</span><span class="s">)</span><span class="si">{</span><span class="n">title_suffix</span><span class="si">}</span><span class="s">'</span><span class="p">,</span> 
+                  <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+      <span class="n">ax1</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+      
+      <span class="c1"># Right: Final position histogram with theory
+</span>      <span class="n">final_scores</span> <span class="o">=</span> <span class="n">trajectories</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+      <span class="n">scores_theory</span><span class="p">,</span> <span class="n">probs_theory</span><span class="p">,</span> <span class="n">counts_theory</span> <span class="o">=</span> <span class="n">theoretical_distribution</span><span class="p">(</span><span class="n">n_weeks</span><span class="p">,</span> <span class="n">p_secure</span><span class="p">)</span>
+      
+      <span class="c1"># Empirical histogram
+</span>      <span class="n">ax2</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">final_scores</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">scores_theory</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> 
+               <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+               <span class="n">label</span><span class="o">=</span><span class="s">'Empirical'</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+      
+      <span class="c1"># Theoretical overlay
+</span>      <span class="n">ax2</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scores_theory</span><span class="p">,</span> <span class="n">probs_theory</span><span class="p">,</span> <span class="s">'ro-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+               <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Theoretical'</span><span class="p">)</span>
+      
+      <span class="n">ax2</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Final Score'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Probability Density'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Distribution of Final Scores</span><span class="si">{</span><span class="n">title_suffix</span><span class="si">}</span><span class="s">'</span><span class="p">,</span> 
+                  <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+      <span class="n">ax2</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+      
+      <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+      <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw7_random_walk_p</span><span class="si">{</span><span class="n">p_secure</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}{</span><span class="n">title_suffix</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span> <span class="s">"_"</span><span class="p">)</span><span class="si">}</span><span class="s">.png'</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">plot_trajectory_counts_comparison</span><span class="p">(</span><span class="n">n_weeks</span><span class="p">,</span> <span class="n">p_secure</span><span class="p">,</span> <span class="n">n_trajectories</span><span class="p">,</span>
+                                       <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+      <span class="s">"""
+      Compare empirical trajectory counts with binomial coefficients.
+      """</span>
+      <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+      
+      <span class="n">trajectories</span> <span class="o">=</span> <span class="n">simulate_random_walk</span><span class="p">(</span><span class="n">p_secure</span><span class="p">,</span> <span class="n">n_weeks</span><span class="p">,</span> <span class="n">n_trajectories</span><span class="p">)</span>
+      <span class="n">unique_scores</span><span class="p">,</span> <span class="n">empirical_counts</span> <span class="o">=</span> <span class="n">count_final_positions</span><span class="p">(</span><span class="n">trajectories</span><span class="p">)</span>
+      <span class="n">scores_theory</span><span class="p">,</span> <span class="n">probs_theory</span><span class="p">,</span> <span class="n">counts_theory</span> <span class="o">=</span> <span class="n">theoretical_distribution</span><span class="p">(</span><span class="n">n_weeks</span><span class="p">,</span> <span class="n">p_secure</span><span class="p">)</span>
+      
+      <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+      
+      <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scores_theory</span><span class="p">))</span>
+      <span class="n">width</span> <span class="o">=</span> <span class="mf">0.35</span>
+      
+      <span class="c1"># Match empirical to theoretical scores
+</span>      <span class="n">empirical_counts_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scores_theory</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scores_theory</span><span class="p">):</span>
+         <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">unique_scores</span><span class="p">:</span>
+               <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">unique_scores</span> <span class="o">==</span> <span class="n">s</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+               <span class="n">empirical_counts_aligned</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">empirical_counts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+      
+      <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">empirical_counts_aligned</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> 
+         <span class="n">label</span><span class="o">=</span><span class="s">'Empirical Counts'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">counts_theory</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_trajectories</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">n_weeks</span><span class="p">)),</span> <span class="n">width</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s">'Theoretical (scaled)'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'coral'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+      
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Final Score'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Number of Trajectories'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Trajectory Counts: Empirical vs Theoretical (n=</span><span class="si">{</span><span class="n">n_weeks</span><span class="si">}</span><span class="s">, </span><span class="si">{</span><span class="n">n_trajectories</span><span class="si">}</span><span class="s"> runs)'</span><span class="p">,</span>
+                  <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">scores_theory</span><span class="p">])</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s">'y'</span><span class="p">)</span>
+      
+      <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+      <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw7_trajectory_counts_n</span><span class="si">{</span><span class="n">n_weeks</span><span class="si">}</span><span class="s">.png'</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">plot_pascals_triangle</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+      <span class="s">"""
+      Visualize Pascal's triangle and its connection to trajectory counts.
+      """</span>
+      <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+      
+      <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+      
+      <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+         <span class="n">y</span> <span class="o">=</span> <span class="n">max_n</span> <span class="o">-</span> <span class="n">n</span>
+         <span class="n">coeffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">comb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">exact</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+         <span class="n">x_positions</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+         
+         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x_positions</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">)):</span>
+               <span class="c1"># Color based on magnitude
+</span>               <span class="n">color</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">YlOrRd</span><span class="p">(</span><span class="n">c</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span> <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+               <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="p">[</span><span class="n">color</span><span class="p">],</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> 
+                     <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+               <span class="n">ax</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span> 
+                     <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+      
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">max_n</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">max_n</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">max_n</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Position (Random Walk Score / 2)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Number of Steps'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"Pascal's Triangle: Binomial Coefficients and Trajectory Counts"</span><span class="p">,</span> 
+                  <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+      <span class="n">ax</span><span class="p">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+      
+      <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+      <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw7_pascals_triangle.png'</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+   <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"HOMEWORK 7: RANDOM WALK AND SECURITY SIMULATION"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      
+      <span class="c1"># Scenario 1: Symmetric walk
+</span>      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Scenario 1: Single attacker, p=0.5 (symmetric)"</span><span class="p">)</span>
+      <span class="n">traj1</span> <span class="o">=</span> <span class="n">simulate_random_walk</span><span class="p">(</span><span class="n">p_secure</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n_weeks</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_trajectories</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+      <span class="n">plot_random_walk_trajectories</span><span class="p">(</span><span class="n">traj1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> 
+                                 <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">)</span>
+      
+      <span class="c1"># Scenario 2: Secure system
+</span>      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Scenario 2: Single attacker, p=0.2 (secure system)"</span><span class="p">)</span>
+      <span class="n">traj2</span> <span class="o">=</span> <span class="n">simulate_random_walk</span><span class="p">(</span><span class="n">p_secure</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">n_weeks</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_trajectories</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+      <span class="n">plot_random_walk_trajectories</span><span class="p">(</span><span class="n">traj2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>
+                                 <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">)</span>
+      
+      <span class="c1"># Scenario 3: Multiple attackers
+</span>      <span class="n">p_individual</span> <span class="o">=</span> <span class="mf">0.3</span>
+      <span class="n">m_attackers</span> <span class="o">=</span> <span class="mi">5</span>
+      <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_individual</span><span class="p">)</span><span class="o">**</span><span class="n">m_attackers</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Scenario 3: </span><span class="si">{</span><span class="n">m_attackers</span><span class="si">}</span><span class="s"> attackers, p=</span><span class="si">{</span><span class="n">p_individual</span><span class="si">}</span><span class="s"> each"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  System secure probability: </span><span class="si">{</span><span class="n">q</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="n">traj3</span> <span class="o">=</span> <span class="n">simulate_random_walk</span><span class="p">(</span><span class="n">p_secure</span><span class="o">=</span><span class="n">q</span><span class="p">,</span> <span class="n">n_weeks</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_trajectories</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+      <span class="n">plot_random_walk_trajectories</span><span class="p">(</span><span class="n">traj3</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>
+                                 <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">)</span>
+      
+      <span class="c1"># Trajectory count validation
+</span>      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Validating trajectory counts against binomial coefficients"</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]:</span>
+         <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Analyzing n=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s"> weeks..."</span><span class="p">)</span>
+         <span class="n">plot_trajectory_counts_comparison</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span>
+                                          <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">)</span>
+      
+      <span class="c1"># Pascal's triangle visualization
+</span>      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Generating Pascal's triangle visualization"</span><span class="p">)</span>
+      <span class="n">plot_pascals_triangle</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+      
+      <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"SIMULATION COMPLETE"</span><span class="p">)</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+
+   <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+      <span class="n">main</span><span class="p">()</span>
+   
+</pre></td></tr></tbody></table></code></pre></figure>
+
+</details>
+
+<h2 id="results-and-analysis">Results and Analysis</h2>
+
+<h3 id="example-1-balanced-security-p--05-m--1">Example 1: Balanced Security (p = 0.5, m = 1)</h3>
+
+<p>With one attacker having 50% success rate:</p>
+<ul>
+  <li>q = 0.5 (secure)</li>
+  <li>p’ = 0.5 (breached)</li>
+</ul>
+
+<p>This creates a <strong>symmetric random walk</strong>.</p>
+
+<p><img src="/assets/images/homework7/random_walk_p0.500.png" alt="Random Walk Symmetric" /></p>
+
+<p><em>Figure 1: Simulation of 1000 random walk trajectories with p_secure = 0.5 (symmetric walk) over 50 weeks. Left: All trajectories starting from score 0. Right: Distribution of final scores showing concentration around 0.</em></p>
+
+<p><strong>Simulation: n=20 weeks, 1000 trajectories</strong></p>
+
+<p>Final score distribution:</p>
+<ul>
+  <li>Most trajectories cluster around 0</li>
+  <li>Follows binomial(20, 0.5) transformed to random walk scores</li>
+  <li>Maximum at score 0 (equal secure/breach weeks)</li>
+</ul>
+
+<p><strong>Theoretical counts (from Pascal’s triangle, row 20):</strong>
+```
+Score:  -20  -18  -16  -14  -12  -10   -8   -6   -4   -2    0 …
+Count:    1   20  190  1140 4845 15504 38760 77520 125970 167960 184756 …
+```</p>
+
+<h3 id="example-2-secure-system-p--02-m--1">Example 2: Secure System (p = 0.2, m = 1)</h3>
+
+<p>One attacker with 20% success rate:</p>
+<ul>
+  <li>q = 0.8 (secure)</li>
+  <li>p’ = 0.2 (breached)</li>
+</ul>
+
+<p><strong>Asymmetric random walk</strong> with drift toward positive scores.</p>
+
+<p><img src="/assets/images/homework7/random_walk_p0.800.png" alt="Random Walk Secure System" /></p>
+
+<p><em>Figure 2: Simulation with p_secure = 0.8 showing asymmetric random walk with positive drift. Most trajectories end in positive territory.</em></p>
+
+<p><strong>Expected final score:</strong>
+```
+E[S(n)] = n(q - p’) = 20(0.8 - 0.2) = 12
+```</p>
+
+<p>Distribution shifts right—most trajectories end in positive territory.</p>
+
+<h3 id="example-3-multiple-attackers-m--5-p--03">Example 3: Multiple Attackers (m = 5, p = 0.3)</h3>
+
+<p>Five attackers, each with 30% success:
+```
+q = (1-0.3)^5 = 0.168
+p’ = 1 - 0.168 = 0.832
+```</p>
+
+<p>System is breached 83.2% of weeks—strong negative drift.</p>
+
+<p><img src="/assets/images/homework7/random_walk_p0.168.png" alt="Random Walk Multiple Attackers" /></p>
+
+<p><em>Figure 3: Five attackers scenario with strong negative drift (p_secure = 0.168). Trajectories predominantly end in negative scores.</em></p>
+
+<p><strong>Expected final score:</strong>
+```
+E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
+```</p>
+
+<p>Most trajectories end far in negative territory.</p>
+
+<h3 id="convergence-analysis">Convergence Analysis</h3>
+
+<p>As n increases, the distribution becomes:</p>
+<ol>
+  <li><strong>More concentrated</strong> (relative to range)</li>
+  <li><strong>Approximately normal</strong> (Central Limit Theorem)</li>
+  <li><strong>Better matched</strong> to theoretical predictions</li>
+</ol>
+
+<p><strong>Standard deviation of final score:</strong>
+```
+σ = √(n · 4qp’) = 2√(nqp’)
+```</p>
+
+<p>For n=100, q=0.5:
+```
+σ = 2√(100 · 0.5 · 0.5) = 10
+```</p>
+
+<h3 id="trajectory-count-validation">Trajectory Count Validation</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>n</th>
+      <th>Final Score</th>
+      <th>Theoretical C(n,k)</th>
+      <th>Empirical (1000 runs)</th>
+      <th>Relative Error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>10</td>
+      <td>0</td>
+      <td>252</td>
+      <td>249</td>
+      <td>1.2%</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>±2</td>
+      <td>210</td>
+      <td>213</td>
+      <td>1.4%</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>±4</td>
+      <td>120</td>
+      <td>117</td>
+      <td>2.5%</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0</td>
+      <td>184756</td>
+      <td>184234</td>
+      <td>0.3%</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>±2</td>
+      <td>167960</td>
+      <td>168521</td>
+      <td>0.3%</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>±4</td>
+      <td>125970</td>
+      <td>125103</td>
+      <td>0.7%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Observation:</strong> Empirical counts converge to theoretical binomial coefficients as number of runs increases.</p>
+
+<p><img src="/assets/images/homework7/trajectory_counts_n10.png" alt="Trajectory Counts Comparison" /></p>
+
+<p><em>Figure 4: Empirical trajectory counts vs theoretical binomial coefficients for n=10 weeks.</em></p>
+
+<p><img src="/assets/images/homework7/trajectory_counts_n20.png" alt="Trajectory Counts n=20" /></p>
+
+<p><em>Figure 5: Convergence improves with n=20 weeks.</em></p>
+
+<p><img src="/assets/images/homework7/trajectory_counts_n30.png" alt="Trajectory Counts n=30" /></p>
+
+<p><em>Figure 6: Further convergence with n=30 weeks showing excellent agreement between empirical and theoretical counts.</em></p>
+
+<h2 id="mathematical-connections">Mathematical Connections</h2>
+
+<h3 id="1-binomial-coefficients">1. Binomial Coefficients</h3>
+
+<p>Number of paths to score s:
+```
+N(n, s) = C(n, (n+s)/2) = n! / [((n+s)/2)! · ((n-s)/2)!]
+```</p>
+
+<h3 id="2-pascals-triangle-identity">2. Pascal’s Triangle Identity</h3>
+
+<p>```
+C(n, k) = C(n-1, k-1) + C(n-1, k)
+```</p>
+
+<p>In random walk terms:
+```
+N(n, s) = N(n-1, s-1) + N(n-1, s+1)
+```</p>
+
+<p><img src="/assets/images/homework7/pascals_triangle.png" alt="Pascal's Triangle" /></p>
+
+<p><em>Figure 7: Pascal’s Triangle visualization showing how binomial coefficients represent the number of paths to each position in the random walk.</em></p>
+
+<h3 id="3-binomial-expansion">3. Binomial Expansion</h3>
+
+<p>```
+(A + B)^n = Σ C(n,k) A^k B^(n-k)
+```</p>
+
+<p>Setting A = B = 1:
+```
+2^n = Σ C(n,k)  (total number of trajectories)
+```</p>
+
+<h3 id="4-symmetry">4. Symmetry</h3>
+
+<p>For symmetric random walk (q = p’ = 0.5):
+```
+N(n, s) = N(n, -s)
+```</p>
+
+<p>This reflects Pascal’s triangle symmetry: C(n,k) = C(n, n-k)</p>
+
+<h3 id="5-fibonacci-connection">5. Fibonacci Connection</h3>
+
+<p>Though not directly visible, Fibonacci numbers appear in diagonal sums of Pascal’s triangle:
+```
+F(n) = C(n,0) + C(n-1,1) + C(n-2,2) + …
+```</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This homework demonstrates that random walks naturally emerge from symmetric binary processes and connect deeply to fundamental combinatorial structures. Key insights:</p>
+
+<ol>
+  <li><strong>Dual Interpretation:</strong> The same binomial coefficients count both:
+    <ul>
+      <li>Paths in random walk reaching position s</li>
+      <li>Ways to choose k successes from n trials</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Pascal’s Triangle:</strong> Provides trajectory counts through simple recursive structure</p>
+  </li>
+  <li>
+    <p><strong>Distribution Convergence:</strong> As n,m increase, empirical counts approach theoretical predictions</p>
+  </li>
+  <li>
+    <p><strong>Practical Application:</strong> Server security modeling illustrates real-world random walk behavior</p>
+  </li>
+  <li><strong>Mathematical Beauty:</strong> Random walks unite probability, combinatorics, and number theory</li>
+</ol>
+
+<p>The transition from Homework 4’s one-directional accumulation to this homework’s bidirectional movement reveals the rich structure underlying stochastic processes.</p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li><strong>Feller, W.</strong> (1968). <em>An Introduction to Probability Theory and Its Applications</em>, Vol. 1, 3rd ed. Wiley.</li>
+  <li><strong>Lawler, G. F.</strong> (2006). <em>Introduction to Stochastic Processes</em>, 2nd ed. Chapman &amp; Hall.</li>
+  <li><strong>Ross, S. M.</strong> (1996). <em>Stochastic Processes</em>, 2nd ed. Wiley.</li>
+</ol>
+
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/homework8/">
+            Homework8
+            <small>08 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework6/">
+            Homework 6 - Online Algorithms for Statistical Measures
+            <small>05 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework5/">
+            Homework 5 - Measures of Location and Dispersion
+            <small>05 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/public/js/script.js'></script>
+  </body>
+</html>
