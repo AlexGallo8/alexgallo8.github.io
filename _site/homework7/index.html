@@ -123,16 +123,14 @@
 
 <h3 id="mathematical-formulation">Mathematical Formulation</h3>
 
-<p>Let Xᵢ be the outcome of week i:
-```
-Xᵢ = +1  with probability q = P(server secure) = (1-p)^m
-Xᵢ = -1  with probability p’ = P(server breached) = 1-(1-p)^m
-```</p>
+<p>Let Xᵢ be the outcome of week i:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Xᵢ = +1  with probability q = P(server secure) = (1-p)^m
+Xᵢ = -1  with probability p' = P(server breached) = 1-(1-p)^m
+</code></pre></div></div>
 
-<p>The cumulative score after n weeks:
-```
-S(n) = X₁ + X₂ + … + Xₙ
-```</p>
+<p>The cumulative score after n weeks:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S(n) = X₁ + X₂ + ... + Xₙ
+</code></pre></div></div>
 
 <p>where S(n) ∈ {-n, -n+2, -n+4, …, n-2, n}.</p>
 
@@ -191,15 +189,13 @@ S(n) = X₁ + X₂ + … + Xₙ
 
 <h3 id="the-fundamental-relationship">The Fundamental Relationship</h3>
 
-<p>If we have <strong>k</strong> secure weeks (+1) and <strong>(n-k)</strong> breached weeks (-1), the final score is:
-```
-S(n) = k - (n-k) = 2k - n
-```</p>
+<p>If we have <strong>k</strong> secure weeks (+1) and <strong>(n-k)</strong> breached weeks (-1), the final score is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S(n) = k - (n-k) = 2k - n
+</code></pre></div></div>
 
-<p>Therefore:
-```
-k = (n + S(n)) / 2
-```</p>
+<p>Therefore:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>k = (n + S(n)) / 2
+</code></pre></div></div>
 
 <p>This means:</p>
 <ul>
@@ -210,10 +206,9 @@ k = (n + S(n)) / 2
 
 <h3 id="number-of-trajectories">Number of Trajectories</h3>
 
-<p>The number of trajectories reaching score s after n steps is:
-```
-N(n, s) = C(n, k) = C(n, (n+s)/2)
-```</p>
+<p>The number of trajectories reaching score s after n steps is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(n, s) = C(n, k) = C(n, (n+s)/2)
+</code></pre></div></div>
 
 <p>where C(n,k) = n! / (k!(n-k)!) is the binomial coefficient.</p>
 
@@ -221,15 +216,14 @@ N(n, s) = C(n, k) = C(n, (n+s)/2)
 
 <h3 id="pascals-triangle-connection">Pascal’s Triangle Connection</h3>
 
-<p>The trajectory counts form Pascal’s triangle:
-```
-                    1                        n=0
+<p>The trajectory counts form Pascal’s triangle:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                    1                        n=0
                   1   1                      n=1
                 1   2   1                    n=2
               1   3   3   1                  n=3
             1   4   6   4   1                n=4
           1   5  10  10   5   1              n=5
-```</p>
+</code></pre></div></div>
 
 <p>For random walk, we read the same triangle but map positions differently:</p>
 <ul>
@@ -239,15 +233,13 @@ N(n, s) = C(n, k) = C(n, (n+s)/2)
 
 <h3 id="recurrence-relation">Recurrence Relation</h3>
 
-<p>The number of paths satisfies:
-```
-N(n, s) = N(n-1, s-1) + N(n-1, s+1)
-```</p>
+<p>The number of paths satisfies:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(n, s) = N(n-1, s-1) + N(n-1, s+1)
+</code></pre></div></div>
 
-<p>This is the same recurrence as Pascal’s triangle:
-```
-C(n, k) = C(n-1, k-1) + C(n-1, k)
-```</p>
+<p>This is the same recurrence as Pascal’s triangle:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C(n, k) = C(n-1, k-1) + C(n-1, k)
+</code></pre></div></div>
 
 <p><strong>Interpretation:</strong> To reach position s at step n, we must have been at s-1 or s+1 at step n-1.</p>
 
@@ -264,11 +256,10 @@ C(n, k) = C(n-1, k-1) + C(n-1, k)
 
 <h3 id="probability-calculation">Probability Calculation</h3>
 
-<p>For m independent attackers, each with probability p of success:
-```
-q = P(all m attackers fail) = (1-p)^m
-p’ = P(at least one succeeds) = 1-(1-p)^m
-```</p>
+<p>For m independent attackers, each with probability p of success:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>q = P(all m attackers fail) = (1-p)^m
+p' = P(at least one succeeds) = 1-(1-p)^m
+</code></pre></div></div>
 
 <p>Examples:</p>
 <ul>
@@ -304,8 +295,6 @@ p’ = P(at least one succeeds) = 1-(1-p)^m
 </ol>
 
 <h2 id="python-implementation">Python Implementation</h2>
-
-<h3 id="core-simulation-function">Core Simulation Function</h3>
 
 <details>
    <summary>View random_walk.py</summary>
@@ -881,11 +870,10 @@ p’ = P(at least one succeeds) = 1-(1-p)^m
   <li>Maximum at score 0 (equal secure/breach weeks)</li>
 </ul>
 
-<p><strong>Theoretical counts (from Pascal’s triangle, row 20):</strong>
-```
-Score:  -20  -18  -16  -14  -12  -10   -8   -6   -4   -2    0 …
-Count:    1   20  190  1140 4845 15504 38760 77520 125970 167960 184756 …
-```</p>
+<p><strong>Theoretical counts (from Pascal’s triangle, row 20):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Score:  -20  -18  -16  -14  -12  -10   -8   -6   -4   -2    0 ...
+Count:    1   20  190  1140 4845 15504 38760 77520 125970 167960 184756 ...
+</code></pre></div></div>
 
 <h3 id="example-2-secure-system-p--02-m--1">Example 2: Secure System (p = 0.2, m = 1)</h3>
 
@@ -901,20 +889,18 @@ Count:    1   20  190  1140 4845 15504 38760 77520 125970 167960 184756 …
 
 <p><em>Figure 2: Simulation with p_secure = 0.8 showing asymmetric random walk with positive drift. Most trajectories end in positive territory.</em></p>
 
-<p><strong>Expected final score:</strong>
-```
-E[S(n)] = n(q - p’) = 20(0.8 - 0.2) = 12
-```</p>
+<p><strong>Expected final score:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>E[S(n)] = n(q - p') = 20(0.8 - 0.2) = 12
+</code></pre></div></div>
 
 <p>Distribution shifts right—most trajectories end in positive territory.</p>
 
 <h3 id="example-3-multiple-attackers-m--5-p--03">Example 3: Multiple Attackers (m = 5, p = 0.3)</h3>
 
-<p>Five attackers, each with 30% success:
-```
-q = (1-0.3)^5 = 0.168
-p’ = 1 - 0.168 = 0.832
-```</p>
+<p>Five attackers, each with 30% success:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>q = (1-0.3)^5 = 0.168
+p' = 1 - 0.168 = 0.832
+</code></pre></div></div>
 
 <p>System is breached 83.2% of weeks—strong negative drift.</p>
 
@@ -922,10 +908,9 @@ p’ = 1 - 0.168 = 0.832
 
 <p><em>Figure 3: Five attackers scenario with strong negative drift (p_secure = 0.168). Trajectories predominantly end in negative scores.</em></p>
 
-<p><strong>Expected final score:</strong>
-```
-E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
-```</p>
+<p><strong>Expected final score:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
+</code></pre></div></div>
 
 <p>Most trajectories end far in negative territory.</p>
 
@@ -938,15 +923,13 @@ E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
   <li><strong>Better matched</strong> to theoretical predictions</li>
 </ol>
 
-<p><strong>Standard deviation of final score:</strong>
-```
-σ = √(n · 4qp’) = 2√(nqp’)
-```</p>
+<p><strong>Standard deviation of final score:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>σ = √(n · 4qp') = 2√(nqp')
+</code></pre></div></div>
 
-<p>For n=100, q=0.5:
-```
-σ = 2√(100 · 0.5 · 0.5) = 10
-```</p>
+<p>For n=100, q=0.5:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>σ = 2√(100 · 0.5 · 0.5) = 10
+</code></pre></div></div>
 
 <h3 id="trajectory-count-validation">Trajectory Count Validation</h3>
 
@@ -1024,21 +1007,18 @@ E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
 
 <h3 id="1-binomial-coefficients">1. Binomial Coefficients</h3>
 
-<p>Number of paths to score s:
-```
-N(n, s) = C(n, (n+s)/2) = n! / [((n+s)/2)! · ((n-s)/2)!]
-```</p>
+<p>Number of paths to score s:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(n, s) = C(n, (n+s)/2) = n! / [((n+s)/2)! · ((n-s)/2)!]
+</code></pre></div></div>
 
 <h3 id="2-pascals-triangle-identity">2. Pascal’s Triangle Identity</h3>
 
-<p>```
-C(n, k) = C(n-1, k-1) + C(n-1, k)
-```</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C(n, k) = C(n-1, k-1) + C(n-1, k)
+</code></pre></div></div>
 
-<p>In random walk terms:
-```
-N(n, s) = N(n-1, s-1) + N(n-1, s+1)
-```</p>
+<p>In random walk terms:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(n, s) = N(n-1, s-1) + N(n-1, s+1)
+</code></pre></div></div>
 
 <p><img src="/assets/images/homework7/pascals_triangle.png" alt="Pascal's Triangle" /></p>
 
@@ -1046,30 +1026,26 @@ N(n, s) = N(n-1, s-1) + N(n-1, s+1)
 
 <h3 id="3-binomial-expansion">3. Binomial Expansion</h3>
 
-<p>```
-(A + B)^n = Σ C(n,k) A^k B^(n-k)
-```</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(A + B)^n = Σ C(n,k) A^k B^(n-k)
+</code></pre></div></div>
 
-<p>Setting A = B = 1:
-```
-2^n = Σ C(n,k)  (total number of trajectories)
-```</p>
+<p>Setting A = B = 1:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2^n = Σ C(n,k)  (total number of trajectories)
+</code></pre></div></div>
 
 <h3 id="4-symmetry">4. Symmetry</h3>
 
-<p>For symmetric random walk (q = p’ = 0.5):
-```
-N(n, s) = N(n, -s)
-```</p>
+<p>For symmetric random walk (q = p’ = 0.5):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(n, s) = N(n, -s)
+</code></pre></div></div>
 
 <p>This reflects Pascal’s triangle symmetry: C(n,k) = C(n, n-k)</p>
 
 <h3 id="5-fibonacci-connection">5. Fibonacci Connection</h3>
 
-<p>Though not directly visible, Fibonacci numbers appear in diagonal sums of Pascal’s triangle:
-```
-F(n) = C(n,0) + C(n-1,1) + C(n-2,2) + …
-```</p>
+<p>Though not directly visible, Fibonacci numbers appear in diagonal sums of Pascal’s triangle:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>F(n) = C(n,0) + C(n-1,1) + C(n-2,2) + ...
+</code></pre></div></div>
 
 <h2 id="conclusion">Conclusion</h2>
 
@@ -1117,7 +1093,7 @@ F(n) = C(n,0) + C(n-1,1) + C(n-2,2) + …
         <h3>
           <a href="/homework8/">
             Homework8
-            <small>08 Nov 2025</small>
+            <small>09 Nov 2025</small>
           </a>
         </h3>
       </li>

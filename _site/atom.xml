@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-11-08T17:48:46+01:00</updated>
+ <updated>2025-11-09T17:11:39+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>Homework8</title>
    <link href="http://localhost:4000/homework8/"/>
-   <updated>2025-11-08T00:00:00+01:00</updated>
+   <updated>2025-11-09T00:00:00+01:00</updated>
    <id>http://localhost:4000/homework8</id>
    <content type="html">
 </content>
@@ -50,16 +50,14 @@
 
 &lt;h3 id=&quot;mathematical-formulation&quot;&gt;Mathematical Formulation&lt;/h3&gt;
 
-&lt;p&gt;Let Xᵢ be the outcome of week i:
-```
-Xᵢ = +1  with probability q = P(server secure) = (1-p)^m
-Xᵢ = -1  with probability p’ = P(server breached) = 1-(1-p)^m
-```&lt;/p&gt;
+&lt;p&gt;Let Xᵢ be the outcome of week i:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Xᵢ = +1  with probability q = P(server secure) = (1-p)^m
+Xᵢ = -1  with probability p&apos; = P(server breached) = 1-(1-p)^m
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The cumulative score after n weeks:
-```
-S(n) = X₁ + X₂ + … + Xₙ
-```&lt;/p&gt;
+&lt;p&gt;The cumulative score after n weeks:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;S(n) = X₁ + X₂ + ... + Xₙ
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;where S(n) ∈ {-n, -n+2, -n+4, …, n-2, n}.&lt;/p&gt;
 
@@ -118,15 +116,13 @@ S(n) = X₁ + X₂ + … + Xₙ
 
 &lt;h3 id=&quot;the-fundamental-relationship&quot;&gt;The Fundamental Relationship&lt;/h3&gt;
 
-&lt;p&gt;If we have &lt;strong&gt;k&lt;/strong&gt; secure weeks (+1) and &lt;strong&gt;(n-k)&lt;/strong&gt; breached weeks (-1), the final score is:
-```
-S(n) = k - (n-k) = 2k - n
-```&lt;/p&gt;
+&lt;p&gt;If we have &lt;strong&gt;k&lt;/strong&gt; secure weeks (+1) and &lt;strong&gt;(n-k)&lt;/strong&gt; breached weeks (-1), the final score is:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;S(n) = k - (n-k) = 2k - n
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Therefore:
-```
-k = (n + S(n)) / 2
-```&lt;/p&gt;
+&lt;p&gt;Therefore:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;k = (n + S(n)) / 2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;This means:&lt;/p&gt;
 &lt;ul&gt;
@@ -137,10 +133,9 @@ k = (n + S(n)) / 2
 
 &lt;h3 id=&quot;number-of-trajectories&quot;&gt;Number of Trajectories&lt;/h3&gt;
 
-&lt;p&gt;The number of trajectories reaching score s after n steps is:
-```
-N(n, s) = C(n, k) = C(n, (n+s)/2)
-```&lt;/p&gt;
+&lt;p&gt;The number of trajectories reaching score s after n steps is:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;N(n, s) = C(n, k) = C(n, (n+s)/2)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;where C(n,k) = n! / (k!(n-k)!) is the binomial coefficient.&lt;/p&gt;
 
@@ -148,15 +143,14 @@ N(n, s) = C(n, k) = C(n, (n+s)/2)
 
 &lt;h3 id=&quot;pascals-triangle-connection&quot;&gt;Pascal’s Triangle Connection&lt;/h3&gt;
 
-&lt;p&gt;The trajectory counts form Pascal’s triangle:
-```
-                    1                        n=0
+&lt;p&gt;The trajectory counts form Pascal’s triangle:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                    1                        n=0
                   1   1                      n=1
                 1   2   1                    n=2
               1   3   3   1                  n=3
             1   4   6   4   1                n=4
           1   5  10  10   5   1              n=5
-```&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;For random walk, we read the same triangle but map positions differently:&lt;/p&gt;
 &lt;ul&gt;
@@ -166,15 +160,13 @@ N(n, s) = C(n, k) = C(n, (n+s)/2)
 
 &lt;h3 id=&quot;recurrence-relation&quot;&gt;Recurrence Relation&lt;/h3&gt;
 
-&lt;p&gt;The number of paths satisfies:
-```
-N(n, s) = N(n-1, s-1) + N(n-1, s+1)
-```&lt;/p&gt;
+&lt;p&gt;The number of paths satisfies:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;N(n, s) = N(n-1, s-1) + N(n-1, s+1)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;This is the same recurrence as Pascal’s triangle:
-```
-C(n, k) = C(n-1, k-1) + C(n-1, k)
-```&lt;/p&gt;
+&lt;p&gt;This is the same recurrence as Pascal’s triangle:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;C(n, k) = C(n-1, k-1) + C(n-1, k)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Interpretation:&lt;/strong&gt; To reach position s at step n, we must have been at s-1 or s+1 at step n-1.&lt;/p&gt;
 
@@ -191,11 +183,10 @@ C(n, k) = C(n-1, k-1) + C(n-1, k)
 
 &lt;h3 id=&quot;probability-calculation&quot;&gt;Probability Calculation&lt;/h3&gt;
 
-&lt;p&gt;For m independent attackers, each with probability p of success:
-```
-q = P(all m attackers fail) = (1-p)^m
-p’ = P(at least one succeeds) = 1-(1-p)^m
-```&lt;/p&gt;
+&lt;p&gt;For m independent attackers, each with probability p of success:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;q = P(all m attackers fail) = (1-p)^m
+p&apos; = P(at least one succeeds) = 1-(1-p)^m
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Examples:&lt;/p&gt;
 &lt;ul&gt;
@@ -231,8 +222,6 @@ p’ = P(at least one succeeds) = 1-(1-p)^m
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;python-implementation&quot;&gt;Python Implementation&lt;/h2&gt;
-
-&lt;h3 id=&quot;core-simulation-function&quot;&gt;Core Simulation Function&lt;/h3&gt;
 
 &lt;details&gt;
    &lt;summary&gt;View random_walk.py&lt;/summary&gt;
@@ -808,11 +797,10 @@ p’ = P(at least one succeeds) = 1-(1-p)^m
   &lt;li&gt;Maximum at score 0 (equal secure/breach weeks)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;Theoretical counts (from Pascal’s triangle, row 20):&lt;/strong&gt;
-```
-Score:  -20  -18  -16  -14  -12  -10   -8   -6   -4   -2    0 …
-Count:    1   20  190  1140 4845 15504 38760 77520 125970 167960 184756 …
-```&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Theoretical counts (from Pascal’s triangle, row 20):&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Score:  -20  -18  -16  -14  -12  -10   -8   -6   -4   -2    0 ...
+Count:    1   20  190  1140 4845 15504 38760 77520 125970 167960 184756 ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;example-2-secure-system-p--02-m--1&quot;&gt;Example 2: Secure System (p = 0.2, m = 1)&lt;/h3&gt;
 
@@ -828,20 +816,18 @@ Count:    1   20  190  1140 4845 15504 38760 77520 125970 167960 184756 …
 
 &lt;p&gt;&lt;em&gt;Figure 2: Simulation with p_secure = 0.8 showing asymmetric random walk with positive drift. Most trajectories end in positive territory.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Expected final score:&lt;/strong&gt;
-```
-E[S(n)] = n(q - p’) = 20(0.8 - 0.2) = 12
-```&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Expected final score:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;E[S(n)] = n(q - p&apos;) = 20(0.8 - 0.2) = 12
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Distribution shifts right—most trajectories end in positive territory.&lt;/p&gt;
 
 &lt;h3 id=&quot;example-3-multiple-attackers-m--5-p--03&quot;&gt;Example 3: Multiple Attackers (m = 5, p = 0.3)&lt;/h3&gt;
 
-&lt;p&gt;Five attackers, each with 30% success:
-```
-q = (1-0.3)^5 = 0.168
-p’ = 1 - 0.168 = 0.832
-```&lt;/p&gt;
+&lt;p&gt;Five attackers, each with 30% success:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;q = (1-0.3)^5 = 0.168
+p&apos; = 1 - 0.168 = 0.832
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;System is breached 83.2% of weeks—strong negative drift.&lt;/p&gt;
 
@@ -849,10 +835,9 @@ p’ = 1 - 0.168 = 0.832
 
 &lt;p&gt;&lt;em&gt;Figure 3: Five attackers scenario with strong negative drift (p_secure = 0.168). Trajectories predominantly end in negative scores.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Expected final score:&lt;/strong&gt;
-```
-E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
-```&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Expected final score:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Most trajectories end far in negative territory.&lt;/p&gt;
 
@@ -865,15 +850,13 @@ E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
   &lt;li&gt;&lt;strong&gt;Better matched&lt;/strong&gt; to theoretical predictions&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;strong&gt;Standard deviation of final score:&lt;/strong&gt;
-```
-σ = √(n · 4qp’) = 2√(nqp’)
-```&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Standard deviation of final score:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;σ = √(n · 4qp&apos;) = 2√(nqp&apos;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;For n=100, q=0.5:
-```
-σ = 2√(100 · 0.5 · 0.5) = 10
-```&lt;/p&gt;
+&lt;p&gt;For n=100, q=0.5:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;σ = 2√(100 · 0.5 · 0.5) = 10
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;trajectory-count-validation&quot;&gt;Trajectory Count Validation&lt;/h3&gt;
 
@@ -951,21 +934,18 @@ E[S(n)] = n(0.168 - 0.832) = -13.3 (for n=20)
 
 &lt;h3 id=&quot;1-binomial-coefficients&quot;&gt;1. Binomial Coefficients&lt;/h3&gt;
 
-&lt;p&gt;Number of paths to score s:
-```
-N(n, s) = C(n, (n+s)/2) = n! / [((n+s)/2)! · ((n-s)/2)!]
-```&lt;/p&gt;
+&lt;p&gt;Number of paths to score s:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;N(n, s) = C(n, (n+s)/2) = n! / [((n+s)/2)! · ((n-s)/2)!]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;2-pascals-triangle-identity&quot;&gt;2. Pascal’s Triangle Identity&lt;/h3&gt;
 
-&lt;p&gt;```
-C(n, k) = C(n-1, k-1) + C(n-1, k)
-```&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;C(n, k) = C(n-1, k-1) + C(n-1, k)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;In random walk terms:
-```
-N(n, s) = N(n-1, s-1) + N(n-1, s+1)
-```&lt;/p&gt;
+&lt;p&gt;In random walk terms:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;N(n, s) = N(n-1, s-1) + N(n-1, s+1)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/homework7/pascals_triangle.png&quot; alt=&quot;Pascal&apos;s Triangle&quot; /&gt;&lt;/p&gt;
 
@@ -973,30 +953,26 @@ N(n, s) = N(n-1, s-1) + N(n-1, s+1)
 
 &lt;h3 id=&quot;3-binomial-expansion&quot;&gt;3. Binomial Expansion&lt;/h3&gt;
 
-&lt;p&gt;```
-(A + B)^n = Σ C(n,k) A^k B^(n-k)
-```&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(A + B)^n = Σ C(n,k) A^k B^(n-k)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Setting A = B = 1:
-```
-2^n = Σ C(n,k)  (total number of trajectories)
-```&lt;/p&gt;
+&lt;p&gt;Setting A = B = 1:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2^n = Σ C(n,k)  (total number of trajectories)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;4-symmetry&quot;&gt;4. Symmetry&lt;/h3&gt;
 
-&lt;p&gt;For symmetric random walk (q = p’ = 0.5):
-```
-N(n, s) = N(n, -s)
-```&lt;/p&gt;
+&lt;p&gt;For symmetric random walk (q = p’ = 0.5):&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;N(n, s) = N(n, -s)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;This reflects Pascal’s triangle symmetry: C(n,k) = C(n, n-k)&lt;/p&gt;
 
 &lt;h3 id=&quot;5-fibonacci-connection&quot;&gt;5. Fibonacci Connection&lt;/h3&gt;
 
-&lt;p&gt;Though not directly visible, Fibonacci numbers appear in diagonal sums of Pascal’s triangle:
-```
-F(n) = C(n,0) + C(n-1,1) + C(n-2,2) + …
-```&lt;/p&gt;
+&lt;p&gt;Though not directly visible, Fibonacci numbers appear in diagonal sums of Pascal’s triangle:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;F(n) = C(n,0) + C(n-1,1) + C(n-2,2) + ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
 
