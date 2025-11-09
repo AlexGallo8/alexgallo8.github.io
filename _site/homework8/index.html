@@ -9,7 +9,7 @@
 
   <title>
     
-      Homework8 &middot; Statistics Homework
+      Homework 8 - Comparing Bernoulli and Random Walk Processes &middot; Statistics Homework
     
   </title>
 
@@ -97,9 +97,889 @@
 
       <div class="container content">
         <div class="post">
-  <h1 class="post-title">Homework8</h1>
+  <h1 class="post-title">Homework 8 - Comparing Bernoulli and Random Walk Processes</h1>
   <span class="post-date">09 Nov 2025</span>
-  
+  <h2 id="introduction-two-perspectives-on-binary-random-processes">Introduction: Two Perspectives on Binary Random Processes</h2>
+
+<p><a href="/homework4/">Homework 4</a> and <a href="/homework7/">Homework 7</a> explored two fundamental ways to model sequences of binary random outcomes. While both involve independent trials with two possible results, they differ profoundly in their mathematical structure, interpretation, and applications. This homework provides a comprehensive comparison, highlighting the deep connections between these seemingly different processes.</p>
+
+<p><strong>Core Question:</strong> What changes when we shift from counting successes (Homework 4) to tracking signed displacements (Homework 7)?</p>
+
+<!--more-->
+
+<h2 id="side-by-side-comparison">Side-by-Side Comparison</h2>
+
+<h3 id="basic-setup">Basic Setup</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Homework 4: Bernoulli Process</th>
+      <th>Homework 7: Random Walk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Process Name</strong></td>
+      <td>Law of Large Numbers Simulation</td>
+      <td>Symmetric/Asymmetric Random Walk</td>
+    </tr>
+    <tr>
+      <td><strong>Trial Outcome</strong></td>
+      <td>Success (1) or Failure (0)</td>
+      <td>Step Up (+1) or Step Down (-1)</td>
+    </tr>
+    <tr>
+      <td><strong>Cumulative Quantity</strong></td>
+      <td>Number of successes: k</td>
+      <td>Net displacement: s = 2k - n</td>
+    </tr>
+    <tr>
+      <td><strong>Range After n Trials</strong></td>
+      <td>k ∈ {0, 1, 2, …, n}</td>
+      <td>s ∈ {-n, -n+2, …, n-2, n}</td>
+    </tr>
+    <tr>
+      <td><strong>Possible Values</strong></td>
+      <td>n + 1 values</td>
+      <td>n + 1 values (same parity as n)</td>
+    </tr>
+    <tr>
+      <td><strong>Starting Point</strong></td>
+      <td>k = 0</td>
+      <td>s = 0</td>
+    </tr>
+    <tr>
+      <td><strong>Direction</strong></td>
+      <td>Monotone increasing (k ≥ 0)</td>
+      <td>Bidirectional (s can be negative)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="mathematical-formulation">Mathematical Formulation</h3>
+
+<p><strong>Homework 4 (Bernoulli Process):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Xᵢ ∈ {0, 1}
+K(n) = Σ Xᵢ  (total successes)
+E[K(n)] = np
+Var[K(n)] = np(1-p)
+</code></pre></div></div>
+
+<p><strong>Homework 7 (Random Walk):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Yᵢ ∈ {-1, +1}
+S(n) = Σ Yᵢ  (net displacement)
+E[S(n)] = n(q-p') = n(2q-1)
+Var[S(n)] = 4nqp'
+</code></pre></div></div>
+
+<p>where q = P(Yᵢ = +1) and p’ = P(Yᵢ = -1) = 1-q.</p>
+
+<h3 id="the-fundamental-transformation">The Fundamental Transformation</h3>
+
+<p>The two processes are related by a simple transformation:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S(n) = 2K(n) - n
+K(n) = (n + S(n)) / 2
+</code></pre></div></div>
+
+<p><strong>Example:</strong> After n=10 trials with k=7 successes:</p>
+<ul>
+  <li>Homework 4: Position k = 7</li>
+  <li>Homework 7: Score s = 2(7) - 10 = 4</li>
+</ul>
+
+<p>This transformation:</p>
+<ul>
+  <li><strong>Maps</strong> [0, n] → [-n, n]</li>
+  <li><strong>Stretches</strong> the range by factor of 2</li>
+  <li><strong>Centers</strong> around 0 instead of n/2</li>
+  <li><strong>Preserves</strong> the combinatorial structure</li>
+</ul>
+
+<h3 id="visualization-differences">Visualization Differences</h3>
+
+<p><strong>Homework 4 Trajectories:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f(t) = K(t) / t  (relative frequency)
+</code></pre></div></div>
+<ul>
+  <li>Trajectories start at variable points (0 or 1)</li>
+  <li>Converge toward horizontal line at p</li>
+  <li>Always bounded: 0 ≤ f(t) ≤ 1</li>
+  <li>Focus: convergence behavior</li>
+</ul>
+
+<p><strong>Homework 7 Trajectories:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S(t) = 2K(t) - t  (cumulative score)
+</code></pre></div></div>
+<ul>
+  <li>All trajectories start at 0</li>
+  <li>Can wander above and below starting point</li>
+  <li>Unbounded: -t ≤ S(t) ≤ t</li>
+  <li>Focus: path structure and excursions</li>
+</ul>
+
+<h2 id="mathematical-connections">Mathematical Connections</h2>
+
+<h3 id="1-binomial-coefficients-the-unifying-structure">1. Binomial Coefficients: The Unifying Structure</h3>
+
+<p>Both processes use the same counting mechanism:</p>
+
+<p><strong>Number of paths reaching position k (HW4) or score s (HW7):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(n, k) = C(n, k) = n! / (k!(n-k)!)
+</code></pre></div></div>
+
+<p>For Homework 7, score s corresponds to k = (n+s)/2 successes:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(n, s) = C(n, (n+s)/2)
+</code></pre></div></div>
+
+<p><strong>Example (n=6):</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>k (HW4)</th>
+      <th>s (HW7)</th>
+      <th>Paths C(6,k)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>-6</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>-4</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>-2</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>+2</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>+4</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>+6</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Observation:</strong> Same combinatorial structure, different interpretation:</p>
+<ul>
+  <li>HW4: “How many ways to choose k successes from 6 trials?”</li>
+  <li>HW7: “How many paths reach score s after 6 steps?”</li>
+</ul>
+
+<h3 id="2-pascals-triangle-the-universal-structure">2. Pascal’s Triangle: The Universal Structure</h3>
+
+<p>Both homeworks generate Pascal’s triangle, but read it differently:</p>
+
+<p><strong>Pascal’s Triangle (n=0 to n=6):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                    1
+                  1   1
+                1   2   1
+              1   3   3   1
+            1   4   6   4   1
+          1   5  10  10   5   1
+        1   6  15  20  15   6   1
+</code></pre></div></div>
+
+<p><strong>Homework 4 Reading (row n=6):</strong></p>
+<ul>
+  <li>Position k: Number of ways to get exactly k successes in 6 trials</li>
+  <li>Values: {1, 6, 15, 20, 15, 6, 1} for k ∈ {0,1,2,3,4,5,6}</li>
+</ul>
+
+<p><strong>Homework 7 Reading (row n=6):</strong></p>
+<ul>
+  <li>Position s: Number of paths reaching score s after 6 steps</li>
+  <li>Values: {1, 6, 15, 20, 15, 6, 1} for s ∈ {-6,-4,-2,0,2,4,6}</li>
+</ul>
+
+<p><strong>The mapping:</strong> Same numbers, stretched coordinate system (s = 2k - n).</p>
+
+<h3 id="3-recurrence-relations">3. Recurrence Relations</h3>
+
+<p>Both satisfy the same fundamental recurrence:</p>
+
+<p><strong>Combinatorial Form:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C(n, k) = C(n-1, k-1) + C(n-1, k)
+</code></pre></div></div>
+
+<p><strong>Homework 4 Interpretation:</strong>
+“To have k successes in n trials, either:</p>
+<ul>
+  <li>Last trial was success, and we had k-1 successes in first n-1 trials, OR</li>
+  <li>Last trial was failure, and we had k successes in first n-1 trials”</li>
+</ul>
+
+<p><strong>Homework 7 Interpretation:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(n, s) = N(n-1, s-1) + N(n-1, s+1)
+</code></pre></div></div>
+<p>“To reach position s at step n, we must have been at:</p>
+<ul>
+  <li>Position s-1 at step n-1 and moved up (+1), OR</li>
+  <li>Position s+1 at step n-1 and moved down (-1)”</li>
+</ul>
+
+<p><strong>Graphical representation:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        Step n-1          Step n
+           •  (s+1)
+            \
+             \  (-1 step)
+              ↘
+               •  (s)
+              ↗
+             /  (+1 step)
+            /
+           •  (s-1)
+</code></pre></div></div>
+
+<h3 id="4-binomial-distribution-connection">4. Binomial Distribution Connection</h3>
+
+<p><strong>Homework 4:</strong> Direct binomial distribution</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(K = k) = C(n,k) p^k (1-p)^(n-k)
+</code></pre></div></div>
+
+<p><strong>Homework 7:</strong> Transformed binomial distribution</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(S = s) = P(K = (n+s)/2) = C(n, (n+s)/2) q^((n+s)/2) p'^((n-s)/2)
+</code></pre></div></div>
+
+<p>where:</p>
+<ul>
+  <li>K = number of +1 steps (successes)</li>
+  <li>S = 2K - n (net displacement)</li>
+  <li>k = (n+s)/2 relates the two</li>
+</ul>
+
+<p><strong>Distribution shape:</strong></p>
+<ul>
+  <li>Both are binomial distributions</li>
+  <li>HW7 is HW4 stretched and centered at 0</li>
+  <li>Same bell curve, different x-axis scale</li>
+</ul>
+
+<h3 id="5-binomial-expansion">5. Binomial Expansion</h3>
+
+<p>The binomial theorem provides the foundation for both:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(A + B)^n = Σ(k=0 to n) C(n,k) A^k B^(n-k)
+</code></pre></div></div>
+
+<p><strong>Setting A = B = 1:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2^n = Σ C(n,k)
+</code></pre></div></div>
+
+<p><strong>Interpretation:</strong></p>
+<ul>
+  <li><strong>Total trajectories:</strong> 2^n (each of n steps has 2 choices)</li>
+  <li><strong>Sum of all path counts:</strong> Σ C(n,k) = 2^n ✓</li>
+</ul>
+
+<p><strong>Homework 4:</strong> 2^n total sequences of n binary outcomes
+<strong>Homework 7:</strong> 2^n total random walk paths through n steps</p>
+
+<p><strong>Example (n=5):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2^5 = 32 = C(5,0) + C(5,1) + C(5,2) + C(5,3) + C(5,4) + C(5,5)
+        = 1 + 5 + 10 + 10 + 5 + 1
+</code></pre></div></div>
+
+<h3 id="6-fibonacci-sequence-connection">6. Fibonacci Sequence Connection</h3>
+
+<p>Hidden within Pascal’s triangle are the Fibonacci numbers, obtained by summing diagonals:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                    1
+                  1   1
+                1   2   1
+              1   3   3   1
+            1   4   6   4   1
+          1   5  10  10   5   1
+        1   6  15  20  15   6   1
+
+Diagonal sums:
+F(1) = 1
+F(2) = 1 + 1 = 1
+F(3) = 1 + 2 = 2
+F(4) = 1 + 3 + 1 = 3
+F(5) = 1 + 4 + 3 = 5
+F(6) = 1 + 5 + 6 + 1 = 8
+F(7) = 1 + 6 + 10 + 4 = 13
+</code></pre></div></div>
+
+<p><strong>Formula:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>F(n) = Σ(k=0 to ⌊n/2⌋) C(n-k-1, k)
+</code></pre></div></div>
+
+<p><strong>Connection to our homeworks:</strong></p>
+<ul>
+  <li>Fibonacci appears when counting paths with constraints</li>
+  <li>Example: Number of ways to reach position n using steps of size 1 or 2</li>
+  <li>Related to lattice paths, which generalize both HW4 and HW7 structures</li>
+</ul>
+
+<h3 id="7-symmetry-properties">7. Symmetry Properties</h3>
+
+<p><strong>Homework 4 (p = 0.5):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(K = k) = P(K = n-k)
+C(n,k) = C(n, n-k)
+</code></pre></div></div>
+<p>Distribution is symmetric around k = n/2.</p>
+
+<p><strong>Homework 7 (q = p’ = 0.5):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(S = s) = P(S = -s)
+N(n,s) = N(n,-s)
+</code></pre></div></div>
+<p>Distribution is symmetric around s = 0.</p>
+
+<p><strong>Asymmetry:</strong> When p ≠ 0.5 (HW4) or q ≠ p’ (HW7):</p>
+<ul>
+  <li>HW4: Distribution skews toward larger k if p &gt; 0.5</li>
+  <li>HW7: Random walk drifts positive if q &gt; p’, negative if q &lt; p’</li>
+</ul>
+
+<h2 id="key-differences">Key Differences</h2>
+
+<h3 id="1-conceptual-framework">1. Conceptual Framework</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Homework 4</th>
+      <th>Homework 7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Central Question</strong></td>
+      <td>“What proportion of trials succeed?”</td>
+      <td>“Where do we end up?”</td>
+    </tr>
+    <tr>
+      <td><strong>Accumulation</strong></td>
+      <td>One-directional (counting up)</td>
+      <td>Bidirectional (up and down)</td>
+    </tr>
+    <tr>
+      <td><strong>Focus</strong></td>
+      <td>Convergence to probability</td>
+      <td>Path behavior and position</td>
+    </tr>
+    <tr>
+      <td><strong>Key Theorem</strong></td>
+      <td>Law of Large Numbers</td>
+      <td>Random Walk Theory</td>
+    </tr>
+    <tr>
+      <td><strong>Application</strong></td>
+      <td>Frequency estimation</td>
+      <td>Position tracking</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="2-range-and-scale">2. Range and Scale</h3>
+
+<p><strong>Homework 4:</strong></p>
+<ul>
+  <li>Range: [0, n]</li>
+  <li>n+1 possible values</li>
+  <li>Relative frequency: f(n) = k/n ∈ [0, 1]</li>
+</ul>
+
+<p><strong>Homework 7:</strong></p>
+<ul>
+  <li>Range: [-n, n]</li>
+  <li>n+1 possible values (same parity)</li>
+  <li>Score: s ∈ {-n, -n+2, …, n-2, n}</li>
+</ul>
+
+<p><strong>Scale transformation:</strong> s = 2k - n maps HW4 → HW7</p>
+
+<h3 id="3-visualization-differences">3. Visualization Differences</h3>
+
+<p><strong>Homework 4 plots:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f(n) vs n (relative frequency over trials)
+- Trajectories converge to horizontal line at p
+- Y-axis: [0, 1]
+- Shows LLN convergence behavior
+</code></pre></div></div>
+
+<p><strong>Homework 7 plots:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S(n) vs n (cumulative score over steps)
+- Trajectories start at origin, wander up/down
+- Y-axis: [-n, n]
+- Shows random walk structure
+</code></pre></div></div>
+
+<h3 id="4-statistical-interpretation">4. Statistical Interpretation</h3>
+
+<p><strong>Homework 4:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mean: E[K] = np
+Variance: Var[K] = np(1-p)
+Distribution: K ~ Binomial(n, p)
+</code></pre></div></div>
+
+<p><strong>Homework 7:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mean: E[S] = n(q-p') = n(2q-1)
+Variance: Var[S] = 4nqp'
+Distribution: S ~ 2·Binomial(n, q) - n
+</code></pre></div></div>
+
+<p><strong>Expected position:</strong></p>
+<ul>
+  <li>HW4: Expected successes = np</li>
+  <li>HW7: Expected score = n(q-p’)
+    <ul>
+      <li>If q = p’ = 0.5: E[S] = 0 (symmetric walk)</li>
+      <li>If q &gt; p’: E[S] &gt; 0 (positive drift)</li>
+      <li>If q &lt; p’: E[S] &lt; 0 (negative drift)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="5-probability-calculations">5. Probability Calculations</h3>
+
+<p><strong>Homework 4:</strong> P(exactly k successes)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(K = k) = C(n,k) p^k (1-p)^(n-k)
+</code></pre></div></div>
+
+<p><strong>Homework 7:</strong> P(final score = s)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(S = s) = C(n, (n+s)/2) q^((n+s)/2) p'^((n-s)/2)
+</code></pre></div></div>
+
+<p><strong>Example (n=10, p=0.6 → q=0.6, p’=0.4):</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>k (HW4)</th>
+      <th>P(K=k)</th>
+      <th>s (HW7)</th>
+      <th>P(S=s)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.0001</td>
+      <td>-10</td>
+      <td>0.0001</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.2007</td>
+      <td>0</td>
+      <td>0.2007</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>0.1209</td>
+      <td>+6</td>
+      <td>0.1209</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.0060</td>
+      <td>+10</td>
+      <td>0.0060</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Same probabilities, different coordinate systems!</p>
+
+<h2 id="practical-applications">Practical Applications</h2>
+
+<h3 id="homework-4-applications-success-rate-estimation">Homework 4 Applications: Success Rate Estimation</h3>
+
+<ol>
+  <li><strong>Quality Control:</strong>
+    <ul>
+      <li>n = sample size</li>
+      <li>k = number of defective items</li>
+      <li>Estimate defect rate: p̂ = k/n</li>
+    </ul>
+  </li>
+  <li><strong>A/B Testing:</strong>
+    <ul>
+      <li>n = number of users</li>
+      <li>k = number of conversions</li>
+      <li>Estimate conversion rate</li>
+    </ul>
+  </li>
+  <li><strong>Medical Trials:</strong>
+    <ul>
+      <li>n = patients</li>
+      <li>k = successful treatments</li>
+      <li>Estimate treatment efficacy</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Key insight:</strong> LLN guarantees that k/n → p as n increases.</p>
+
+<h3 id="homework-7-applications-position-tracking">Homework 7 Applications: Position Tracking</h3>
+
+<ol>
+  <li><strong>Financial Markets:</strong>
+    <ul>
+      <li>S(n) = cumulative price changes</li>
+      <li>Predict drift (bull vs bear market)</li>
+      <li>Analyze volatility</li>
+    </ul>
+  </li>
+  <li><strong>Game Theory:</strong>
+    <ul>
+      <li>S(n) = player’s score relative to opponent</li>
+      <li>Winning = reaching positive threshold</li>
+      <li>“Gambler’s ruin” problems</li>
+    </ul>
+  </li>
+  <li><strong>Physical Systems:</strong>
+    <ul>
+      <li>Brownian motion (continuous limit of random walk)</li>
+      <li>Particle diffusion</li>
+      <li>Stock price modeling</li>
+    </ul>
+  </li>
+  <li><strong>Network Security (our problem):</strong>
+    <ul>
+      <li>S(n) = net security score</li>
+      <li>Positive = more secure weeks than breached</li>
+      <li>Negative = system under heavy attack</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Key insight:</strong> Random walks model cumulative effects of balanced forces.</p>
+
+<h2 id="convergence-behavior">Convergence Behavior</h2>
+
+<h3 id="homework-4-convergence-to-probability">Homework 4: Convergence to Probability</h3>
+
+<p><strong>Law of Large Numbers:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f(n) = K/n → p  as n → ∞
+</code></pre></div></div>
+
+<p><strong>Rate of convergence:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Var[f(n)] = p(1-p)/n → 0  as n → ∞
+</code></pre></div></div>
+
+<p><strong>Central Limit Theorem:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>√n (f(n) - p) → N(0, p(1-p))
+</code></pre></div></div>
+
+<p><strong>Practical meaning:</strong></p>
+<ul>
+  <li>With 1000 trials, f(1000) ≈ p ± 0.03 (roughly)</li>
+  <li>Uncertainty decreases as 1/√n</li>
+</ul>
+
+<h3 id="homework-7-spreading-distribution">Homework 7: Spreading Distribution</h3>
+
+<p><strong>Expected position:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>E[S(n)] = n(q - p')
+</code></pre></div></div>
+
+<p><strong>Standard deviation:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>σ[S(n)] = 2√(nqp')
+</code></pre></div></div>
+
+<p><strong>Central Limit Theorem:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(S(n) - n(q-p')) / (2√(nqp')) → N(0, 1)
+</code></pre></div></div>
+
+<p><strong>Practical meaning:</strong></p>
+<ul>
+  <li>Position spreads as √n</li>
+  <li>Even with drift, substantial randomness remains</li>
+  <li>After 1000 steps: typical deviation ≈ 30 steps from expected position</li>
+</ul>
+
+<h2 id="combined-visualization">Combined Visualization</h2>
+
+<p>To see the relationship, we can plot both perspectives simultaneously:</p>
+
+<p><strong>Example: n=100, p=0.6 (or q=0.6, p’=0.4)</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.6</span>
+<span class="n">trajectories</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+<span class="c1"># Homework 4: Cumulative successes
+</span><span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">trajectories</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">f_n</span> <span class="o">=</span> <span class="n">K</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Homework 7: Random walk (transform 0→-1, 1→+1)
+</span><span class="n">steps</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">trajectories</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot HW4
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">ax1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">f_n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'p=</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Homework 4: Relative Frequency'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Trial n'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'f(n) = K/n'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Plot HW7
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">ax2</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Starting position'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'orange'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+           <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'Expected: </span><span class="si">{</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Homework 7: Random Walk Score'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Step n'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'S(n)'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="deep-mathematical-connections">Deep Mathematical Connections</h2>
+
+<h3 id="1-generating-functions">1. Generating Functions</h3>
+
+<p><strong>Binomial coefficients generating function:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1 + x)^n = Σ(k=0 to n) C(n,k) x^k
+</code></pre></div></div>
+
+<p><strong>Applications:</strong></p>
+<ul>
+  <li>Extract C(n,k) as coefficient of x^k</li>
+  <li>Proves identities like Σ C(n,k) = 2^n (set x=1)</li>
+  <li>Connects to probability generating functions</li>
+</ul>
+
+<h3 id="2-catalan-numbers">2. Catalan Numbers</h3>
+
+<p>Related to Pascal’s triangle via:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cat(n) = C(2n, n) / (n+1)
+</code></pre></div></div>
+
+<p><strong>Connection to random walks:</strong></p>
+<ul>
+  <li>Catalan numbers count paths that never go below starting point</li>
+  <li>“Ballot problem”: paths where cumulative score stays ≥ 0</li>
+  <li>Appears in HW7 when adding boundary constraints</li>
+</ul>
+
+<h3 id="3-stirlings-approximation">3. Stirling’s Approximation</h3>
+
+<p>For large n:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C(n, n/2) ≈ 2^n / √(πn/2)
+</code></pre></div></div>
+
+<p><strong>Implications:</strong></p>
+<ul>
+  <li>Central binomial coefficient (most probable outcome)</li>
+  <li>Both HW4 and HW7 peak probabilities</li>
+  <li>Explains bell curve shape in histograms</li>
+</ul>
+
+<h3 id="4-reflection-principle">4. Reflection Principle</h3>
+
+<p><strong>Random walk theorem:</strong>
+Number of paths from (0,0) to (n,k) that touch or cross y=-1:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>= Number of paths from (0,-2) to (n,k)
+</code></pre></div></div>
+
+<p><strong>Application:</strong> Calculate probability of first return to origin, hitting boundaries, etc.</p>
+
+<h2 id="summary-table">Summary Table</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Homework 4</th>
+      <th>Homework 7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Process Type</strong></td>
+      <td>Bernoulli trials</td>
+      <td>Random walk</td>
+    </tr>
+    <tr>
+      <td><strong>Outcome Space</strong></td>
+      <td>{0, 1}</td>
+      <td>{-1, +1}</td>
+    </tr>
+    <tr>
+      <td><strong>Cumulative Variable</strong></td>
+      <td>K ∈ [0, n]</td>
+      <td>S ∈ [-n, n]</td>
+    </tr>
+    <tr>
+      <td><strong>Path Count</strong></td>
+      <td>C(n,k)</td>
+      <td>C(n, (n+s)/2)</td>
+    </tr>
+    <tr>
+      <td><strong>Total Paths</strong></td>
+      <td>2^n</td>
+      <td>2^n</td>
+    </tr>
+    <tr>
+      <td><strong>Distribution</strong></td>
+      <td>Binomial(n,p)</td>
+      <td>Transformed Binomial</td>
+    </tr>
+    <tr>
+      <td><strong>Expected Value</strong></td>
+      <td>np</td>
+      <td>n(q-p’)</td>
+    </tr>
+    <tr>
+      <td><strong>Variance</strong></td>
+      <td>np(1-p)</td>
+      <td>4nqp’</td>
+    </tr>
+    <tr>
+      <td><strong>Convergence</strong></td>
+      <td>f(n)→p</td>
+      <td>S(n)/n→(q-p’)</td>
+    </tr>
+    <tr>
+      <td><strong>Spread</strong></td>
+      <td>O(√n) absolute</td>
+      <td>O(√n) absolute</td>
+    </tr>
+    <tr>
+      <td><strong>Relative Spread</strong></td>
+      <td>O(1/√n)</td>
+      <td>O(1/√n) relative to position</td>
+    </tr>
+    <tr>
+      <td><strong>Key Theorem</strong></td>
+      <td>LLN + CLT</td>
+      <td>Random Walk CLT</td>
+    </tr>
+    <tr>
+      <td><strong>Symmetry Axis</strong></td>
+      <td>k = n/2</td>
+      <td>s = 0</td>
+    </tr>
+    <tr>
+      <td><strong>Pascal’s Triangle</strong></td>
+      <td>Direct reading</td>
+      <td>Stretched reading</td>
+    </tr>
+    <tr>
+      <td><strong>Focus</strong></td>
+      <td>Rate/proportion</td>
+      <td>Position/displacement</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Homeworks 4 and 7 explore the same fundamental combinatorial structure—the binomial distribution—from two complementary perspectives:</p>
+
+<p><strong>Homework 4 (Bernoulli Process):</strong></p>
+<ul>
+  <li><strong>Counts</strong> successes: “How many heads?”</li>
+  <li><strong>Converges</strong> to probability via LLN</li>
+  <li><strong>Application:</strong> Estimating rates and proportions</li>
+  <li><strong>Range:</strong> [0, n], monotone increasing</li>
+</ul>
+
+<p><strong>Homework 7 (Random Walk):</strong></p>
+<ul>
+  <li><strong>Tracks</strong> net displacement: “How far up or down?”</li>
+  <li><strong>Wanders</strong> around expected drift</li>
+  <li><strong>Application:</strong> Position tracking, cumulative effects</li>
+  <li><strong>Range:</strong> [-n, n], bidirectional movement</li>
+</ul>
+
+<p><strong>Unified Mathematics:</strong>
+Both homeworks use:</p>
+<ol>
+  <li><strong>Binomial coefficients</strong> C(n,k) for path counting</li>
+  <li><strong>Pascal’s triangle</strong> for recursive structure</li>
+  <li><strong>Binomial distribution</strong> for probability calculations</li>
+  <li><strong>2^n total trajectories</strong> from binary choices</li>
+  <li><strong>Central Limit Theorem</strong> for asymptotic behavior</li>
+</ol>
+
+<p><strong>Key Transformation:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S(n) = 2K(n) - n
+</code></pre></div></div>
+<p>This simple linear mapping connects the two perspectives while preserving the underlying combinatorial structure.</p>
+
+<p><strong>Deeper Insight:</strong>
+The random walk (HW7) is not just a different view of Bernoulli trials (HW4)—it’s a fundamental model in its own right, with applications ranging from finance to physics to computer science. The connection through binomial coefficients reveals the deep unity in probability theory: different phenomena share common mathematical structures.</p>
+
+<p><strong>Educational Value:</strong>
+By studying both perspectives, we gain:</p>
+<ul>
+  <li><strong>Combinatorial intuition:</strong> Same counts, different interpretations</li>
+  <li><strong>Probabilistic thinking:</strong> From frequencies to displacements</li>
+  <li><strong>Mathematical connections:</strong> Pascal, Fibonacci, binomial theorem</li>
+  <li><strong>Applied modeling:</strong> When to use each framework</li>
+</ul>
+
+<p>The beauty of mathematics lies in these connections—seemingly different problems revealing identical structures underneath.</p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li><strong>Feller, W.</strong> (1968). <em>An Introduction to Probability Theory and Its Applications</em>, Vol. 1, 3rd ed. Wiley.
+    <ul>
+      <li>Chapters 3 (Bernoulli trials) and 14 (Random walks)</li>
+    </ul>
+  </li>
+  <li><strong>Lawler, G. F.</strong> (2006). <em>Introduction to Stochastic Processes</em>, 2nd ed. Chapman &amp; Hall.
+    <ul>
+      <li>Comprehensive treatment of random walks</li>
+    </ul>
+  </li>
+  <li><strong>Ross, S. M.</strong> (1996). <em>Stochastic Processes</em>, 2nd ed. Wiley.
+    <ul>
+      <li>Connections between different stochastic models</li>
+    </ul>
+  </li>
+  <li><strong>Graham, R. L., Knuth, D. E., &amp; Patashnik, O.</strong> (1994). <em>Concrete Mathematics</em>, 2nd ed. Addison-Wesley.
+    <ul>
+      <li>Binomial coefficients, generating functions, and combinatorial identities</li>
+    </ul>
+  </li>
+  <li><strong>Grimmett, G. &amp; Stirzaker, D.</strong> (2001). <em>Probability and Random Processes</em>, 3rd ed. Oxford University Press.
+    <ul>
+      <li>Rigorous treatment of convergence theorems</li>
+    </ul>
+  </li>
+</ol>
 
 </div>
 
