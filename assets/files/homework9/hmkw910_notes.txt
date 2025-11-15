@@ -1,9 +1,4 @@
----
-layout: post
-title: "Homework 8"
----
-
-HMWK 8 explanation: RANDOM WALK VS STOCHASTIC PROCESS
+RANDOM WALK VS STOCHASTIC PROCESS
 A Stochastic process is a family of random variables.
 We start from a couple of definition:
    - probability: 
@@ -28,26 +23,27 @@ We start from a couple of definition:
          A Measure Space is an object defined by a triplet (omega, F, p), where omega is the set f possible outcomes; F is the se of all
          possible events (subsets) I can build using the possible outcomes (sigma algebra of omega based on some axioms and complete);
          p just any number assign to an element in F.
-
-         HMWK 9: make a paralelism between measure and probability theory and derive subadditivity from the axioms. And explore the
-         inclusion/exclusion principle.
-         Then repeat the random walk but, this time at each step make a jump 0 or 1, the second one with probability:
-         lambda*dt (with lambda arbitrary positive). It becomes the simulation of a continuous time process.
-
-            ^
-            |
-            |
-            |                   .
-            |              .  
-            |         .         .
-            |    .         . 
-         ___|____|____.____|____.____|____|__> subdivide 0 to 1 in n interval where 1/n=dt
-            |    .         .  
-            |         .         .
-
+         
    - random variable: any function omega: => R(real numbers). Omega is the set of all possible outcomes, a random variable X is a
      projection of omega on the real line. In the random walk homework if we take each step we have a sequence of random variables.
 
 A family of stochastic process: {Xt}t in S, where Xt is a stochastic variable.
 y=x^2 could be a stochastic process
 More common in stochastic processes is talking about incrementation: differential equation with probabilistic incrementation.
+         
+HMWK 9: make a paralelism between measure and probability theory and derive subadditivity from the axioms. And explore the
+inclusion/exclusion principle.
+
+HMWK 10: Then repeat the random walk but, this time at each step make a jump 0 or 1, the second one with probability:
+lambda*dt (with lambda arbitrary positive). It becomes the simulation of a continuous time process (arrival process of Poisson).
+
+   ^
+   |
+   |
+   |
+   |
+   |
+   |
+___|____|____|____|____|____|____|__> subdivide 0 to 1 in n interval where 1/n=dt
+   |
+   |
