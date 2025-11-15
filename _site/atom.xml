@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-11-15T16:47:53+01:00</updated>
+ <updated>2025-11-15T18:13:09+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -19,7 +19,7 @@
    <id>http://localhost:4000/homework10</id>
    <content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
-&lt;p&gt;While &lt;strong&gt;Homework 7&lt;/strong&gt; explored symmetric random walks with discrete steps (+1/-1), &lt;strong&gt;Homework 10&lt;/strong&gt; introduces a fundamentally different type of stochastic process: the &lt;strong&gt;counting process&lt;/strong&gt;. Instead of tracking position in a bidirectional walk, we count the number of events (arrivals, occurrences) that happen over continuous time. This homework demonstrates how discretizing continuous time leads to one of the most important processes in probability theory: the &lt;strong&gt;Poisson process&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;While &lt;a href=&quot;/homework7/&quot;&gt;Homework 7&lt;/a&gt; explored symmetric random walks with discrete steps (+1/-1), &lt;strong&gt;Homework 10&lt;/strong&gt; introduces a fundamentally different type of stochastic process: the &lt;strong&gt;counting process&lt;/strong&gt;. Instead of tracking position in a bidirectional walk, we count the number of events (arrivals, occurrences) that happen over continuous time. This homework demonstrates how discretizing continuous time leads to one of the most important processes in probability theory: the &lt;strong&gt;Poisson process&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -3466,7 +3466,7 @@ By studying both perspectives, we gain:&lt;/p&gt;
    <id>http://localhost:4000/homework7</id>
    <content type="html">&lt;h2 id=&quot;introduction-to-random-walks-and-symmetric-binary-processes&quot;&gt;Introduction to Random Walks and Symmetric Binary Processes&lt;/h2&gt;
 
-&lt;p&gt;While &lt;strong&gt;Homework 4&lt;/strong&gt; explored the Law of Large Numbers through one-directional accumulation (counting successes from 0 to n), &lt;strong&gt;Homework 7&lt;/strong&gt; introduces a fundamentally different perspective: the &lt;strong&gt;symmetric random walk&lt;/strong&gt;. Instead of tracking cumulative success rates, we now model a process where each step can move us either up (+1, secure) or down (-1, breached), creating trajectories that can reach both positive and negative scores.&lt;/p&gt;
+&lt;p&gt;While &lt;a href=&quot;/homework4/&quot;&gt;Homework 4&lt;/a&gt; explored the Law of Large Numbers through one-directional accumulation (counting successes from 0 to n), &lt;strong&gt;Homework 7&lt;/strong&gt; introduces a fundamentally different perspective: the &lt;strong&gt;symmetric random walk&lt;/strong&gt;. Instead of tracking cumulative success rates, we now model a process where each step can move us either up (+1, secure) or down (-1, breached), creating trajectories that can reach both positive and negative scores.&lt;/p&gt;
 
 &lt;p&gt;This homework demonstrates how a simple security model—a server facing weekly attacks—naturally leads to one of the most important structures in probability theory and combinatorics: the random walk and its connection to binomial distributions.&lt;/p&gt;
 
