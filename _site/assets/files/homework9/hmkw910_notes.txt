@@ -1,0 +1,49 @@
+RANDOM WALK VS STOCHASTIC PROCESS
+A Stochastic process is a family of random variables.
+We start from a couple of definition:
+   - probability: 
+         (Matteo):      a number that expresses likelyhood of something happening [subjective approach]
+         (Aldo):        relative frequency of an event [frequentist approach]
+         (Alessandro):  ratio (relative frequency) -> number of cases of the event to total possible cases [classic mathematical aproach]
+      In order to obtain a quantification in the subjective approach, we apply a gambling mechanism where 0 <= p <= 1.
+      Bet mechanism: How much would you willing to bet to receive 100$ in case of win? + Willing to exchange side of the bet.
+         
+         (Axiomatic Definition):
+            - Axioms:
+               - a probability is a function that maps events to real numbers in the interval [0,1]
+               - this funtion is additive for disjoint event (the intersection si an empty set)
+            - P(A) = probability of event A
+            - P(A) = 0 -> A is impossible
+            - P(A) = 1 -> A is certain
+            - P(A) = 0.5 -> A is equally likely to happen or not to happen
+         
+         Approach proposd in 1933 by Kolmogorov, starting from the Measure Theory. It defines measures, that must be positive. One axiom
+         of this theory is that the measure of an union must be equal to the sum of the measures.
+         Theory of probability that is considered just as a measure with the two precedent axioms.
+         A Measure Space is an object defined by a triplet (omega, F, p), where omega is the set f possible outcomes; F is the se of all
+         possible events (subsets) I can build using the possible outcomes (sigma algebra of omega based on some axioms and complete);
+         p just any number assign to an element in F.
+         
+   - random variable: any function omega: => R(real numbers). Omega is the set of all possible outcomes, a random variable X is a
+     projection of omega on the real line. In the random walk homework if we take each step we have a sequence of random variables.
+
+A family of stochastic process: {Xt}t in S, where Xt is a stochastic variable.
+y=x^2 could be a stochastic process
+More common in stochastic processes is talking about incrementation: differential equation with probabilistic incrementation.
+         
+HMWK 9: make a paralelism between measure and probability theory and derive subadditivity from the axioms. And explore the
+inclusion/exclusion principle.
+
+HMWK 10: Then repeat the random walk but, this time at each step make a jump 0 or 1, the second one with probability:
+lambda*dt (with lambda arbitrary positive). It becomes the simulation of a continuous time process (arrival process of Poisson).
+
+   ^
+   |
+   |
+   |
+   |
+   |
+   |
+___|____|____|____|____|____|____|__> subdivide 0 to 1 in n interval where 1/n=dt
+   |
+   |

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Homework 9 - Probability Theory and Measure Theory &middot; Statistics Homework
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://localhost:4000/homework9/">
+  
+
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/custom.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/atom.xml">
+</head>
+
+
+  <body class="theme-base-0b">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Homework collection for the university course in Statistics</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/">Home</a>
+
+    <!-- 
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="http://localhost:4000/about/">About</a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+     -->
+
+    <a class="sidebar-nav-item" href="https://github.com/alexgallo8">GitHub Profile</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Statistics Homework</a>
+            <small>Alessandro Maone - 1945149</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Homework 9 - Probability Theory and Measure Theory</h1>
+  <span class="post-date">14 Nov 2025</span>
+  <h2 id="introduction">Introduction</h2>
+
+<p>This homework explores the foundational aspects of probability theory, examining how different interpretations of probability have evolved and how the axiomatic approach provides a unified mathematical framework. We will investigate the deep connection between probability theory and measure theory, and derive fundamental properties from the axioms of probability.</p>
+
+<!--more-->
+
+<h2 id="part-1-interpretations-of-probability">Part 1: Interpretations of Probability</h2>
+
+<h3 id="11-classical-laplacian-interpretation">1.1 Classical (Laplacian) Interpretation</h3>
+
+<p><strong>Definition:</strong> The probability of an event A is the ratio of favorable outcomes to total possible outcomes, assuming all outcomes are equally likely.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A) = |A| / |Ω| = (Number of favorable outcomes) / (Total number of outcomes)
+</code></pre></div></div>
+
+<p><strong>Example:</strong> Rolling a fair die, P(even number) = 3/6 = 0.5</p>
+
+<p><strong>Strengths:</strong></p>
+<ul>
+  <li>Intuitive and easy to apply in simple cases</li>
+  <li>Provides exact calculations for finite, symmetric sample spaces</li>
+  <li>Foundation for combinatorial probability</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+<ul>
+  <li>Requires outcomes to be equally likely (circular reasoning)</li>
+  <li>Cannot handle continuous sample spaces</li>
+  <li>Fails for infinite sample spaces</li>
+  <li>Cannot address cases where symmetry is not obvious</li>
+</ul>
+
+<p><strong>Historical Context:</strong> Proposed by Pierre-Simon Laplace in the 18th century, this was the first systematic approach to probability.</p>
+
+<h3 id="12-frequentist-interpretation">1.2 Frequentist Interpretation</h3>
+
+<p><strong>Definition:</strong> The probability of an event is the limiting relative frequency of its occurrence in an infinite sequence of independent trials.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A) = lim_{n→∞} (n_A / n)
+</code></pre></div></div>
+
+<p>where n_A is the number of times event A occurs in n trials.</p>
+
+<p><strong>Example:</strong> If we flip a coin 10,000 times and observe 5,023 heads, P(heads) ≈ 0.5023</p>
+
+<p><strong>Strengths:</strong></p>
+<ul>
+  <li>Based on empirical observation</li>
+  <li>Applicable to real-world experiments</li>
+  <li>Provides operational meaning to probability</li>
+  <li>No need to assume equally likely outcomes</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+<ul>
+  <li>Requires repeatable experiments</li>
+  <li>Cannot handle one-time events (e.g., “probability of rain tomorrow”)</li>
+  <li>The limit may not exist in practice</li>
+  <li>Infinite repetition is physically impossible</li>
+</ul>
+
+<p><strong>Historical Context:</strong> Developed by Richard von Mises and others in the early 20th century as a response to the limitations of the classical approach.</p>
+
+<h3 id="13-bayesian-subjective-interpretation">1.3 Bayesian (Subjective) Interpretation</h3>
+
+<p><strong>Definition:</strong> Probability represents a degree of belief or confidence about an event, updated through experience using Bayes’ theorem.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(H|E) = P(E|H) · P(H) / P(E)
+</code></pre></div></div>
+
+<p><strong>Key Concepts:</strong></p>
+<ul>
+  <li><strong>Prior probability P(H):</strong> Initial belief before observing evidence</li>
+  <li><strong>Likelihood P(E|H):</strong> Probability of evidence given hypothesis</li>
+  <li><strong>Posterior probability P(H|E):</strong> Updated belief after observing evidence</li>
+</ul>
+
+<p><strong>Example:</strong> Estimating the probability that a patient has a disease given test results</p>
+
+<p><strong>Strengths:</strong></p>
+<ul>
+  <li>Handles one-time events and subjective uncertainties</li>
+  <li>Incorporates prior knowledge</li>
+  <li>Natural framework for updating beliefs with new information</li>
+  <li>Applicable to decision-making under uncertainty</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+<ul>
+  <li>Different individuals may assign different prior probabilities</li>
+  <li>Subjective nature can lead to disagreements</li>
+  <li>Choice of prior can significantly influence results</li>
+  <li>Requires careful elicitation of beliefs</li>
+</ul>
+
+<p><strong>Betting Mechanism:</strong> To quantify subjective probability, consider: “How much would you be willing to bet to receive $100 if event A occurs?” If you’d bet $p, then your subjective probability is P(A) = p/100. Additionally, you should be willing to take either side of the bet at these odds.</p>
+
+<p><strong>Historical Context:</strong> Foundations laid by Thomas Bayes (18th century), developed extensively by Bruno de Finetti and Leonard Savage in the 20th century.</p>
+
+<h3 id="14-geometric-continuous-interpretation">1.4 Geometric (Continuous) Interpretation</h3>
+
+<p><strong>Definition:</strong> For continuous sample spaces, probability is determined by geometric measures (length, area, volume).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A) = measure(A) / measure(Ω)
+</code></pre></div></div>
+
+<p><strong>Example:</strong> Probability that a randomly chosen point in a unit square falls in a specific region</p>
+
+<p><strong>Strengths:</strong></p>
+<ul>
+  <li>Extends probability to continuous spaces</li>
+  <li>Natural for physical problems (e.g., particle positions)</li>
+  <li>Foundation for continuous random variables</li>
+</ul>
+
+<p><strong>Limitations:</strong></p>
+<ul>
+  <li>Requires careful definition of “random” selection</li>
+  <li>Some sets may not be measurable (Vitali set)</li>
+  <li>Paradoxes can arise (Bertrand’s paradox)</li>
+</ul>
+
+<h3 id="15-conceptual-inconsistencies-resolved-by-axiomatic-approach">1.5 Conceptual Inconsistencies Resolved by Axiomatic Approach</h3>
+
+<p><strong>Problems Among Interpretations:</strong></p>
+
+<ol>
+  <li>
+    <p><strong>Circular reasoning in classical approach:</strong> Defining probability using “equally likely” outcomes assumes what we’re trying to define</p>
+  </li>
+  <li>
+    <p><strong>Incompatibility:</strong> Frequentist approach cannot handle unique events; Bayesian allows them but is subjective</p>
+  </li>
+  <li>
+    <p><strong>Infinite sample spaces:</strong> Classical approach breaks down; geometric approach introduces measurability issues</p>
+  </li>
+  <li>
+    <p><strong>Mathematical rigor:</strong> None of the interpretations provides a rigorous mathematical foundation</p>
+  </li>
+</ol>
+
+<p><strong>Resolution through Axioms:</strong></p>
+
+<p>The axiomatic approach, proposed by Andrei Kolmogorov (1933), provides a unified mathematical framework independent of interpretation:</p>
+
+<p><strong>Kolmogorov’s Axioms:</strong></p>
+<ol>
+  <li><strong>Non-negativity:</strong> P(A) ≥ 0 for all events A</li>
+  <li><strong>Normalization:</strong> P(Ω) = 1 (certainty of sample space)</li>
+  <li><strong>Countable additivity:</strong> For disjoint events A₁, A₂, …:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ Aᵢ) = Σᵢ P(Aᵢ)
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>Why This Resolves Inconsistencies:</strong></p>
+
+<ul>
+  <li><strong>Interpretation-independent:</strong> The axioms don’t specify <em>what</em> probability means, only how it must behave mathematically</li>
+  <li><strong>Mathematical rigor:</strong> Built on measure theory, a solid mathematical foundation</li>
+  <li><strong>Universality:</strong> All interpretations must satisfy these axioms</li>
+  <li><strong>Consistency:</strong> Different interpretations can coexist as different ways to <em>assign</em> probabilities, but all must obey the same rules</li>
+</ul>
+
+<p><strong>Example:</strong> Both a frequentist (using relative frequencies) and a Bayesian (using degrees of belief) can work with the same probability space (Ω, F, P) as long as their probability assignments satisfy the axioms.</p>
+
+<h2 id="part-2-probability-theory-and-measure-theory">Part 2: Probability Theory and Measure Theory</h2>
+
+<h3 id="21-measure-theory-foundation">2.1 Measure Theory Foundation</h3>
+
+<p><strong>Measure Space:</strong> A triplet (Ω, F, μ) where:</p>
+<ul>
+  <li><strong>Ω:</strong> Set of all elements (universal set)</li>
+  <li><strong>F:</strong> σ-algebra on Ω (collection of measurable sets)</li>
+  <li><strong>μ:</strong> Measure function, μ: F → [0, ∞]</li>
+</ul>
+
+<p><strong>Properties of a Measure:</strong></p>
+<ol>
+  <li><strong>Non-negativity:</strong> μ(A) ≥ 0 for all A ∈ F</li>
+  <li><strong>Null empty set:</strong> μ(∅) = 0</li>
+  <li><strong>Countable additivity:</strong> For disjoint sets A₁, A₂, …:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>μ(⋃ᵢ Aᵢ) = Σᵢ μ(Aᵢ)
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="22-σ-algebras-sigma-algebras">2.2 σ-Algebras (Sigma-Algebras)</h3>
+
+<p><strong>Definition:</strong> A σ-algebra F on a set Ω is a collection of subsets satisfying:</p>
+
+<ol>
+  <li><strong>Contains Ω:</strong> Ω ∈ F</li>
+  <li><strong>Closed under complementation:</strong> If A ∈ F, then Aᶜ ∈ F</li>
+  <li><strong>Closed under countable unions:</strong> If A₁, A₂, … ∈ F, then ⋃ᵢ Aᵢ ∈ F</li>
+</ol>
+
+<p><strong>Consequences:</strong></p>
+<ul>
+  <li>∅ ∈ F (since ∅ = Ωᶜ)</li>
+  <li>Closed under countable intersections (by De Morgan’s laws)</li>
+  <li>Closed under set differences</li>
+</ul>
+
+<p><strong>Why σ-Algebras?</strong></p>
+
+<p>σ-algebras define which subsets are “measurable” (i.e., which events can be assigned probabilities). Not all subsets can be measurable without leading to contradictions (e.g., Vitali sets in ℝ).</p>
+
+<p><strong>Example:</strong> For Ω = {1, 2, 3}, one possible σ-algebra is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>F = {∅, {1}, {2,3}, {1,2,3}}
+</code></pre></div></div>
+
+<p><strong>Common σ-Algebras:</strong></p>
+<ul>
+  <li><strong>Power set:</strong> F = P(Ω), all subsets (for finite/countable Ω)</li>
+  <li><strong>Borel σ-algebra:</strong> Generated by open sets in ℝⁿ (for continuous spaces)</li>
+  <li><strong>Trivial σ-algebra:</strong> F = {∅, Ω}</li>
+</ul>
+
+<h3 id="23-probability-measures">2.3 Probability Measures</h3>
+
+<p><strong>Definition:</strong> A probability measure P is a measure on (Ω, F) such that:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(Ω) = 1
+</code></pre></div></div>
+
+<p>Thus, a <strong>probability space</strong> is a measure space (Ω, F, P) where:</p>
+
+<ul>
+  <li><strong>Ω:</strong> Sample space (all possible outcomes)</li>
+  <li><strong>F:</strong> Event space (all events we can assign probabilities to)</li>
+  <li><strong>P:</strong> Probability measure (assigns probabilities to events)</li>
+</ul>
+
+<h3 id="24-measurable-functions-and-random-variables">2.4 Measurable Functions and Random Variables</h3>
+
+<p><strong>Measurable Function:</strong> A function f: (Ω, F) → (S, Σ) is measurable if:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f⁻¹(B) ∈ F  for all B ∈ Σ
+</code></pre></div></div>
+
+<p>i.e., the preimage of every measurable set in S is measurable in Ω.</p>
+
+<p><strong>Random Variable:</strong> A measurable function X: (Ω, F, P) → (ℝ, B, P_X) where:</p>
+<ul>
+  <li><strong>Ω:</strong> Sample space</li>
+  <li><strong>F:</strong> σ-algebra of events</li>
+  <li><strong>P:</strong> Probability measure on (Ω, F)</li>
+  <li><strong>B:</strong> Borel σ-algebra on ℝ</li>
+  <li><strong>P_X:</strong> Induced probability measure on ℝ (distribution of X)</li>
+</ul>
+
+<p><strong>Why This Definition?</strong></p>
+
+<p>For X to be a random variable, we need to be able to calculate probabilities like P(X ∈ B) for any Borel set B. This requires:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ω ∈ Ω : X(ω) ∈ B} ∈ F
+</code></pre></div></div>
+
+<p>i.e., X⁻¹(B) must be an event in our probability space.</p>
+
+<p><strong>Example from Random Walk:</strong></p>
+
+<p>In Homework 7, each step Xᵢ is a random variable:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Xᵢ: Ω → {-1, +1}
+</code></pre></div></div>
+
+<p>where Ω represents all possible outcomes of week i (secure or breached), and:</p>
+<ul>
+  <li>Xᵢ⁻¹({+1}) = {server secure} ∈ F</li>
+  <li>Xᵢ⁻¹({-1}) = {server breached} ∈ F</li>
+</ul>
+
+<p>The cumulative score S(n) = X₁ + X₂ + … + Xₙ is also a random variable.</p>
+
+<h3 id="25-summary-of-connections">2.5 Summary of Connections</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Measure Theory</th>
+      <th>Probability Theory</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Measure space (Ω, F, μ)</td>
+      <td>Probability space (Ω, F, P)</td>
+    </tr>
+    <tr>
+      <td>Measure μ</td>
+      <td>Probability measure P</td>
+    </tr>
+    <tr>
+      <td>μ(Ω) ∈ [0, ∞]</td>
+      <td>P(Ω) = 1</td>
+    </tr>
+    <tr>
+      <td>Measurable set A ∈ F</td>
+      <td>Event A</td>
+    </tr>
+    <tr>
+      <td>Measurable function</td>
+      <td>Random variable</td>
+    </tr>
+    <tr>
+      <td>μ(A)</td>
+      <td>P(A)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Key Insight:</strong> Probability theory is measure theory with the additional constraint that the total measure equals 1. This connection provides probability theory with rigorous mathematical foundations.</p>
+
+<h2 id="part-3-deriving-properties-from-axioms">Part 3: Deriving Properties from Axioms</h2>
+
+<h3 id="31-basic-properties">3.1 Basic Properties</h3>
+
+<p>From Kolmogorov’s axioms, we can derive:</p>
+
+<p><strong>Property 1: Probability of Empty Set</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(∅) = 0
+</code></pre></div></div>
+
+<p><em>Proof:</em> Let A₁ = Ω and Aᵢ = ∅ for i &gt; 1. These are disjoint, so:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(Ω) = P(⋃ᵢ Aᵢ) = P(Ω) + P(∅) + P(∅) + ...
+1 = 1 + Σᵢ₌₂^∞ P(∅)
+</code></pre></div></div>
+<p>This is only possible if P(∅) = 0. □</p>
+
+<p><strong>Property 2: Complement Rule</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(Aᶜ) = 1 - P(A)
+</code></pre></div></div>
+
+<p><em>Proof:</em> Since A and Aᶜ are disjoint and A ∪ Aᶜ = Ω:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(Ω) = P(A ∪ Aᶜ) = P(A) + P(Aᶜ)
+1 = P(A) + P(Aᶜ)
+P(Aᶜ) = 1 - P(A)
+</code></pre></div></div>
+<p>□</p>
+
+<p><strong>Property 3: Monotonicity</strong></p>
+
+<p>If A ⊆ B, then P(A) ≤ P(B)</p>
+
+<p><em>Proof:</em> We can write B = A ∪ (B ∩ Aᶜ), where A and (B ∩ Aᶜ) are disjoint:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(B) = P(A) + P(B ∩ Aᶜ)
+</code></pre></div></div>
+<p>Since P(B ∩ Aᶜ) ≥ 0 (non-negativity axiom):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(B) ≥ P(A)
+</code></pre></div></div>
+<p>□</p>
+
+<h3 id="32-subadditivity-property">3.2 Subadditivity Property</h3>
+
+<p><strong>Theorem (Subadditivity):</strong> For any sequence of events A₁, A₂, A₃, … (not necessarily disjoint):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ₌₁^∞ Aᵢ) ≤ Σᵢ₌₁^∞ P(Aᵢ)
+</code></pre></div></div>
+
+<p>For finite case (n events):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A₁ ∪ A₂ ∪ ... ∪ Aₙ) ≤ P(A₁) + P(A₂) + ... + P(Aₙ)
+</code></pre></div></div>
+
+<p><strong>Proof (Countable Case):</strong></p>
+
+<p>Define a sequence of disjoint events:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B₁ = A₁
+B₂ = A₂ ∩ A₁ᶜ
+B₃ = A₃ ∩ A₁ᶜ ∩ A₂ᶜ
+...
+Bₙ = Aₙ ∩ (⋃ᵢ₌₁^(n-1) Aᵢ)ᶜ
+</code></pre></div></div>
+
+<p>These events are disjoint by construction, and:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⋃ᵢ₌₁^∞ Bᵢ = ⋃ᵢ₌₁^∞ Aᵢ
+</code></pre></div></div>
+
+<p>By countable additivity:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ₌₁^∞ Aᵢ) = P(⋃ᵢ₌₁^∞ Bᵢ) = Σᵢ₌₁^∞ P(Bᵢ)
+</code></pre></div></div>
+
+<p>Since Bᵢ ⊆ Aᵢ for all i, by monotonicity P(Bᵢ) ≤ P(Aᵢ):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ₌₁^∞ Aᵢ) = Σᵢ₌₁^∞ P(Bᵢ) ≤ Σᵢ₌₁^∞ P(Aᵢ)
+</code></pre></div></div>
+<p>□</p>
+
+<p><strong>Interpretation:</strong> The probability of a union is at most the sum of individual probabilities. Equality holds only when events are disjoint (no overlap).</p>
+
+<p><strong>Example:</strong> In security analysis, if event Aᵢ represents “breach occurs through vulnerability i”, then:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(at least one breach) ≤ P(breach through vuln. 1) + ... + P(breach through vuln. n)
+</code></pre></div></div>
+
+<p>This is often called the <strong>union bound</strong> or <strong>Boole’s inequality</strong>.</p>
+
+<h3 id="33-inclusion-exclusion-principle">3.3 Inclusion-Exclusion Principle</h3>
+
+<p><strong>Theorem (Inclusion-Exclusion):</strong> For any events A₁, A₂, …, Aₙ:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ₌₁ⁿ Aᵢ) = Σᵢ P(Aᵢ) - Σᵢ&lt;ⱼ P(Aᵢ ∩ Aⱼ) + Σᵢ&lt;ⱼ&lt;ₖ P(Aᵢ ∩ Aⱼ ∩ Aₖ) - ... + (-1)ⁿ⁺¹ P(A₁ ∩ ... ∩ Aₙ)
+</code></pre></div></div>
+
+<p><strong>Proof by Induction:</strong></p>
+
+<p><em>Base case (n=2):</em></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A₁ ∪ A₂) = P(A₁) + P(A₂) - P(A₁ ∩ A₂)
+</code></pre></div></div>
+
+<p>Proof: Write A₁ ∪ A₂ as disjoint union:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A₁ ∪ A₂ = A₁ ∪ (A₂ ∩ A₁ᶜ)
+</code></pre></div></div>
+
+<p>Then:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A₁ ∪ A₂) = P(A₁) + P(A₂ ∩ A₁ᶜ)
+</code></pre></div></div>
+
+<p>Also, A₂ = (A₂ ∩ A₁) ∪ (A₂ ∩ A₁ᶜ), so:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A₂) = P(A₂ ∩ A₁) + P(A₂ ∩ A₁ᶜ)
+P(A₂ ∩ A₁ᶜ) = P(A₂) - P(A₁ ∩ A₂)
+</code></pre></div></div>
+
+<p>Substituting:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A₁ ∪ A₂) = P(A₁) + P(A₂) - P(A₁ ∩ A₂)
+</code></pre></div></div>
+<p>□</p>
+
+<p><em>Inductive step:</em> Assume the formula holds for n events. For n+1 events:</p>
+
+<p>Let B = ⋃ᵢ₌₁ⁿ Aᵢ. Then:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ₌₁ⁿ⁺¹ Aᵢ) = P(B ∪ Aₙ₊₁) = P(B) + P(Aₙ₊₁) - P(B ∩ Aₙ₊₁)
+</code></pre></div></div>
+
+<p>By inductive hypothesis, P(B) satisfies inclusion-exclusion. Also:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B ∩ Aₙ₊₁ = ⋃ᵢ₌₁ⁿ (Aᵢ ∩ Aₙ₊₁)
+</code></pre></div></div>
+
+<p>Applying inclusion-exclusion to this union and substituting gives the formula for n+1 events. □</p>
+
+<p><strong>Alternative Proof (Combinatorial):</strong></p>
+
+<p>Each element ω ∈ ⋃ᵢ Aᵢ belongs to exactly k ≥ 1 of the sets A₁, …, Aₙ.</p>
+
+<p>On the right-hand side, this element is counted:</p>
+<ul>
+  <li>In Σᵢ P(Aᵢ): k times</li>
+  <li>In -Σᵢ&lt;ⱼ P(Aᵢ ∩ Aⱼ): -C(k,2) times</li>
+  <li>In Σᵢ&lt;ⱼ&lt;ₖ P(Aᵢ ∩ Aⱼ ∩ Aₖ): +C(k,3) times</li>
+  <li>etc.</li>
+</ul>
+
+<p>Total count:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C(k,1) - C(k,2) + C(k,3) - ... + (-1)ᵏ⁺¹C(k,k) = 1 - (1-1)ᵏ = 1
+</code></pre></div></div>
+
+<p>(by binomial theorem), which matches the left-hand side. □</p>
+
+<p><strong>Special Cases:</strong></p>
+
+<p>For n=3:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A₁ ∪ A₂ ∪ A₃) = P(A₁) + P(A₂) + P(A₃) 
+                   - P(A₁ ∩ A₂) - P(A₁ ∩ A₃) - P(A₂ ∩ A₃)
+                   + P(A₁ ∩ A₂ ∩ A₃)
+</code></pre></div></div>
+
+<p><strong>Comparison with Subadditivity:</strong></p>
+
+<p>Inclusion-exclusion gives an exact formula, while subadditivity gives an upper bound:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ Aᵢ) = Σᵢ P(Aᵢ) - [correction terms] ≤ Σᵢ P(Aᵢ)
+</code></pre></div></div>
+
+<p>The correction terms account for overlaps (double-counting).</p>
+
+<h3 id="34-applications-and-examples">3.4 Applications and Examples</h3>
+
+<p><strong>Example 1: Security Systems</strong></p>
+
+<p>A server has three independent vulnerabilities with exploit probabilities:</p>
+<ul>
+  <li>P(A₁) = 0.3</li>
+  <li>P(A₂) = 0.2</li>
+  <li>P(A₃) = 0.4</li>
+</ul>
+
+<p>What is P(at least one vulnerability exploited)?</p>
+
+<p><em>Subadditivity bound:</em></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A₁ ∪ A₂ ∪ A₃) ≤ 0.3 + 0.2 + 0.4 = 0.9
+</code></pre></div></div>
+
+<p>If independent (P(Aᵢ ∩ Aⱼ) = P(Aᵢ)P(Aⱼ)):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(A₁ ∪ A₂ ∪ A₃) = 0.3 + 0.2 + 0.4 
+                  - 0.06 - 0.12 - 0.08 
+                  + 0.024
+                  = 0.664
+</code></pre></div></div>
+
+<p>Or equivalently:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(no exploit) = (1-0.3)(1-0.2)(1-0.4) = 0.336
+P(at least one) = 1 - 0.336 = 0.664
+</code></pre></div></div>
+
+<p><strong>Example 2: Counting Principles</strong></p>
+
+<p>How many integers from 1 to 100 are divisible by 2, 3, or 5?</p>
+
+<p>Let:</p>
+<ul>
+  <li>A₁ = {divisible by 2}</li>
+  <li>A₂ = {divisible by 3}</li>
+  <li>A₃ = {divisible by 5}</li>
+</ul>
+
+<p>Then:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|A₁| = 50, |A₂| = 33, |A₃| = 20
+|A₁ ∩ A₂| = 16, |A₁ ∩ A₃| = 10, |A₂ ∩ A₃| = 6
+|A₁ ∩ A₂ ∩ A₃| = 3
+</code></pre></div></div>
+
+<p>By inclusion-exclusion:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|A₁ ∪ A₂ ∪ A₃| = 50 + 33 + 20 - 16 - 10 - 6 + 3 = 74
+</code></pre></div></div>
+
+<h3 id="35-generalization-bonferroni-inequalities">3.5 Generalization: Bonferroni Inequalities</h3>
+
+<p>The inclusion-exclusion principle leads to alternating upper and lower bounds:</p>
+
+<p><strong>Lower bounds (odd k):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ Aᵢ) ≥ S₁ - S₂ + S₃ - ... + S₂ₖ₋₁
+</code></pre></div></div>
+
+<p><strong>Upper bounds (even k):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(⋃ᵢ Aᵢ) ≤ S₁ - S₂ + S₃ - ... - S₂ₖ
+</code></pre></div></div>
+
+<p>where Sₖ is the sum of probabilities of all k-way intersections:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S₁ = Σᵢ P(Aᵢ)
+S₂ = Σᵢ&lt;ⱼ P(Aᵢ ∩ Aⱼ)
+S₃ = Σᵢ&lt;ⱼ&lt;ₖ P(Aᵢ ∩ Aⱼ ∩ Aₖ)
+...
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This homework has demonstrated:</p>
+
+<ol>
+  <li>
+    <p><strong>Multiple interpretations</strong> of probability exist (classical, frequentist, Bayesian, geometric), each with strengths and limitations</p>
+  </li>
+  <li>
+    <p><strong>The axiomatic approach</strong> provides a unified mathematical framework that resolves conceptual inconsistencies by defining probability as a normalized measure</p>
+  </li>
+  <li><strong>Measure theory</strong> provides the rigorous foundation for probability theory through:
+    <ul>
+      <li>σ-algebras (defining measurable events)</li>
+      <li>Probability measures (assigning probabilities)</li>
+      <li>Measurable functions (random variables)</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Fundamental properties</strong> like subadditivity and inclusion-exclusion can be rigorously derived from Kolmogorov’s axioms</p>
+  </li>
+  <li><strong>Practical applications</strong> of these principles appear throughout statistics, from security analysis to combinatorial counting</li>
+</ol>
+
+<p>The connection between probability and measure theory, established by Kolmogorov, transformed probability from a collection of intuitions into a rigorous mathematical discipline.</p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li><strong>Kolmogorov, A. N.</strong> (1933). <em>Grundbegriffe der Wahrscheinlichkeitsrechnung</em>. Springer. (English: <em>Foundations of the Theory of Probability</em>, 1950)</li>
+  <li><strong>Billingsley, P.</strong> (1995). <em>Probability and Measure</em>, 3rd ed. Wiley.</li>
+  <li><strong>Feller, W.</strong> (1968). <em>An Introduction to Probability Theory and Its Applications</em>, Vol. 1, 3rd ed. Wiley.</li>
+  <li><strong>Ross, S. M.</strong> (2014). <em>A First Course in Probability</em>, 9th ed. Pearson.</li>
+  <li><strong>Durrett, R.</strong> (2019). <em>Probability: Theory and Examples</em>, 5th ed. Cambridge University Press.</li>
+</ol>
+
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/homework10/">
+            Homework 10 - Poisson Process Simulation
+            <small>15 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework8/">
+            Homework 8 - Comparing Bernoulli and Random Walk Processes
+            <small>09 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework7/">
+            Homework 7 - Random Walk and Security Simulation
+            <small>08 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/public/js/script.js'></script>
+  </body>
+</html>

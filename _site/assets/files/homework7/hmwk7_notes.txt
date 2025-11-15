@@ -14,7 +14,7 @@
   </title>
 
   
-  <link rel="canonical" href="http://localhost:4000/assets/files/homework7/hmwk7_note.txt">
+  <link rel="canonical" href="http://localhost:4000/assets/files/homework7/hmwk7_notes.txt">
   
 
   <link rel="stylesheet" href="/public/css/poole.css">
