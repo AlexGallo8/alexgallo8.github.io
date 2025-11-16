@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-11-15T18:13:09+01:00</updated>
+ <updated>2025-11-16T11:16:50+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -1816,64 +1816,6 @@ Var(N(T)) = np(1-p) ≈ np = λT (since p → 0)
   &lt;li&gt;Trading times in limit order books&lt;/li&gt;
   &lt;li&gt;Insurance claims arrival&lt;/li&gt;
   &lt;li&gt;λ = trades/claims per day&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;62-extensions-and-generalizations&quot;&gt;6.2 Extensions and Generalizations&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Non-homogeneous Poisson process:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Rate varies with time: λ(t) instead of constant λ&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;E[N(t)] = ∫₀ᵗ λ(s)ds
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Compound Poisson process:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Each event has an associated random “size” Yᵢ:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;X(t) = Σᵢ₌₁^N(t) Yᵢ
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Example: Total insurance claims (number of claims × claim amounts)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Spatial Poisson process:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Events distributed in space (not just time):&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Points randomly distributed in a region&lt;/li&gt;
-  &lt;li&gt;λ = intensity (expected points per unit area/volume)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Cox process (doubly stochastic):&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Rate λ is itself a random process:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;N(t) | Λ(t) ~ PP(Λ(t))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;63-relationship-to-other-processes&quot;&gt;6.3 Relationship to Other Processes&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Connection to exponential distribution:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Poisson counts events in fixed time&lt;/li&gt;
-  &lt;li&gt;Exponential gives time until next event&lt;/li&gt;
-  &lt;li&gt;They are “dual” to each other&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Connection to Gamma distribution:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Time until k-th event: Gamma(k, λ)&lt;/li&gt;
-  &lt;li&gt;Sum of k exponential random variables&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Connection to normal distribution:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;For large λt, Poisson(λt) ≈ Normal(λt, λt)&lt;/li&gt;
-  &lt;li&gt;Central Limit Theorem applies&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Continuous-time Markov chain:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Poisson process is the simplest example&lt;/li&gt;
-  &lt;li&gt;State space: {0, 1, 2, 3, …}&lt;/li&gt;
-  &lt;li&gt;Transition: only from n to n+1, rate λ&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;

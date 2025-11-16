@@ -1900,64 +1900,6 @@ Var(N(T)) = np(1-p) ≈ np = λT (since p → 0)
   <li>λ = trades/claims per day</li>
 </ul>
 
-<h3 id="62-extensions-and-generalizations">6.2 Extensions and Generalizations</h3>
-
-<p><strong>Non-homogeneous Poisson process:</strong></p>
-
-<p>Rate varies with time: λ(t) instead of constant λ</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>E[N(t)] = ∫₀ᵗ λ(s)ds
-</code></pre></div></div>
-
-<p><strong>Compound Poisson process:</strong></p>
-
-<p>Each event has an associated random “size” Yᵢ:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X(t) = Σᵢ₌₁^N(t) Yᵢ
-</code></pre></div></div>
-
-<p>Example: Total insurance claims (number of claims × claim amounts)</p>
-
-<p><strong>Spatial Poisson process:</strong></p>
-
-<p>Events distributed in space (not just time):</p>
-<ul>
-  <li>Points randomly distributed in a region</li>
-  <li>λ = intensity (expected points per unit area/volume)</li>
-</ul>
-
-<p><strong>Cox process (doubly stochastic):</strong></p>
-
-<p>Rate λ is itself a random process:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>N(t) | Λ(t) ~ PP(Λ(t))
-</code></pre></div></div>
-
-<h3 id="63-relationship-to-other-processes">6.3 Relationship to Other Processes</h3>
-
-<p><strong>Connection to exponential distribution:</strong></p>
-<ul>
-  <li>Poisson counts events in fixed time</li>
-  <li>Exponential gives time until next event</li>
-  <li>They are “dual” to each other</li>
-</ul>
-
-<p><strong>Connection to Gamma distribution:</strong></p>
-<ul>
-  <li>Time until k-th event: Gamma(k, λ)</li>
-  <li>Sum of k exponential random variables</li>
-</ul>
-
-<p><strong>Connection to normal distribution:</strong></p>
-<ul>
-  <li>For large λt, Poisson(λt) ≈ Normal(λt, λt)</li>
-  <li>Central Limit Theorem applies</li>
-</ul>
-
-<p><strong>Continuous-time Markov chain:</strong></p>
-<ul>
-  <li>Poisson process is the simplest example</li>
-  <li>State space: {0, 1, 2, 3, …}</li>
-  <li>Transition: only from n to n+1, rate λ</li>
-</ul>
-
 <h2 id="conclusion">Conclusion</h2>
 
 <p>This homework has demonstrated that:</p>
