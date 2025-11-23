@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Final Thesis - Stochastic Processes in Cybersecurity &middot; Statistics Homework
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://localhost:4000/final-thesis/">
+  
+
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/custom.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/atom.xml">
+</head>
+
+
+  <body class="theme-base-0b">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Homework collection for the university course in Statistics</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/">Home</a>
+
+    <!-- 
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="http://localhost:4000/about/">About</a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+     -->
+
+    <a class="sidebar-nav-item" href="https://github.com/alexgallo8">GitHub Profile</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Statistics Homework</a>
+            <small>Alessandro Maone - 1945149</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Final Thesis - Stochastic Processes in Cybersecurity</h1>
+  <span class="post-date">23 Nov 2025</span>
+  <h2 id="thesis-topic-beyond-the-random-walk-brownian-motion-stochastic-processes-and-the-invariance-principle-donskers-theorem">Thesis Topic: Beyond the random walk: Brownian Motion, stochastic processes, and the Invariance Principle (Donsker’s theorem)</h2>
+
+<h3 id="abstract">Abstract</h3>
+
+<p>This thesis explores the application of stochastic processes, specifically random walks and Poisson processes, to model and analyze security events within cybersecurity systems. Traditional deterministic models often fall short in capturing the inherent randomness and dynamic nature of cyber threats. By leveraging the mathematical rigor of stochastic processes, this research aims to provide a more nuanced understanding of attack dynamics, anomaly detection, and predictive analytics in cybersecurity. The study will demonstrate how these models, rooted in foundational probability theory, can offer valuable insights into system resilience, threat propagation, and incident response strategies.</p>
+
+<!--more-->
+
+<h3 id="1-introduction">1. Introduction</h3>
+
+<p>The landscape of cybersecurity is characterized by constant evolution, unpredictable threats, and complex interactions between attackers and defenders. Understanding and mitigating these threats requires sophisticated analytical tools that can account for inherent uncertainties. Traditional security analyses often rely on static or deterministic models, which may oversimplify the dynamic and probabilistic nature of cyber attacks and system vulnerabilities. This thesis proposes the use of stochastic processes as a powerful framework for modeling and analyzing security events, offering a more realistic and robust approach to cybersecurity.</p>
+
+<p>This research will focus on two fundamental types of stochastic processes: random walks and Poisson processes. Random walks are particularly suited for modeling the progression of an attack or the state of a system over time, where each step represents a discrete event or change in status. Poisson processes, on the other hand, excel at modeling the occurrence of events over continuous time, such as the arrival of malicious traffic or the frequency of security incidents. By integrating these models, this thesis aims to provide a comprehensive framework for understanding, predicting, and responding to cyber threats.</p>
+
+<p>The primary objectives of this thesis are:</p>
+<ul>
+  <li>To establish a theoretical foundation for applying random walks and Poisson processes to various cybersecurity scenarios.</li>
+  <li>To develop and implement computational models for simulating attack dynamics and event occurrences.</li>
+  <li>To demonstrate the utility of these models in anomaly detection, threat prediction, and risk assessment.</li>
+  <li>To explore the connections between discrete and continuous stochastic models, potentially leveraging advanced concepts like Donsker’s theorem for broader applicability.</li>
+</ul>
+
+<h3 id="2-background-and-theoretical-foundations">2. Background and Theoretical Foundations</h3>
+
+<p>This section will lay the groundwork by reviewing essential concepts from probability theory and the specific stochastic processes central to this research.</p>
+
+<h4 id="21-probability-theory-and-measure-theory">2.1 Probability Theory and Measure Theory</h4>
+
+<p>The rigorous foundation for stochastic processes lies in axiomatic probability theory, as established by Kolmogorov. This involves defining a probability space $(\Omega, \mathcal{F}, P)$, where $\Omega$ is the sample space, $\mathcal{F}$ is a $\sigma$-algebra of events, and $P$ is a probability measure. The understanding of $\sigma$-algebras and measurable functions is crucial for defining random variables and, subsequently, stochastic processes.</p>
+
+<p><em>(Refer to Homework 9: “Probability Theory and Measure Theory” for detailed explanations of classical, frequentist, Bayesian, and geometric interpretations of probability, Kolmogorov’s axioms, $\sigma$-algebras, and the connection between measure theory and probability theory. This homework provides the mathematical rigor for the theoretical underpinnings.)</em></p>
+
+<h4 id="22-bernoulli-processes-and-the-law-of-large-numbers">2.2 Bernoulli Processes and the Law of Large Numbers</h4>
+
+<p>A Bernoulli process is a sequence of independent Bernoulli trials, where each trial has two possible outcomes (e.g., success/failure, secure/breached). The Law of Large Numbers (LLN) states that as the number of trials increases, the observed frequency of an event converges to its true probability. This concept is fundamental to understanding the long-term behavior of systems where events occur probabilistically.</p>
+
+<p><em>(Refer to Homework 4: “The Law of Large Numbers and its applications in statistical inference and data analysis” for the simulation and analysis of Bernoulli trials and the demonstration of LLN. This forms the discrete basis for understanding subsequent stochastic models.)</em></p>
+
+<h4 id="23-random-walks">2.3 Random Walks</h4>
+
+<p>A random walk is a mathematical formalization of a path that consists of a succession of random steps. In its simplest form, it involves movement on a grid where, at each step, the direction of movement is chosen randomly. Random walks can be symmetric or asymmetric, depending on the probabilities of moving in different directions. They are powerful tools for modeling cumulative effects of random events.</p>
+
+<p><em>(Refer to Homework 7: “Beyond the random walk: Brownian Motion, stochastic processes, and the Invariance Principle (Donsker’s theorem)” and Homework 8: “Comparing Bernoulli and Random Walk Processes” for the simulation of random walks, their properties, and the transformation from Bernoulli processes. The application of random walks to model “net security score” in network security from Homework 7 will be a direct starting point.)</em></p>
+
+<h4 id="24-poisson-processes">2.4 Poisson Processes</h4>
+
+<p>A Poisson process is a stochastic process that counts the number of events occurring in a given time interval. It is characterized by events occurring independently at a constant average rate ($\lambda$). Key properties include independent and stationary increments, and the number of events in any interval follows a Poisson distribution. The time between consecutive events (interarrival times) follows an exponential distribution.</p>
+
+<p><em>(Refer to Homework 10: “Poisson Process Simulation” for the detailed methodology of simulating Poisson processes, their theoretical background, properties, and connection to random walks. This homework provides the practical and theoretical basis for modeling event occurrences in continuous time.)</em></p>
+
+<h3 id="3-modeling-cybersecurity-events-with-random-walks">3. Modeling Cybersecurity Events with Random Walks</h3>
+
+<p>This section will develop and apply random walk models to represent various cybersecurity scenarios, focusing on the progression of attacks and the state of system security.</p>
+
+<h4 id="31-attack-progression-as-a-random-walk">3.1 Attack Progression as a Random Walk</h4>
+
+<p>We can model the state of a system or the progress of an attacker as a random walk. Each step in the walk represents a discrete action or event. For instance, a positive step could signify a successful defensive action or a failed attacker attempt, while a negative step could represent a successful exploit or a system compromise.</p>
+
+<p><strong>Model Formulation:</strong>
+Let $S_n$ be the security score of a system after $n$ events.
+$S_n = S_{n-1} + X_n$, where $X_n \in \{-1, +1\}$ represents the outcome of the $n$-th event.
+$P(X_n = +1) = p$ (e.g., successful defense, attacker fails)
+$P(X_n = -1) = q = 1-p$ (e.g., successful attack, system compromised)</p>
+
+<p><strong>Cybersecurity Applications:</strong></p>
+<ul>
+  <li><strong>Lateral Movement Modeling:</strong> An attacker’s movement within a network can be modeled as a random walk, where nodes are states and edges are possible transitions.</li>
+  <li><strong>System Resilience Assessment:</strong> The random walk can represent the system’s security posture, with thresholds for “compromised” and “recovered” states.</li>
+  <li><strong>Phishing Campaign Effectiveness:</strong> Each interaction with a user can be a step, leading to either a successful phishing attempt or detection.</li>
+</ul>
+
+<p><strong>Key Analysis:</strong></p>
+<ul>
+  <li><strong>First Passage Time:</strong> Calculating the expected time until the system reaches a critical state (e.g., full compromise or successful recovery).</li>
+  <li><strong>Probability of Ruin/Success:</strong> Determining the probability that an attacker succeeds before being detected, or vice versa.</li>
+  <li><strong>Impact of Asymmetry:</strong> Analyzing how varying probabilities $p$ and $q$ (e.g., due to new defenses or attack techniques) affect the system’s security trajectory.</li>
+</ul>
+
+<p><strong>Computational Implementation (Placeholder):</strong>
+<em>(This section will include Python code for simulating random walks, similar to <code class="language-plaintext highlighter-rouge">simulate_random_walk</code> from Homework 7, but adapted for specific cybersecurity scenarios. It will also include code for visualizing trajectories and analyzing key metrics like first passage time and probability distributions.)</em></p>
+
+<details>
+   <summary>View first_piece.py</summary>
+   
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre>    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+    <span class="k">def</span> <span class="nf">simulate_attack_random_walk</span><span class="p">(</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">p_success</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">n_simulations</span><span class="p">):</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_simulations</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="n">p_success</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">p_success</span><span class="p">])</span>
+        <span class="n">security_scores</span> <span class="o">=</span> <span class="n">initial_state</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">security_scores</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">initial_state</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_simulations</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">security_scores</span><span class="p">])</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">n_simulations</span><span class="p">,</span> <span class="mi">50</span><span class="p">)):</span>
+            <span class="n">ax1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">security_scores</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Compromise Threshold'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Event Count'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'System Security Score'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+        
+        <span class="n">ax2</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">security_scores</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Final Security Score'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Number of Simulations'</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">'2025-12-25-random-walk-simulation.png'</span><span class="p">)</span>
+    
+</pre></td></tr></tbody></table></code></pre></figure>
+
+</details>
+
+<p><img src="/assets/images/final_thesis/random-walk-simulation.png" alt="Random Walk Simulation of Attack Progression" />
+<em>Figure 1: Simulated trajectories of system security scores over 1000 events (500 simulations) with a 60% defense success probability. The red line indicates the critical compromise threshold (-20), and the histogram shows the distribution of final security scores (aligned with Homework 7’s random walk analysis framework).</em></p>
+
+<h3 id="4-modeling-cybersecurity-events-with-poisson-processes">4. Modeling Cybersecurity Events with Poisson Processes</h3>
+
+<p>This section will apply Poisson processes to model the occurrence of discrete security events over continuous time, enabling anomaly detection and predictive analytics.</p>
+
+<h4 id="41-event-arrival-modeling">4.1 Event Arrival Modeling</h4>
+
+<p>Many cybersecurity events, such as login attempts, firewall alerts, intrusion attempts, or malware detections, can be modeled as events occurring randomly over time. If these events occur independently at a constant average rate, a Poisson process is an appropriate model.</p>
+
+<p><strong>Model Formulation:</strong>
+Let $N(t)$ be the number of security events observed up to time $t$.
+$N(t) \sim \text{Poisson}(\lambda t)$, where $\lambda$ is the average rate of events per unit time.
+The probability of observing $k$ events in time $t$ is $P(N(t) = k) = \frac{e^{-\lambda t} (\lambda t)^k}{k!}$.</p>
+
+<p><strong>Cybersecurity Applications:</strong></p>
+<ul>
+  <li><strong>Anomaly Detection:</strong> Deviations from the expected Poisson rate can indicate malicious activity. For example, a sudden increase in failed login attempts (higher $\lambda$) might signal a brute-force attack.</li>
+  <li><strong>Security Incident Frequency:</strong> Modeling the rate of security incidents to understand trends and allocate resources effectively.</li>
+  <li><strong>Log Analysis:</strong> Analyzing the arrival rate of specific log entries to identify unusual patterns.</li>
+</ul>
+
+<p><strong>Key Analysis:</strong></p>
+<ul>
+  <li><strong>Rate Estimation:</strong> Estimating the parameter $\lambda$ from observed security event data.</li>
+  <li><strong>Statistical Hypothesis Testing:</strong> Using statistical tests (e.g., chi-squared goodness-of-fit) to determine if observed event counts conform to a Poisson distribution.</li>
+  <li><strong>Change Point Detection:</strong> Identifying shifts in the rate parameter $\lambda$, which could indicate the onset of an attack or a change in system behavior.</li>
+</ul>
+
+<p><strong>Computational Implementation (Placeholder):</strong>
+<em>(This section will include Python code for simulating Poisson processes, similar to <code class="language-plaintext highlighter-rouge">simulate_poisson_process</code> from Homework 10, and for analyzing real or synthetic security event data. It will cover rate estimation, visualization of event arrivals, and basic anomaly detection techniques based on Poisson distributions.)</em></p>
+
+<details>
+   <summary>View second_piece.py</summary>
+   
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="code"><pre>    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+    <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">poisson</span>
+
+    <span class="k">def</span> <span class="nf">simulate_security_poisson_process</span><span class="p">(</span><span class="n">lambda_rate</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">):</span>
+        <span class="n">interarrival_times</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">lambda_rate</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">lambda_rate</span><span class="o">*</span><span class="n">T</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">event_times</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">interarrival_times</span><span class="p">)</span>
+        <span class="n">event_times</span> <span class="o">=</span> <span class="n">event_times</span><span class="p">[</span><span class="n">event_times</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">]</span>
+        
+        <span class="n">interval_bins</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_intervals</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">event_counts</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">event_times</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">interval_bins</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">estimated_lambda</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">event_counts</span><span class="p">)</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">stem</span><span class="p">(</span><span class="n">event_times</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">event_times</span><span class="p">),</span> <span class="n">basefmt</span><span class="o">=</span><span class="s">'b-'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Time (hours)'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Security Event Occurrence'</span><span class="p">)</span>
+        
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">event_counts</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">event_counts</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">x</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">poisson</span><span class="p">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">estimated_lambda</span><span class="p">),</span> <span class="s">'b-'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'Estimated Poisson (λ=</span><span class="si">{</span><span class="n">estimated_lambda</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">)'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Event Count per Interval'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Probability Density'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">'2025-12-25-poisson-process-simulation.png'</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">event_times</span><span class="p">,</span> <span class="n">event_counts</span><span class="p">,</span> <span class="n">estimated_lambda</span>
+    
+</pre></td></tr></tbody></table></code></pre></figure>
+
+</details>
+
+<p><img src="/assets/images/final_thesis/poisson-process-simulation.png" alt="Poisson Process Simulation of Security Event Arrivals" />
+<em>Figure 2: Simulated security event arrivals over 24 hours (λ=5 events/hour) and interval event count distribution (aligned with Homework 10’s Poisson process methodology). The blue line shows the estimated Poisson distribution for anomaly detection benchmarking.</em></p>
+
+<h4 id="42-interarrival-times-and-exponential-distribution">4.2 Interarrival Times and Exponential Distribution</h4>
+
+<p>A key property of a Poisson process is that the time between consecutive events (interarrival times) follows an exponential distribution with rate $\lambda$. This allows for analysis of the time gaps between security events.</p>
+
+<p><strong>Cybersecurity Applications:</strong></p>
+<ul>
+  <li><strong>Timing Analysis of Attacks:</strong> Analyzing the time intervals between stages of a multi-stage attack.</li>
+  <li><strong>Resource Exhaustion Attacks:</strong> Understanding if the interarrival times of requests in a denial-of-service attack follow an exponential distribution, which can inform defense strategies.</li>
+</ul>
+
+<h3 id="5-integration-and-advanced-topics">5. Integration and Advanced Topics</h3>
+
+<p>This section will explore how random walk and Poisson process models can be integrated and extended, potentially delving into more advanced stochastic concepts.</p>
+
+<h4 id="51-combining-models-for-comprehensive-threat-analysis">5.1 Combining Models for Comprehensive Threat Analysis</h4>
+
+<p>A complete cybersecurity scenario often involves both the progression of an attack (random walk) and the occurrence of various events over time (Poisson process). For example, a random walk could model an attacker’s lateral movement, while Poisson processes could model the generation of alerts at different stages of that movement.</p>
+
+<p><strong>Research Directions:</strong></p>
+<ul>
+  <li><strong>Hybrid Models:</strong> Developing models that combine discrete-step random walks with continuous-time Poisson event generation.</li>
+  <li><strong>Conditional Probabilities:</strong> Analyzing the probability of a system state (from a random walk) given a certain number of events (from a Poisson process), and vice versa.</li>
+</ul>
+
+<h4 id="52-brownian-motion-and-donskers-theorem">5.2 Brownian Motion and Donsker’s Theorem</h4>
+
+<p>Donsker’s theorem, also known as the Invariance Principle, states that under certain conditions, a properly scaled and centered random walk converges in distribution to Brownian motion (a continuous-time stochastic process). This connection allows for the application of powerful analytical tools from continuous mathematics to discrete random walk problems.</p>
+
+<p><em>(Refer to Homework 7: “Beyond the random walk: Brownian Motion, stochastic processes, and the Invariance Principle (Donsker’s theorem)” for the initial introduction to this concept.)</em></p>
+
+<p><strong>Implications for Cybersecurity:</strong></p>
+<ul>
+  <li><strong>Continuous Approximation:</strong> Using Brownian motion to approximate the behavior of high-frequency security events or long-duration attack progressions, simplifying analysis.</li>
+  <li><strong>Advanced Analytics:</strong> Applying techniques developed for Brownian motion (e.g., stochastic differential equations) to cybersecurity problems.</li>
+</ul>
+
+<h3 id="6-case-studies-and-empirical-validation">6. Case Studies and Empirical Validation</h3>
+
+<p>This section will apply the developed stochastic models to real or synthetic cybersecurity datasets to demonstrate their practical utility and validate their effectiveness.</p>
+
+<p><strong>Potential Case Studies:</strong></p>
+<ul>
+  <li><strong>Network Intrusion Detection:</strong> Analyzing network traffic logs (e.g., NetFlow data) to identify anomalous patterns using Poisson process models for packet arrival rates.</li>
+  <li><strong>Vulnerability Exploitation Chains:</strong> Modeling the sequence of exploits in a multi-stage attack using random walks, and predicting the likelihood of successful compromise.</li>
+  <li><strong>Security Information and Event Management (SIEM) Data Analysis:</strong> Applying both random walk and Poisson process models to SIEM data to detect complex attack patterns and predict future incidents.</li>
+</ul>
+
+<p><strong>Methodology:</strong></p>
+<ul>
+  <li>Data collection and preprocessing.</li>
+  <li>Parameter estimation for random walk and Poisson models.</li>
+  <li>Simulation and comparison with observed data.</li>
+  <li>Evaluation of model performance in terms of accuracy, precision, recall, and F1-score for detection and prediction tasks.</li>
+</ul>
+
+<h3 id="7-conclusion">7. Conclusion</h3>
+
+<p>This thesis has demonstrated the significant potential of stochastic processes, particularly random walks and Poisson processes, in enhancing the modeling and analysis of security events in cybersecurity. By moving beyond deterministic approaches, these probabilistic models offer a more realistic representation of the dynamic and uncertain nature of cyber threats. The research has highlighted how these models can be applied to understand attack progression, detect anomalies, and inform predictive analytics, thereby contributing to more robust and proactive cybersecurity strategies.</p>
+
+<p>Future work could involve exploring more complex stochastic models, such as Markov chains or semi-Markov processes, to capture state-dependent transitions and varying event rates. Further research could also focus on integrating machine learning techniques with stochastic models to develop adaptive and intelligent cybersecurity systems.</p>
+
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/homework10/">
+            Homework 10 - Poisson Process Simulation
+            <small>15 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework9/">
+            Homework 9 - Probability Theory and Measure Theory
+            <small>14 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework8/">
+            Homework 8 - Comparing Bernoulli and Random Walk Processes
+            <small>09 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/public/js/script.js'></script>
+  </body>
+</html>

@@ -4,13 +4,318 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-11-16T11:16:50+01:00</updated>
+ <updated>2025-11-23T23:53:48+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Final Thesis - Stochastic Processes in Cybersecurity</title>
+   <link href="http://localhost:4000/final-thesis/"/>
+   <updated>2025-11-23T00:00:00+01:00</updated>
+   <id>http://localhost:4000/final-thesis</id>
+   <content type="html">&lt;h2 id=&quot;thesis-topic-beyond-the-random-walk-brownian-motion-stochastic-processes-and-the-invariance-principle-donskers-theorem&quot;&gt;Thesis Topic: Beyond the random walk: Brownian Motion, stochastic processes, and the Invariance Principle (Donsker’s theorem)&lt;/h2&gt;
+
+&lt;h3 id=&quot;abstract&quot;&gt;Abstract&lt;/h3&gt;
+
+&lt;p&gt;This thesis explores the application of stochastic processes, specifically random walks and Poisson processes, to model and analyze security events within cybersecurity systems. Traditional deterministic models often fall short in capturing the inherent randomness and dynamic nature of cyber threats. By leveraging the mathematical rigor of stochastic processes, this research aims to provide a more nuanced understanding of attack dynamics, anomaly detection, and predictive analytics in cybersecurity. The study will demonstrate how these models, rooted in foundational probability theory, can offer valuable insights into system resilience, threat propagation, and incident response strategies.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h3&gt;
+
+&lt;p&gt;The landscape of cybersecurity is characterized by constant evolution, unpredictable threats, and complex interactions between attackers and defenders. Understanding and mitigating these threats requires sophisticated analytical tools that can account for inherent uncertainties. Traditional security analyses often rely on static or deterministic models, which may oversimplify the dynamic and probabilistic nature of cyber attacks and system vulnerabilities. This thesis proposes the use of stochastic processes as a powerful framework for modeling and analyzing security events, offering a more realistic and robust approach to cybersecurity.&lt;/p&gt;
+
+&lt;p&gt;This research will focus on two fundamental types of stochastic processes: random walks and Poisson processes. Random walks are particularly suited for modeling the progression of an attack or the state of a system over time, where each step represents a discrete event or change in status. Poisson processes, on the other hand, excel at modeling the occurrence of events over continuous time, such as the arrival of malicious traffic or the frequency of security incidents. By integrating these models, this thesis aims to provide a comprehensive framework for understanding, predicting, and responding to cyber threats.&lt;/p&gt;
+
+&lt;p&gt;The primary objectives of this thesis are:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;To establish a theoretical foundation for applying random walks and Poisson processes to various cybersecurity scenarios.&lt;/li&gt;
+  &lt;li&gt;To develop and implement computational models for simulating attack dynamics and event occurrences.&lt;/li&gt;
+  &lt;li&gt;To demonstrate the utility of these models in anomaly detection, threat prediction, and risk assessment.&lt;/li&gt;
+  &lt;li&gt;To explore the connections between discrete and continuous stochastic models, potentially leveraging advanced concepts like Donsker’s theorem for broader applicability.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-background-and-theoretical-foundations&quot;&gt;2. Background and Theoretical Foundations&lt;/h3&gt;
+
+&lt;p&gt;This section will lay the groundwork by reviewing essential concepts from probability theory and the specific stochastic processes central to this research.&lt;/p&gt;
+
+&lt;h4 id=&quot;21-probability-theory-and-measure-theory&quot;&gt;2.1 Probability Theory and Measure Theory&lt;/h4&gt;
+
+&lt;p&gt;The rigorous foundation for stochastic processes lies in axiomatic probability theory, as established by Kolmogorov. This involves defining a probability space $(\Omega, \mathcal{F}, P)$, where $\Omega$ is the sample space, $\mathcal{F}$ is a $\sigma$-algebra of events, and $P$ is a probability measure. The understanding of $\sigma$-algebras and measurable functions is crucial for defining random variables and, subsequently, stochastic processes.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(Refer to Homework 9: “Probability Theory and Measure Theory” for detailed explanations of classical, frequentist, Bayesian, and geometric interpretations of probability, Kolmogorov’s axioms, $\sigma$-algebras, and the connection between measure theory and probability theory. This homework provides the mathematical rigor for the theoretical underpinnings.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;22-bernoulli-processes-and-the-law-of-large-numbers&quot;&gt;2.2 Bernoulli Processes and the Law of Large Numbers&lt;/h4&gt;
+
+&lt;p&gt;A Bernoulli process is a sequence of independent Bernoulli trials, where each trial has two possible outcomes (e.g., success/failure, secure/breached). The Law of Large Numbers (LLN) states that as the number of trials increases, the observed frequency of an event converges to its true probability. This concept is fundamental to understanding the long-term behavior of systems where events occur probabilistically.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(Refer to Homework 4: “The Law of Large Numbers and its applications in statistical inference and data analysis” for the simulation and analysis of Bernoulli trials and the demonstration of LLN. This forms the discrete basis for understanding subsequent stochastic models.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;23-random-walks&quot;&gt;2.3 Random Walks&lt;/h4&gt;
+
+&lt;p&gt;A random walk is a mathematical formalization of a path that consists of a succession of random steps. In its simplest form, it involves movement on a grid where, at each step, the direction of movement is chosen randomly. Random walks can be symmetric or asymmetric, depending on the probabilities of moving in different directions. They are powerful tools for modeling cumulative effects of random events.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(Refer to Homework 7: “Beyond the random walk: Brownian Motion, stochastic processes, and the Invariance Principle (Donsker’s theorem)” and Homework 8: “Comparing Bernoulli and Random Walk Processes” for the simulation of random walks, their properties, and the transformation from Bernoulli processes. The application of random walks to model “net security score” in network security from Homework 7 will be a direct starting point.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;24-poisson-processes&quot;&gt;2.4 Poisson Processes&lt;/h4&gt;
+
+&lt;p&gt;A Poisson process is a stochastic process that counts the number of events occurring in a given time interval. It is characterized by events occurring independently at a constant average rate ($\lambda$). Key properties include independent and stationary increments, and the number of events in any interval follows a Poisson distribution. The time between consecutive events (interarrival times) follows an exponential distribution.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(Refer to Homework 10: “Poisson Process Simulation” for the detailed methodology of simulating Poisson processes, their theoretical background, properties, and connection to random walks. This homework provides the practical and theoretical basis for modeling event occurrences in continuous time.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-modeling-cybersecurity-events-with-random-walks&quot;&gt;3. Modeling Cybersecurity Events with Random Walks&lt;/h3&gt;
+
+&lt;p&gt;This section will develop and apply random walk models to represent various cybersecurity scenarios, focusing on the progression of attacks and the state of system security.&lt;/p&gt;
+
+&lt;h4 id=&quot;31-attack-progression-as-a-random-walk&quot;&gt;3.1 Attack Progression as a Random Walk&lt;/h4&gt;
+
+&lt;p&gt;We can model the state of a system or the progress of an attacker as a random walk. Each step in the walk represents a discrete action or event. For instance, a positive step could signify a successful defensive action or a failed attacker attempt, while a negative step could represent a successful exploit or a system compromise.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Model Formulation:&lt;/strong&gt;
+Let $S_n$ be the security score of a system after $n$ events.
+$S_n = S_{n-1} + X_n$, where $X_n \in \{-1, +1\}$ represents the outcome of the $n$-th event.
+$P(X_n = +1) = p$ (e.g., successful defense, attacker fails)
+$P(X_n = -1) = q = 1-p$ (e.g., successful attack, system compromised)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Cybersecurity Applications:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Lateral Movement Modeling:&lt;/strong&gt; An attacker’s movement within a network can be modeled as a random walk, where nodes are states and edges are possible transitions.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;System Resilience Assessment:&lt;/strong&gt; The random walk can represent the system’s security posture, with thresholds for “compromised” and “recovered” states.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Phishing Campaign Effectiveness:&lt;/strong&gt; Each interaction with a user can be a step, leading to either a successful phishing attempt or detection.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Key Analysis:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;First Passage Time:&lt;/strong&gt; Calculating the expected time until the system reaches a critical state (e.g., full compromise or successful recovery).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Probability of Ruin/Success:&lt;/strong&gt; Determining the probability that an attacker succeeds before being detected, or vice versa.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Impact of Asymmetry:&lt;/strong&gt; Analyzing how varying probabilities $p$ and $q$ (e.g., due to new defenses or attack techniques) affect the system’s security trajectory.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Computational Implementation (Placeholder):&lt;/strong&gt;
+&lt;em&gt;(This section will include Python code for simulating random walks, similar to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;simulate_random_walk&lt;/code&gt; from Homework 7, but adapted for specific cybersecurity scenarios. It will also include code for visualizing trajectories and analyzing key metrics like first passage time and probability distributions.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;details&gt;
+   &lt;summary&gt;View first_piece.py&lt;/summary&gt;
+   
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+    &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;simulate_attack_random_walk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initial_state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p_success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_simulations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;choice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_simulations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p_success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p_success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;security_scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initial_state&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumsum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;security_scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hstack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initial_state&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ones&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_simulations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;security_scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_simulations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;security_scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axhline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;red&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;linestyle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;--&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Compromise Threshold&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Event Count&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;System Security Score&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;security_scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bins&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Final Security Score&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Number of Simulations&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tight_layout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;savefig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;2025-12-25-random-walk-simulation.png&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;/details&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/final_thesis/random-walk-simulation.png&quot; alt=&quot;Random Walk Simulation of Attack Progression&quot; /&gt;
+&lt;em&gt;Figure 1: Simulated trajectories of system security scores over 1000 events (500 simulations) with a 60% defense success probability. The red line indicates the critical compromise threshold (-20), and the histogram shows the distribution of final security scores (aligned with Homework 7’s random walk analysis framework).&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;4-modeling-cybersecurity-events-with-poisson-processes&quot;&gt;4. Modeling Cybersecurity Events with Poisson Processes&lt;/h3&gt;
+
+&lt;p&gt;This section will apply Poisson processes to model the occurrence of discrete security events over continuous time, enabling anomaly detection and predictive analytics.&lt;/p&gt;
+
+&lt;h4 id=&quot;41-event-arrival-modeling&quot;&gt;4.1 Event Arrival Modeling&lt;/h4&gt;
+
+&lt;p&gt;Many cybersecurity events, such as login attempts, firewall alerts, intrusion attempts, or malware detections, can be modeled as events occurring randomly over time. If these events occur independently at a constant average rate, a Poisson process is an appropriate model.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Model Formulation:&lt;/strong&gt;
+Let $N(t)$ be the number of security events observed up to time $t$.
+$N(t) \sim \text{Poisson}(\lambda t)$, where $\lambda$ is the average rate of events per unit time.
+The probability of observing $k$ events in time $t$ is $P(N(t) = k) = \frac{e^{-\lambda t} (\lambda t)^k}{k!}$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Cybersecurity Applications:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Anomaly Detection:&lt;/strong&gt; Deviations from the expected Poisson rate can indicate malicious activity. For example, a sudden increase in failed login attempts (higher $\lambda$) might signal a brute-force attack.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Security Incident Frequency:&lt;/strong&gt; Modeling the rate of security incidents to understand trends and allocate resources effectively.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Log Analysis:&lt;/strong&gt; Analyzing the arrival rate of specific log entries to identify unusual patterns.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Key Analysis:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Rate Estimation:&lt;/strong&gt; Estimating the parameter $\lambda$ from observed security event data.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Statistical Hypothesis Testing:&lt;/strong&gt; Using statistical tests (e.g., chi-squared goodness-of-fit) to determine if observed event counts conform to a Poisson distribution.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Change Point Detection:&lt;/strong&gt; Identifying shifts in the rate parameter $\lambda$, which could indicate the onset of an attack or a change in system behavior.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Computational Implementation (Placeholder):&lt;/strong&gt;
+&lt;em&gt;(This section will include Python code for simulating Poisson processes, similar to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;simulate_poisson_process&lt;/code&gt; from Homework 10, and for analyzing real or synthetic security event data. It will cover rate estimation, visualization of event arrivals, and basic anomaly detection techniques based on Poisson distributions.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;details&gt;
+   &lt;summary&gt;View second_piece.py&lt;/summary&gt;
+   
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+    &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
+    &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;scipy.stats&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;poisson&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;simulate_security_poisson_process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lambda_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_intervals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;interarrival_times&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exponential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lambda_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lambda_rate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;event_times&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumsum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interarrival_times&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;event_times&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event_times&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_times&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;interval_bins&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linspace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_intervals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;event_counts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;histogram&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_times&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bins&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interval_bins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;estimated_lambda&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_times&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ones_like&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_times&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;basefmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;b-&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Time (hours)&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Security Event Occurrence&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bins&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;density&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;poisson&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pmf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;estimated_lambda&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;b-&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Estimated Poisson (λ=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;estimated_lambda&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;)&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Event Count per Interval&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Probability Density&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ax2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tight_layout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;savefig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;2025-12-25-poisson-process-simulation.png&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event_times&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;estimated_lambda&lt;/span&gt;
+    
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;/details&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/final_thesis/poisson-process-simulation.png&quot; alt=&quot;Poisson Process Simulation of Security Event Arrivals&quot; /&gt;
+&lt;em&gt;Figure 2: Simulated security event arrivals over 24 hours (λ=5 events/hour) and interval event count distribution (aligned with Homework 10’s Poisson process methodology). The blue line shows the estimated Poisson distribution for anomaly detection benchmarking.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;42-interarrival-times-and-exponential-distribution&quot;&gt;4.2 Interarrival Times and Exponential Distribution&lt;/h4&gt;
+
+&lt;p&gt;A key property of a Poisson process is that the time between consecutive events (interarrival times) follows an exponential distribution with rate $\lambda$. This allows for analysis of the time gaps between security events.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Cybersecurity Applications:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Timing Analysis of Attacks:&lt;/strong&gt; Analyzing the time intervals between stages of a multi-stage attack.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Resource Exhaustion Attacks:&lt;/strong&gt; Understanding if the interarrival times of requests in a denial-of-service attack follow an exponential distribution, which can inform defense strategies.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;5-integration-and-advanced-topics&quot;&gt;5. Integration and Advanced Topics&lt;/h3&gt;
+
+&lt;p&gt;This section will explore how random walk and Poisson process models can be integrated and extended, potentially delving into more advanced stochastic concepts.&lt;/p&gt;
+
+&lt;h4 id=&quot;51-combining-models-for-comprehensive-threat-analysis&quot;&gt;5.1 Combining Models for Comprehensive Threat Analysis&lt;/h4&gt;
+
+&lt;p&gt;A complete cybersecurity scenario often involves both the progression of an attack (random walk) and the occurrence of various events over time (Poisson process). For example, a random walk could model an attacker’s lateral movement, while Poisson processes could model the generation of alerts at different stages of that movement.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Research Directions:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Hybrid Models:&lt;/strong&gt; Developing models that combine discrete-step random walks with continuous-time Poisson event generation.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Conditional Probabilities:&lt;/strong&gt; Analyzing the probability of a system state (from a random walk) given a certain number of events (from a Poisson process), and vice versa.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;52-brownian-motion-and-donskers-theorem&quot;&gt;5.2 Brownian Motion and Donsker’s Theorem&lt;/h4&gt;
+
+&lt;p&gt;Donsker’s theorem, also known as the Invariance Principle, states that under certain conditions, a properly scaled and centered random walk converges in distribution to Brownian motion (a continuous-time stochastic process). This connection allows for the application of powerful analytical tools from continuous mathematics to discrete random walk problems.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(Refer to Homework 7: “Beyond the random walk: Brownian Motion, stochastic processes, and the Invariance Principle (Donsker’s theorem)” for the initial introduction to this concept.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Implications for Cybersecurity:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Continuous Approximation:&lt;/strong&gt; Using Brownian motion to approximate the behavior of high-frequency security events or long-duration attack progressions, simplifying analysis.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Advanced Analytics:&lt;/strong&gt; Applying techniques developed for Brownian motion (e.g., stochastic differential equations) to cybersecurity problems.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;6-case-studies-and-empirical-validation&quot;&gt;6. Case Studies and Empirical Validation&lt;/h3&gt;
+
+&lt;p&gt;This section will apply the developed stochastic models to real or synthetic cybersecurity datasets to demonstrate their practical utility and validate their effectiveness.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Potential Case Studies:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Network Intrusion Detection:&lt;/strong&gt; Analyzing network traffic logs (e.g., NetFlow data) to identify anomalous patterns using Poisson process models for packet arrival rates.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Vulnerability Exploitation Chains:&lt;/strong&gt; Modeling the sequence of exploits in a multi-stage attack using random walks, and predicting the likelihood of successful compromise.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Security Information and Event Management (SIEM) Data Analysis:&lt;/strong&gt; Applying both random walk and Poisson process models to SIEM data to detect complex attack patterns and predict future incidents.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Methodology:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Data collection and preprocessing.&lt;/li&gt;
+  &lt;li&gt;Parameter estimation for random walk and Poisson models.&lt;/li&gt;
+  &lt;li&gt;Simulation and comparison with observed data.&lt;/li&gt;
+  &lt;li&gt;Evaluation of model performance in terms of accuracy, precision, recall, and F1-score for detection and prediction tasks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;7-conclusion&quot;&gt;7. Conclusion&lt;/h3&gt;
+
+&lt;p&gt;This thesis has demonstrated the significant potential of stochastic processes, particularly random walks and Poisson processes, in enhancing the modeling and analysis of security events in cybersecurity. By moving beyond deterministic approaches, these probabilistic models offer a more realistic representation of the dynamic and uncertain nature of cyber threats. The research has highlighted how these models can be applied to understand attack progression, detect anomalies, and inform predictive analytics, thereby contributing to more robust and proactive cybersecurity strategies.&lt;/p&gt;
+
+&lt;p&gt;Future work could involve exploring more complex stochastic models, such as Markov chains or semi-Markov processes, to capture state-dependent transitions and varying event rates. Further research could also focus on integrating machine learning techniques with stochastic models to develop adaptive and intelligent cybersecurity systems.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Homework 10 - Poisson Process Simulation</title>
