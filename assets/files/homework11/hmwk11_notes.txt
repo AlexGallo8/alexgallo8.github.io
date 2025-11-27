@@ -1,0 +1,40 @@
+Theoretical                                                 Sampling
+Distributions                                               Distributions
+(mathematical objects with parameters
+useful to study empirical probability)
+
+statistical unit    ------>       dataset       ------>     Distributions continuous/discrete (with plots)
+                    survey       ___________                  - univariate
+                                |  |  |  |  |                 - bivariate
+                                |  |  |  |  |                 - metrics
+                                |  |  |  |  |               N.B. using parameters I can use distributions to
+                                |  |  |  |  |               define models and making them more and more similar
+                                -------------               to what they model.
+                                                            Principal distributions: uniform, normal, exponential,
+                                                            poisson, fisher, student, χ2.
+
+Central Limit Theorem (CLT)
+divide by square root of n to make the distribution able to remain stable
+(in random walk the variance go linear with n).
+
+Under a bell distribution we can define probability density and study the density function between two points.
+Prob(x, x+dx) = f(x)dx
+
+    - Probability density (continuous)
+    - Probability function (discrete)
+    - CDF (Cumulative Distribution function): how much the function increase in an interval (x1, x2): F2-F1
+    [while P(X1 < X < X2) = x1∫x2(f(x)dx)]
+    Fundamental theorem of calcolous: F2 - F1 = x1∫x2(f(x)dx)
+
+    F(x) = Pr(X <= x)
+
+You can create a random generator in 0-1 that follows the CDF distribution (more probability if there is a jump,
+that a represent an interval where the functions is faster). Using the inversion method you can obtain different
+distributions and shapes.
+
+
+HMWK 11: 
+random walk and poisson process were about dicrete time and state
+brownian process is a generalization of rw that works with continuous states.
+
+There are some methods to generate a normal from uniform (Yt = Tt-1 + N(mu=0, sigma)).
