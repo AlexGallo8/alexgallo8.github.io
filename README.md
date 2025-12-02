@@ -12,9 +12,11 @@ The content is organized and published through [GitHub Pages](https://pages.gith
 - [Homework 4](https://alexgallo8.github.io/homework4) - *Simulating the Law of Large Numbers*
 - [Homework 5](https://alexgallo8.github.io/homework5) - *Measures of Location and Dispersion*
 - [Homework 6](https://alexgallo8.github.io/homework6) - *Online Algorithms for Statistical Measures*
-- [Homework 7](https://alexgallo8.github.io/homework7) - *andom Walk and Security Simulation*
+- [Homework 7](https://alexgallo8.github.io/homework7) - *Random Walk and Security Simulation*
 - [Homework 8](https://alexgallo8.github.io/homework8) - *Comparing Bernoulli and Random Walk Processes*
-- (More will be added as the course progresses)
+- [Homework 9](https://alexgallo8.github.io/homework9) - *Probability Theory and Measure Theory*
+- [Homework 10](https://alexgallo8.github.io/homework10) - *Poisson Process Simulation*
+- [Homework 11](https://alexgallo8.github.io/homework11) - *Brownian Process Simulation*
 
 ---
 
