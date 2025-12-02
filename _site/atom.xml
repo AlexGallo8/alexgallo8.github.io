@@ -4,7 +4,7 @@
  <title>Statistics Homework</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2025-12-02T16:18:48+01:00</updated>
+ <updated>2025-12-02T16:39:44+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Alessandro Maone - 1945149</name>
@@ -1632,17 +1632,7 @@ Q-Q plot should follow diagonal
 &lt;ul&gt;
   &lt;li&gt;Expected max ≈ 0.798&lt;/li&gt;
   &lt;li&gt;Expected min ≈ -0.798 (by symmetry)&lt;/li&gt;
-  &lt;li&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;Most simulations will show&lt;/td&gt;
-          &lt;td&gt;extrema&lt;/td&gt;
-          &lt;td&gt;&amp;lt; 2.5&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/li&gt;
+  &lt;li&gt;Most simulations will show |extrema| &amp;lt; 2.5&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Reflection principle:&lt;/strong&gt;&lt;/p&gt;
@@ -1703,7 +1693,7 @@ Q-Q plot should follow diagonal
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[B,B](t) = lim_{Δt→0} Σᵢ (B(tᵢ₊₁) - B(tᵢ))²
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt; &lt;a href=&quot;t&quot;&gt;B,B&lt;/a&gt; = t (deterministic!)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt; [B,B](t) = t (deterministic!)&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Implication:&lt;/strong&gt; While individual increments are random, their squared sum equals time with probability 1. This is crucial for stochastic calculus (Itô’s lemma).&lt;/p&gt;
 
