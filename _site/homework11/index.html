@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Homework 11 - Brownian Process Simulation &middot; Statistics Homework
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://localhost:4000/homework11/">
+  
+
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="/public/css/custom.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="http://localhost:4000/public/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://localhost:4000/atom.xml">
+</head>
+
+
+  <body class="theme-base-0b">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>Homework collection for the university course in Statistics</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="http://localhost:4000/">Home</a>
+
+    <!-- 
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="http://localhost:4000/about/">About</a>
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+     -->
+
+    <a class="sidebar-nav-item" href="https://github.com/alexgallo8">GitHub Profile</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2025. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Statistics Homework</a>
+            <small>Alessandro Maone - 1945149</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Homework 11 - Brownian Process Simulation</h1>
+  <span class="post-date">02 Dec 2025</span>
+  <h2 id="introduction">Introduction</h2>
+
+<p>While <a href="/homework7/">Homework 7</a> explored discrete random walks with discrete steps and <a href="/homework10/">Homework 10</a> introduced counting processes with discrete state space, <strong>Homework 11</strong> extends these concepts to a fundamentally different type of stochastic process: the <strong>Brownian process</strong> (also called <strong>Brownian motion</strong>). The Brownian process represents a generalization of random walks that operates in <strong>continuous time with continuous state space</strong>, where position can take any real value and time evolves smoothly.</p>
+
+<!--more-->
+
+<h2 id="problem-statement">Problem Statement</h2>
+
+<h3 id="brownian-motion-in-continuous-time-and-space">Brownian Motion in Continuous Time and Space</h3>
+
+<p>Consider a particle (or other entity) whose position evolves randomly over continuous time t ≥ 0. At each instant, the particle experiences infinitesimal random “kicks” that accumulate to produce continuous paths. Unlike discrete random walks:</p>
+<ul>
+  <li><strong>State space:</strong> ℝ (all real numbers, not just integers)</li>
+  <li><strong>Time:</strong> Continuous t ≥ 0 (not discrete steps)</li>
+  <li><strong>Increments:</strong> Infinitesimally small and normally distributed</li>
+  <li><strong>Paths:</strong> Continuous but nowhere differentiable</li>
+</ul>
+
+<p><strong>Goal:</strong> Simulate this process by:</p>
+<ol>
+  <li>Discretizing time into small intervals of width Δt</li>
+  <li>In each interval, adding a normally distributed increment N(0, σ²Δt)</li>
+  <li>Plotting position paths and analyzing statistical properties</li>
+  <li>Verifying convergence to theoretical Brownian motion</li>
+</ol>
+
+<p><strong>Question:</strong> How does this continuous process relate to the discrete random walk? What are the key properties that distinguish Brownian motion?</p>
+
+<h3 id="mathematical-formulation">Mathematical Formulation</h3>
+
+<p><strong>Time discretization:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>t₀ = 0, t₁ = Δt, t₂ = 2Δt, ..., tₙ = nΔt = T
+where Δt = T/n
+</code></pre></div></div>
+
+<p><strong>Position increment in interval i:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ΔXᵢ ~ N(0, σ²Δt)
+(normally distributed with mean 0 and variance σ²Δt)
+</code></pre></div></div>
+
+<p><strong>Cumulative position at time T:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X(T) = X₀ + ΔX₁ + ΔX₂ + ... + ΔXₙ = X₀ + Σᵢ₌₁ⁿ ΔXᵢ
+</code></pre></div></div>
+
+<p><strong>Standard Brownian motion (σ = 1, X₀ = 0):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B(t) = N(0, t)
+(normally distributed with mean 0 and variance t)
+</code></pre></div></div>
+
+<p><strong>As n → ∞ (Δt → 0):</strong> This discrete approximation converges to continuous-time Brownian motion.</p>
+
+<h2 id="theoretical-background">Theoretical Background</h2>
+
+<h3 id="21-from-discrete-random-walk-to-brownian-motion">2.1 From Discrete Random Walk to Brownian Motion</h3>
+
+<p><strong>Scaling relationship (key insight):</strong></p>
+
+<p>In a symmetric random walk with n steps over interval [0,T]:</p>
+<ul>
+  <li>Each step: ±1 with probability 1/2</li>
+  <li>Time per step: Δt = T/n</li>
+  <li>Position at time T: X(T) = sum of n ±1 steps</li>
+</ul>
+
+<p><strong>To pass to continuous limit:</strong></p>
+
+<p>Instead of ±1 steps, use increments:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ΔXᵢ ~ N(0, Δt)
+</code></pre></div></div>
+
+<p>This choice ensures:</p>
+<ol>
+  <li><strong>Independence:</strong> Increments in different time intervals are independent</li>
+  <li><strong>Continuity:</strong> With infinitesimal increments, paths become continuous</li>
+  <li><strong>Scaling:</strong> Variance grows linearly with time: Var(X(t)) = t</li>
+</ol>
+
+<p><strong>Central Limit Theorem role:</strong></p>
+
+<p>The sum of many small independent normal increments remains normal (by CLT), but with variance that grows as t. This is the foundation of Brownian motion.</p>
+
+<h3 id="22-brownian-motion-definition-and-properties">2.2 Brownian Motion: Definition and Properties</h3>
+
+<p><strong>Definition (Standard Brownian Motion):</strong> A stochastic process {B(t), t ≥ 0} is a standard Brownian motion (Wiener process) if:</p>
+
+<ol>
+  <li>
+    <p><strong>B(0) = 0</strong> (starts at origin)</p>
+  </li>
+  <li><strong>Independent increments:</strong> For any times 0 ≤ t₁ &lt; t₂ &lt; t₃ &lt; t₄:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B(t₂) - B(t₁) is independent of B(t₄) - B(t₃)
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Stationary increments:</strong> The distribution of B(t+s) - B(s) depends only on t, not on s</p>
+  </li>
+  <li><strong>Normal distribution:</strong> For any t &gt; 0:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B(t) ~ N(0, t)
+P(B(t) ≤ x) = Φ(x/√t)
+</code></pre></div>    </div>
+    <p>where Φ is the standard normal CDF</p>
+  </li>
+  <li>
+    <p><strong>Continuous paths:</strong> B(t) is continuous in t (with probability 1)</p>
+  </li>
+  <li><strong>Non-differentiability:</strong> Paths are nowhere differentiable (unbounded variation)</li>
+</ol>
+
+<p><strong>Equivalent infinitesimal characterization:</strong></p>
+
+<p>For small Δt &gt; 0:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ΔB(t) = B(t+Δt) - B(t) ~ N(0, Δt)
+Cov(ΔB(s), ΔB(t)) = 0 for s ≠ t (independent increments)
+</code></pre></div></div>
+
+<h3 id="23-key-properties-of-brownian-motion">2.3 Key Properties of Brownian Motion</h3>
+
+<p><strong>Property 1: Distribution at time t</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B(t) ~ N(0, t)
+f_t(x) = (1/√(2πt)) · exp(-x²/(2t))
+</code></pre></div></div>
+
+<p><strong>Property 2: Expected value</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>E[B(t)] = 0
+</code></pre></div></div>
+
+<p><strong>Property 3: Variance</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Var(B(t)) = t
+</code></pre></div></div>
+
+<p><strong>Property 4: Standard deviation scales as √t</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SD(B(t)) = √t
+</code></pre></div></div>
+
+<p>This is why we divide by √n in the Central Limit Theorem.</p>
+
+<p><strong>Property 5: Covariance function</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cov(B(s), B(t)) = min(s,t)
+</code></pre></div></div>
+
+<p>For s &lt; t: The earlier and later positions share the common variability from 0 to s.</p>
+
+<p><strong>Property 6: Increments are normal</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B(t) - B(s) ~ N(0, t-s) for s &lt; t
+</code></pre></div></div>
+
+<p><strong>Property 7: Self-similarity</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>If {B(t), t ≥ 0} is Brownian motion, then {c·B(t/c²), t ≥ 0} is also Brownian motion
+</code></pre></div></div>
+
+<p>This scaling property connects discrete and continuous formulations.</p>
+
+<p><strong>Property 8: Quadratic variation</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[B,B](t) = lim_{Δt→0} Σᵢ (ΔBᵢ)² = t (deterministic!)
+</code></pre></div></div>
+
+<p>Unlike position which is random, the total squared variation equals time.</p>
+
+<p><strong>Property 9: Reflection principle</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(max_{0≤s≤t} B(s) ≥ a) = 2·P(B(t) ≥ a) for a &gt; 0
+</code></pre></div></div>
+
+<p><strong>Property 10: Recurrence</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>For 1D Brownian motion: returns to any point infinitely often with probability 1
+(recurrent)
+</code></pre></div></div>
+
+<h3 id="24-geometric-brownian-motion-gbm">2.4 Geometric Brownian Motion (GBM)</h3>
+
+<p><strong>Modified Brownian motion with drift and scaling:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dX(t) = μ·X(t)·dt + σ·X(t)·dB(t)
+</code></pre></div></div>
+
+<p><strong>Solution:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X(t) = X₀·exp((μ - σ²/2)t + σB(t))
+</code></pre></div></div>
+
+<p><strong>Used in:</strong> Stock price modeling, financial option pricing (Black-Scholes)</p>
+
+<h3 id="25-connection-to-random-walk-and-poisson-process">2.5 Connection to Random Walk and Poisson Process</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>HW7: Random Walk</th>
+      <th>HW10: Poisson</th>
+      <th>HW11: Brownian</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Time</strong></td>
+      <td>Discrete steps</td>
+      <td>Continuous time</td>
+      <td>Continuous time</td>
+    </tr>
+    <tr>
+      <td><strong>State space</strong></td>
+      <td>Discrete {±1, ±2, …}</td>
+      <td>Discrete {0,1,2,…}</td>
+      <td>Continuous ℝ</td>
+    </tr>
+    <tr>
+      <td><strong>Increments</strong></td>
+      <td>±1 (deterministic)</td>
+      <td>0 or +1 (Bernoulli)</td>
+      <td>Normal (infinitesimal)</td>
+    </tr>
+    <tr>
+      <td><strong>Distribution</strong></td>
+      <td>Transformed Binomial</td>
+      <td>Poisson</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <td><strong>Variance growth</strong></td>
+      <td>Linear: σ²n</td>
+      <td>Linear: λt</td>
+      <td>Linear: t</td>
+    </tr>
+    <tr>
+      <td><strong>Scaling</strong></td>
+      <td>Classical limit → Brownian</td>
+      <td>N/A</td>
+      <td>Self-similar</td>
+    </tr>
+    <tr>
+      <td><strong>Paths</strong></td>
+      <td>Piecewise constant</td>
+      <td>Step function</td>
+      <td>Continuous</td>
+    </tr>
+    <tr>
+      <td><strong>Applications</strong></td>
+      <td>Stock prices, signals</td>
+      <td>Event counting</td>
+      <td>Volatility, diffusion</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Key transitions:</strong></p>
+<ul>
+  <li>Random walk (discrete) → Brownian motion (continuous) via scaling</li>
+  <li>Brownian motion → Poisson process (change to counting)</li>
+  <li>All converge to normal distributions by CLT</li>
+</ul>
+
+<h2 id="methodology">Methodology</h2>
+
+<h3 id="31-simulation-parameters">3.1 Simulation Parameters</h3>
+
+<p><strong>Fixed parameters:</strong></p>
+<ul>
+  <li><strong>T = 1:</strong> Time interval (normalized to [0,1])</li>
+  <li><strong>n = 5000:</strong> Number of time steps</li>
+  <li><strong>Δt = T/n = 0.0002:</strong> Width of each step</li>
+</ul>
+
+<p><strong>Variable parameters:</strong></p>
+<ul>
+  <li><strong>σ (volatility):</strong> Controls the magnitude of random increments
+    <ul>
+      <li>Low volatility: σ = 0.5 (gentle random motion)</li>
+      <li>Medium volatility: σ = 1.0 (standard Brownian motion)</li>
+      <li>High volatility: σ = 2.0 (large fluctuations)</li>
+    </ul>
+  </li>
+  <li><strong>n_simulations:</strong> Number of independent realizations (e.g., 1000)</li>
+  <li><strong>μ (drift):</strong> For non-zero mean case (optional)</li>
+</ul>
+
+<h3 id="32-implementation-strategy">3.2 Implementation Strategy</h3>
+
+<p><strong>Step 1: Time discretization</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Create time grid: t = [0, Δt, 2Δt, ..., T]
+</code></pre></div></div>
+
+<p><strong>Step 2: Generate increments</strong></p>
+
+<p>For each time step i:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ΔBᵢ ~ N(0, σ²Δt)
+</code></pre></div></div>
+
+<p>This uses the standard normal distribution scaled by √(σ²Δt).</p>
+
+<p><strong>Step 3: Cumulative position</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B(tᵢ) = B(tᵢ₋₁) + ΔBᵢ
+</code></pre></div></div>
+
+<p>This produces a continuous path: position accumulates increments over time.</p>
+
+<p><strong>Step 4: Multiple realizations</strong></p>
+
+<p>Repeat steps 2-3 many times to get distribution of:</p>
+<ul>
+  <li>B(T) (final position)</li>
+  <li>B(t) at various times t</li>
+  <li>Maximum and minimum positions</li>
+  <li>Path statistics (range, extreme values)</li>
+</ul>
+
+<p><strong>Step 5: Comparison with theory</strong></p>
+<ul>
+  <li>Plot empirical distribution of B(T)</li>
+  <li>Overlay theoretical N(0, σ²T) PDF</li>
+  <li>Calculate sample mean and variance</li>
+  <li>Compare with theoretical 0 and σ²T</li>
+</ul>
+
+<h3 id="33-validation-checks">3.3 Validation Checks</h3>
+
+<p><strong>Check 1: Mean</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>E[B(T)] = 0
+Sample mean should be close to 0
+</code></pre></div></div>
+
+<p><strong>Check 2: Variance</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Var(B(T)) = σ²T
+Sample variance should be close to σ²T
+</code></pre></div></div>
+
+<p><strong>Check 3: Distribution shape</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Empirical histogram should match normal PDF
+Histogram should be roughly bell-shaped and symmetric
+</code></pre></div></div>
+
+<p><strong>Check 4: Path properties</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Paths should be continuous but rough
+Paths should cross zero frequently (recurrence)
+No monotonic trend visible
+</code></pre></div></div>
+
+<p><strong>Check 5: Increments are normal</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Distribution of ΔB should be approximately N(0, σ²Δt)
+Q-Q plot should follow diagonal
+</code></pre></div></div>
+
+<h3 id="34-visualization-strategy">3.4 Visualization Strategy</h3>
+
+<p><strong>Plot 1: Sample paths</strong></p>
+<ul>
+  <li>Show several realizations of B(t) vs t</li>
+  <li>Display continuous path nature</li>
+  <li>Illustrate random fluctuations and crossings</li>
+</ul>
+
+<p><strong>Plot 2: Distribution at final time</strong></p>
+<ul>
+  <li>Histogram of B(T) from many simulations</li>
+  <li>Overlay theoretical N(0, σ²T) PDF</li>
+  <li>Include mean and variance annotations</li>
+</ul>
+
+<p><strong>Plot 3: Distribution at multiple times</strong></p>
+<ul>
+  <li>Show how variance grows with time</li>
+  <li>Compare B(t) distributions for t = 0.2, 0.5, 1.0</li>
+  <li>Demonstrate scaling property</li>
+</ul>
+
+<p><strong>Plot 4: Volatility comparison</strong></p>
+<ul>
+  <li>Compare paths with different σ values</li>
+  <li>Show how σ affects path roughness</li>
+  <li>Compare final distributions</li>
+</ul>
+
+<p><strong>Plot 5: Convergence with time step</strong></p>
+<ul>
+  <li>Show convergence as Δt decreases (n increases)</li>
+  <li>Demonstrate that finer discretization gives better approximation</li>
+</ul>
+
+<p><strong>Plot 6: Maximum/minimum over [0,T]</strong></p>
+<ul>
+  <li>Distribution of max{B(t), 0≤t≤T}</li>
+  <li>Distribution of min{B(t), 0≤t≤T}</li>
+  <li>Compare with reflection principle predictions</li>
+</ul>
+
+<h2 id="python-implementation">Python Implementation</h2>
+
+<details>
+    <summary>View brownian_motion.py</summary>
+    
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+</pre></td><td class="code"><pre>    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+    <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">kstest</span><span class="p">,</span> <span class="n">shapiro</span>
+
+    <span class="k">def</span> <span class="nf">simulate_brownian_motion</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="s">"""
+        Simulate a single realization of Brownian motion (or with drift).
+        
+        Parameters:
+        -----------
+        sigma : float
+            Volatility parameter (standard deviation of increments)
+        T : float
+            Total time interval
+        n_steps : int
+            Number of time steps
+        mu : float
+            Drift parameter (default 0 for standard Brownian motion)
+        
+        Returns:
+        --------
+        times : ndarray
+            Time grid [0, dt, 2dt, ..., T]
+        positions : ndarray
+            Position B(t) at each time point
+        """</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span> <span class="o">/</span> <span class="n">n_steps</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Generate increments: N(mu*dt, sigma^2*dt)
+</span>        <span class="n">increments</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">n_steps</span><span class="p">)</span>
+        
+        <span class="c1"># Cumulative sum starting at 0
+</span>        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="p">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">increments</span><span class="p">)])</span>
+        
+        <span class="k">return</span> <span class="n">times</span><span class="p">,</span> <span class="n">positions</span>
+
+    <span class="k">def</span> <span class="nf">simulate_multiple_realizations</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">n_sims</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="s">"""
+        Generate multiple independent realizations of Brownian motion.
+        
+        Returns:
+        --------
+        times : ndarray
+            Time grid
+        all_paths : ndarray
+            Array of shape (n_sims, n_steps+1) with sample paths
+        final_positions : ndarray
+            Final position B(T) for each realization
+        """</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">all_paths</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_sims</span><span class="p">,</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_sims</span><span class="p">):</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">positions</span> <span class="o">=</span> <span class="n">simulate_brownian_motion</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+            <span class="n">all_paths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions</span>
+        
+        <span class="n">final_positions</span> <span class="o">=</span> <span class="n">all_paths</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">times</span><span class="p">,</span> <span class="n">all_paths</span><span class="p">,</span> <span class="n">final_positions</span>
+
+    <span class="k">def</span> <span class="nf">theoretical_normal_pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">variance</span><span class="p">):</span>
+        <span class="s">"""
+        Calculate theoretical normal PDF.
+        """</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">)))</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">variance</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">plot_sample_paths</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_paths_to_plot</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> 
+                            <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+        <span class="s">"""
+        Plot sample paths of Brownian motion.
+        """</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+        
+        <span class="c1"># Select subset of paths to plot
+</span>        <span class="n">n_total</span> <span class="o">=</span> <span class="n">paths</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_total</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_paths_to_plot</span><span class="p">,</span> <span class="n">n_total</span><span class="p">)).</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">)</span>
+        
+        <span class="c1"># Add mean path (should be near zero for standard Brownian)
+</span>        <span class="n">mean_path</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">mean_path</span><span class="p">,</span> <span class="s">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Mean path'</span><span class="p">)</span>
+        
+        <span class="c1"># Add ±1 SD envelope
+</span>        <span class="n">std_path</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">mean_path</span> <span class="o">-</span> <span class="n">std_path</span><span class="p">,</span> <span class="n">mean_path</span> <span class="o">+</span> <span class="n">std_path</span><span class="p">,</span>
+                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'±1 SD envelope'</span><span class="p">)</span>
+        
+        <span class="c1"># Theoretical envelope: ±√t for standard BM
+</span>        <span class="k">if</span> <span class="n">sigma</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="s">'k--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'±√t bounds'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="s">'k--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="n">ax</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'-'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Time t'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Position B(t)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Brownian Motion Sample Paths (σ = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s">, T = </span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s">)'</span><span class="p">,</span>
+                    <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw11_sample_paths_sigma_</span><span class="si">{</span><span class="n">sigma</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">.png'</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">plot_final_position_distribution</span><span class="p">(</span><span class="n">final_positions</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> 
+                                        <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+        <span class="s">"""
+        Plot distribution of B(T) and compare with theoretical normal.
+        """</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+        
+        <span class="c1"># Theoretical parameters
+</span>        <span class="n">theoretical_var</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span>
+        <span class="n">theoretical_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">theoretical_var</span><span class="p">)</span>
+        
+        <span class="c1"># Left: Histogram with PDF overlay
+</span>        <span class="n">ax1</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">final_positions</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s">'Empirical'</span><span class="p">)</span>
+        
+        <span class="c1"># Theoretical normal PDF
+</span>        <span class="n">x_range</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">final_positions</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">final_positions</span><span class="p">.</span><span class="nb">max</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">pdf</span> <span class="o">=</span> <span class="n">theoretical_normal_pdf</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theoretical_var</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">pdf</span><span class="p">,</span> <span class="s">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'Theoretical N(0, </span><span class="si">{</span><span class="n">theoretical_var</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">)'</span><span class="p">)</span>
+        
+        <span class="c1"># Statistics
+</span>        <span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">final_positions</span><span class="p">)</span>
+        <span class="n">sample_var</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">var</span><span class="p">(</span><span class="n">final_positions</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">stats_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'Sample mean: </span><span class="si">{</span><span class="n">sample_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Theoretical mean: 0.0000</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Sample variance: </span><span class="si">{</span><span class="n">sample_var</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Theoretical variance: </span><span class="si">{</span><span class="n">theoretical_var</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Sample std: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">final_positions</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Theoretical std: </span><span class="si">{</span><span class="n">theoretical_std</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span>
+        
+        <span class="n">ax1</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.97</span><span class="p">,</span> <span class="n">stats_text</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax1</span><span class="p">.</span><span class="n">transAxes</span><span class="p">,</span>
+                <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s">'top'</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">'right'</span><span class="p">,</span>
+                <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s">'round'</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s">'wheat'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+        
+        <span class="n">ax1</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Position B(T)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Density'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Distribution of Final Position (σ = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s">, T = </span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s">)'</span><span class="p">,</span>
+                    <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="c1"># Right: Q-Q plot
+</span>        <span class="n">sorted_positions</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">final_positions</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_positions</span><span class="p">)</span>
+        <span class="n">theoretical_quantiles</span> <span class="o">=</span> <span class="n">norm</span><span class="p">.</span><span class="n">ppf</span><span class="p">((</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> 
+                                        <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theoretical_std</span><span class="p">)</span>
+        
+        <span class="n">ax2</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">theoretical_quantiles</span><span class="p">,</span> <span class="n">sorted_positions</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        
+        <span class="c1"># Perfect fit line
+</span>        <span class="n">min_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">theoretical_quantiles</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">sorted_positions</span><span class="p">.</span><span class="nb">min</span><span class="p">())</span>
+        <span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">theoretical_quantiles</span><span class="p">.</span><span class="nb">max</span><span class="p">(),</span> <span class="n">sorted_positions</span><span class="p">.</span><span class="nb">max</span><span class="p">())</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">],</span> <span class="p">[</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">],</span> <span class="s">'r--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s">'Perfect fit'</span><span class="p">)</span>
+        
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Theoretical Quantiles (Normal)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Empirical Quantiles'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Q-Q Plot'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw11_distribution_sigma_</span><span class="si">{</span><span class="n">sigma</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">.png'</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">sample_mean</span><span class="p">,</span> <span class="n">sample_var</span>
+
+    <span class="k">def</span> <span class="nf">plot_time_evolution</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+        <span class="s">"""
+        Show how distribution evolves with time.
+        """</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="p">.</span><span class="n">flatten</span><span class="p">()</span>
+        
+        <span class="c1"># Select times to plot
+</span>        <span class="n">time_indices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span> <span class="o">*</span> <span class="n">frac</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">frac</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>
+        <span class="n">time_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">times</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">time_indices</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">ax_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">t_val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">time_indices</span><span class="p">,</span> <span class="n">time_values</span><span class="p">)):</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">ax_idx</span><span class="p">]</span>
+            <span class="n">positions_at_t</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[:,</span> <span class="n">time_idx</span><span class="p">]</span>
+            
+            <span class="n">theoretical_var</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">t_val</span>
+            <span class="n">theoretical_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">theoretical_var</span><span class="p">)</span>
+            
+            <span class="c1"># Histogram
+</span>            <span class="n">ax</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">positions_at_t</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            
+            <span class="c1"># Theoretical PDF
+</span>            <span class="n">x_range</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">positions_at_t</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">positions_at_t</span><span class="p">.</span><span class="nb">max</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+            <span class="n">pdf</span> <span class="o">=</span> <span class="n">theoretical_normal_pdf</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theoretical_var</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">pdf</span><span class="p">,</span> <span class="s">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            
+            <span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">positions_at_t</span><span class="p">)</span>
+            <span class="n">sample_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">positions_at_t</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'t = </span><span class="si">{</span><span class="n">t_val</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+            <span class="n">title</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Sample σ = </span><span class="si">{</span><span class="n">sample_std</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, Theory σ = </span><span class="si">{</span><span class="n">theoretical_std</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span>
+            
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Position B(t)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Density'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw11_time_evolution_sigma_</span><span class="si">{</span><span class="n">sigma</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">.png'</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">plot_volatility_comparison</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">sigma_values</span><span class="p">,</span> <span class="n">n_sims</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                    <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+        <span class="s">"""
+        Compare processes with different volatilities.
+        """</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        
+        <span class="c1"># Top row: Sample paths
+</span>        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sigma_values</span><span class="p">[:</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span>
+            <span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">simulate_multiple_realizations</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">n_sims</span><span class="p">)</span>
+            
+            <span class="c1"># Plot sample paths
+</span>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_sims</span><span class="p">)):</span>
+                <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">)</span>
+            
+            <span class="n">mean_path</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">mean_path</span><span class="p">,</span> <span class="s">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Mean'</span><span class="p">)</span>
+            
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Time t'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Position B(t)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Sample Paths (σ = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s">)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="c1"># Bottom row: Final distributions
+</span>        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sigma_values</span><span class="p">[:</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span>
+            <span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">final_pos</span> <span class="o">=</span> <span class="n">simulate_multiple_realizations</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">n_sims</span><span class="p">)</span>
+            
+            <span class="n">theoretical_var</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span>
+            
+            <span class="n">ax</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">final_pos</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            
+            <span class="n">x_range</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">final_pos</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">final_pos</span><span class="p">.</span><span class="nb">max</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+            <span class="n">pdf</span> <span class="o">=</span> <span class="n">theoretical_normal_pdf</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theoretical_var</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">pdf</span><span class="p">,</span> <span class="s">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+            
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Position B(T)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Density'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Final Distribution (σ = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s">)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw11_volatility_comparison.png'</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">plot_increment_analysis</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+        <span class="s">"""
+        Analyze increments to verify they are normal.
+        """</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="c1"># Extract increments from all paths
+</span>        <span class="n">all_increments</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">diff</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="n">flatten</span><span class="p">()</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        
+        <span class="c1"># Left: Histogram of increments
+</span>        <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span> <span class="o">/</span> <span class="p">(</span><span class="n">paths</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">theoretical_std</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+        
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hist</span><span class="p">(</span><span class="n">all_increments</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s">'steelblue'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="s">'Empirical'</span><span class="p">)</span>
+        
+        <span class="n">x_range</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">all_increments</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">all_increments</span><span class="p">.</span><span class="nb">max</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">pdf</span> <span class="o">=</span> <span class="n">theoretical_normal_pdf</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theoretical_std</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">pdf</span><span class="p">,</span> <span class="s">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'Theoretical N(0, </span><span class="si">{</span><span class="n">theoretical_std</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">)'</span><span class="p">)</span>
+        
+        <span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_increments</span><span class="p">)</span>
+        <span class="n">sample_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_increments</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">stats_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'Sample mean: </span><span class="si">{</span><span class="n">sample_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Sample std: </span><span class="si">{</span><span class="n">sample_std</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Theoretical std: </span><span class="si">{</span><span class="n">theoretical_std</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">'</span>
+        
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span><span class="p">(</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.97</span><span class="p">,</span> <span class="n">stats_text</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">transAxes</span><span class="p">,</span>
+                    <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s">'top'</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">'right'</span><span class="p">,</span>
+                    <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s">'round'</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s">'wheat'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+        
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Increment ΔB'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Density'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Distribution of Increments (dt = </span><span class="si">{</span><span class="n">dt</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">)'</span><span class="p">,</span>
+                        <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="c1"># Right: Q-Q plot
+</span>        <span class="n">sorted_increments</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">all_increments</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_increments</span><span class="p">)</span>
+        <span class="n">theoretical_quantiles</span> <span class="o">=</span> <span class="n">norm</span><span class="p">.</span><span class="n">ppf</span><span class="p">((</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span>
+                                        <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theoretical_std</span><span class="p">)</span>
+        
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">scatter</span><span class="p">(</span><span class="n">theoretical_quantiles</span><span class="p">,</span> <span class="n">sorted_increments</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        
+        <span class="n">min_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">theoretical_quantiles</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">sorted_increments</span><span class="p">.</span><span class="nb">min</span><span class="p">())</span>
+        <span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">theoretical_quantiles</span><span class="p">.</span><span class="nb">max</span><span class="p">(),</span> <span class="n">sorted_increments</span><span class="p">.</span><span class="nb">max</span><span class="p">())</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">plot</span><span class="p">([</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">],</span> <span class="p">[</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">],</span> <span class="s">'r--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="s">'Perfect fit'</span><span class="p">)</span>
+        
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Theoretical Quantiles (Normal)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Empirical Quantiles'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Q-Q Plot for Increments'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw11_increment_analysis_sigma_</span><span class="si">{</span><span class="n">sigma</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">.png'</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">analyze_extrema</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s">'assets/images'</span><span class="p">):</span>
+        <span class="s">"""
+        Analyze maximum and minimum positions.
+        """</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="n">max_positions</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">min_positions</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">abs_extrema</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">max_positions</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">min_positions</span><span class="p">))</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        
+        <span class="c1"># Left: Distribution of max
+</span>        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hist</span><span class="p">(</span><span class="n">max_positions</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span>
+                    <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Max'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hist</span><span class="p">(</span><span class="n">min_positions</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span>
+                    <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'Min'</span><span class="p">)</span>
+        
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'Extreme Value'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Distribution of Extrema'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="c1"># Middle: Distribution of absolute extrema
+</span>        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">hist</span><span class="p">(</span><span class="n">abs_extrema</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'purple'</span><span class="p">,</span>
+                    <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+        
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'|Extreme Value|'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'Frequency'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Distribution of Absolute Extrema'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="c1"># Right: Statistics
+</span>        <span class="n">stats_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'Maximum:</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'  Mean: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">max_positions</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'  Std: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">max_positions</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Minimum:</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'  Mean: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">min_positions</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'  Std: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">min_positions</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'Absolute Extrema:</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'  Mean: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">abs_extrema</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="se">\n</span><span class="s">'</span>
+        <span class="n">stats_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s">'  Std: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">abs_extrema</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span>
+        
+        <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">stats_text</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">transAxes</span><span class="p">,</span>
+                    <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span>
+                    <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s">'round'</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s">'lightyellow'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s">/hw11_extrema_analysis_sigma_</span><span class="si">{</span><span class="n">sigma</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">.png'</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Saved: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">perform_normality_tests</span><span class="p">(</span><span class="n">final_positions</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="s">"""
+        Perform statistical tests for normality.
+        """</span>
+        <span class="n">theoretical_var</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span>
+        
+        <span class="c1"># Shapiro-Wilk test (for normality)
+</span>        <span class="n">sw_stat</span><span class="p">,</span> <span class="n">sw_pval</span> <span class="o">=</span> <span class="n">shapiro</span><span class="p">(</span><span class="n">final_positions</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shapiro-Wilk Normality Test:"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Test statistic: </span><span class="si">{</span><span class="n">sw_stat</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  p-value: </span><span class="si">{</span><span class="n">sw_pval</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Result: </span><span class="si">{</span><span class="s">'PASS'</span> <span class="k">if</span> <span class="n">sw_pval</span> <span class="o">&gt;</span> <span class="mf">0.05</span> <span class="k">else</span> <span class="s">'FAIL'</span><span class="si">}</span><span class="s"> (α=0.05)"</span><span class="p">)</span>
+        
+        <span class="c1"># Kolmogorov-Smirnov test (against normal distribution)
+</span>        <span class="n">theoretical_std</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">theoretical_var</span><span class="p">)</span>
+        <span class="n">ks_stat</span><span class="p">,</span> <span class="n">ks_pval</span> <span class="o">=</span> <span class="n">kstest</span><span class="p">(</span><span class="n">final_positions</span><span class="p">,</span> <span class="s">'norm'</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">theoretical_std</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Kolmogorov-Smirnov Test (vs Normal):"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  KS statistic: </span><span class="si">{</span><span class="n">ks_stat</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  p-value: </span><span class="si">{</span><span class="n">ks_pval</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Result: </span><span class="si">{</span><span class="s">'PASS'</span> <span class="k">if</span> <span class="n">ks_pval</span> <span class="o">&gt;</span> <span class="mf">0.05</span> <span class="k">else</span> <span class="s">'FAIL'</span><span class="si">}</span><span class="s"> (α=0.05)"</span><span class="p">)</span>
+        
+        <span class="c1"># Sample statistics vs theory
+</span>        <span class="n">sample_mean</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">final_positions</span><span class="p">)</span>
+        <span class="n">sample_var</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">var</span><span class="p">(</span><span class="n">final_positions</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Statistic Comparison:"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Sample mean: </span><span class="si">{</span><span class="n">sample_mean</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s"> (theory: 0)"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Sample variance: </span><span class="si">{</span><span class="n">sample_var</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s"> (theory: </span><span class="si">{</span><span class="n">theoretical_var</span><span class="si">:</span><span class="p">.</span><span class="mi">6</span><span class="n">f</span><span class="si">}</span><span class="s">)"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Relative error in variance: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">sample_var</span> <span class="o">-</span> <span class="n">theoretical_var</span><span class="p">)</span><span class="o">/</span><span class="n">theoretical_var</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">%"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"HOMEWORK 11: BROWNIAN MOTION SIMULATION"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        
+        <span class="c1"># Parameters
+</span>        <span class="n">T</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">n_steps</span> <span class="o">=</span> <span class="mi">5000</span>
+        <span class="n">n_sims</span> <span class="o">=</span> <span class="mi">1000</span>
+        
+        <span class="c1"># Scenario 1: Low volatility
+</span>        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"SCENARIO 1: Low Volatility (σ = 0.5)"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Simulating </span><span class="si">{</span><span class="n">n_sims</span><span class="si">}</span><span class="s"> realizations..."</span><span class="p">)</span>
+        <span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">final_pos</span> <span class="o">=</span> <span class="n">simulate_multiple_realizations</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">n_sims</span><span class="p">)</span>
+        
+        <span class="n">plot_sample_paths</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_paths_to_plot</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="n">plot_final_position_distribution</span><span class="p">(</span><span class="n">final_pos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">plot_time_evolution</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">plot_increment_analysis</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">analyze_extrema</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">perform_normality_tests</span><span class="p">(</span><span class="n">final_pos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        
+        <span class="c1"># Scenario 2: Medium volatility (standard)
+</span>        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"SCENARIO 2: Medium Volatility (σ = 1.0)"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Simulating </span><span class="si">{</span><span class="n">n_sims</span><span class="si">}</span><span class="s"> realizations..."</span><span class="p">)</span>
+        <span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">final_pos</span> <span class="o">=</span> <span class="n">simulate_multiple_realizations</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">n_sims</span><span class="p">)</span>
+        
+        <span class="n">plot_sample_paths</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_paths_to_plot</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="n">plot_final_position_distribution</span><span class="p">(</span><span class="n">final_pos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">plot_time_evolution</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">plot_increment_analysis</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">analyze_extrema</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">perform_normality_tests</span><span class="p">(</span><span class="n">final_pos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        
+        <span class="c1"># Scenario 3: High volatility
+</span>        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"SCENARIO 3: High Volatility (σ = 2.0)"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="mf">2.0</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Simulating </span><span class="si">{</span><span class="n">n_sims</span><span class="si">}</span><span class="s"> realizations..."</span><span class="p">)</span>
+        <span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">final_pos</span> <span class="o">=</span> <span class="n">simulate_multiple_realizations</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">n_sims</span><span class="p">)</span>
+        
+        <span class="n">plot_sample_paths</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">n_paths_to_plot</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="n">plot_final_position_distribution</span><span class="p">(</span><span class="n">final_pos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">plot_time_evolution</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">plot_increment_analysis</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">analyze_extrema</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">perform_normality_tests</span><span class="p">(</span><span class="n">final_pos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        
+        <span class="c1"># Volatility comparison
+</span>        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"VOLATILITY COMPARISON"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Comparing σ = 0.5, 1.0, 2.0..."</span><span class="p">)</span>
+        <span class="n">plot_volatility_comparison</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="n">n_sims</span><span class="p">)</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"ALL PLOTS SAVED"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Generated files:"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"  - hw11_sample_paths_sigma_*.png"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"  - hw11_distribution_sigma_*.png"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"  - hw11_time_evolution_sigma_*.png"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"  - hw11_increment_analysis_sigma_*.png"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"  - hw11_extrema_analysis_sigma_*.png"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"  - hw11_volatility_comparison.png"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">()</span>
+   
+</pre></td></tr></tbody></table></code></pre></figure>
+
+</details>
+
+<h2 id="expected-results-and-analysis">Expected Results and Analysis</h2>
+
+<h3 id="41-example-1-low-volatility-σ--05">4.1 Example 1: Low Volatility (σ = 0.5)</h3>
+
+<p><strong>Theoretical predictions:</strong></p>
+<ul>
+  <li>E[B(1)] = 0</li>
+  <li>Var(B(1)) = 0.25</li>
+  <li>SD(B(1)) = 0.5</li>
+  <li>Distribution: N(0, 0.25)</li>
+</ul>
+
+<p><strong>Expected simulation results (n = 5000, 1000 realizations):</strong></p>
+<ul>
+  <li>Sample mean of B(1): ≈ 0.00 ± 0.02</li>
+  <li>Sample variance: ≈ 0.25 ± 0.01</li>
+  <li>Approximately 68% within ±0.5</li>
+  <li>Approximately 95% within ±1.0</li>
+</ul>
+
+<p><strong>Sample paths:</strong></p>
+<ul>
+  <li>Relatively gentle fluctuations</li>
+  <li>Paths cluster around zero</li>
+  <li>Continuous but somewhat jagged appearance</li>
+  <li>Multiple zero crossings</li>
+</ul>
+
+<p><img src="/assets/images/homework11/sample_paths_sigma_0.5.png" alt="Low Volatility Sample Paths" /></p>
+
+<p><em>Figure 1: Sample paths of Brownian motion with σ = 0.5. Paths show gentle random fluctuations with frequent returns toward zero.</em></p>
+
+<p><img src="/assets/images/homework11/distribution_sigma_0.5.png" alt="Low Volatility Distribution" /></p>
+
+<p><em>Figure 2: Distribution of B(1) for σ = 0.5 showing excellent agreement with theoretical N(0, 0.25). Left: Histogram with PDF overlay. Right: Q-Q plot.</em></p>
+
+<h3 id="42-example-2-medium-volatility-σ--10">4.2 Example 2: Medium Volatility (σ = 1.0)</h3>
+
+<p><strong>Theoretical predictions:</strong></p>
+<ul>
+  <li>E[B(1)] = 0</li>
+  <li>Var(B(1)) = 1.0</li>
+  <li>SD(B(1)) = 1.0</li>
+  <li>Distribution: N(0, 1) - standard normal</li>
+</ul>
+
+<p><strong>Expected simulation results:</strong></p>
+<ul>
+  <li>Sample mean: ≈ 0.00 ± 0.03</li>
+  <li>Sample variance: ≈ 1.00 ± 0.05</li>
+  <li>Approximately 68% within ±1.0</li>
+  <li>Approximately 95% within ±2.0</li>
+</ul>
+
+<p><strong>Sample paths:</strong></p>
+<ul>
+  <li>Moderate random fluctuations</li>
+  <li>Greater excursions from zero</li>
+  <li>More pronounced “random walk” character</li>
+  <li>Clear continuous nature</li>
+</ul>
+
+<p><img src="/assets/images/homework11/sample_paths_sigma_1.0.png" alt="Medium Volatility Sample Paths" /></p>
+
+<p><em>Figure 3: Sample paths of standard Brownian motion (σ = 1.0) showing characteristic random walk behavior with continuous paths and significant excursions.</em></p>
+
+<p><img src="/assets/images/homework11/distribution_sigma_1.0.png" alt="Medium Volatility Distribution" /></p>
+
+<p><em>Figure 4: Distribution of B(1) for σ = 1.0 (standard normal). Left shows histogram vs theoretical N(0,1) PDF. Right: Q-Q plot shows excellent fit.</em></p>
+
+<h3 id="43-example-3-high-volatility-σ--20">4.3 Example 3: High Volatility (σ = 2.0)</h3>
+
+<p><strong>Theoretical predictions:</strong></p>
+<ul>
+  <li>E[B(1)] = 0</li>
+  <li>Var(B(1)] = 4.0</li>
+  <li>SD(B(1)] = 2.0</li>
+  <li>Distribution: N(0, 4)</li>
+</ul>
+
+<p><strong>Expected simulation results:</strong></p>
+<ul>
+  <li>Sample mean: ≈ 0.00 ± 0.06</li>
+  <li>Sample variance: ≈ 4.00 ± 0.20</li>
+  <li>Approximately 68% within ±2.0</li>
+  <li>Approximately 95% within ±4.0</li>
+</ul>
+
+<p><strong>Sample paths:</strong></p>
+<ul>
+  <li>Large random fluctuations</li>
+  <li>Extensive excursions from origin</li>
+  <li>Still continuous but with larger jumps</li>
+  <li>Less frequent zero crossings</li>
+</ul>
+
+<p><img src="/assets/images/homework11/sample_paths_sigma_2.0.png" alt="High Volatility Sample Paths" /></p>
+
+<p><em>Figure 5: Sample paths with σ = 2.0 showing large random fluctuations and wide excursions from the origin.</em></p>
+
+<p><img src="/assets/images/homework11/distribution_sigma_2.0.png" alt="High Volatility Distribution" /></p>
+
+<p><em>Figure 6: Distribution of B(1) for σ = 2.0 showing N(0,4) with wider spread than lower volatility cases.</em></p>
+
+<h3 id="44-time-evolution-analysis">4.4 Time Evolution Analysis</h3>
+
+<p><strong>How variance grows with time:</strong></p>
+
+<p>As t increases, the variance of B(t) grows as σ²t:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>t</th>
+      <th>σ=0.5</th>
+      <th>σ=1.0</th>
+      <th>σ=2.0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.2</td>
+      <td>0.05</td>
+      <td>0.20</td>
+      <td>0.80</td>
+    </tr>
+    <tr>
+      <td>0.5</td>
+      <td>0.125</td>
+      <td>0.50</td>
+      <td>2.00</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>0.25</td>
+      <td>1.00</td>
+      <td>4.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Expected behavior:</strong></p>
+<ul>
+  <li>Distributions widen as time progresses</li>
+  <li>Spread follows √t scaling</li>
+  <li>Mean remains at zero (symmetric about origin)</li>
+  <li>Bell shape becomes more pronounced</li>
+</ul>
+
+<p><img src="/assets/images/homework11/time_evolution_sigma_1.0.png" alt="Time Evolution" /></p>
+
+<p><em>Figure 7: Evolution of B(t) distribution with time. As t increases from 0.2 to 1.0, variance grows linearly with time.</em></p>
+
+<h3 id="45-increment-analysis">4.5 Increment Analysis</h3>
+
+<p><strong>Statistical properties of increments:</strong></p>
+
+<p>For Brownian motion, each increment should be:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ΔB ~ N(0, σ²Δt)
+</code></pre></div></div>
+
+<p>With n = 5000 steps over T = 1, we have Δt = 0.0002</p>
+
+<p><strong>Expected increments:</strong></p>
+<ul>
+  <li>Mean: ≈ 0</li>
+  <li>Variance: σ²·0.0002</li>
+  <li>For σ = 1: variance ≈ 0.0002</li>
+  <li>Standard deviation: ≈ 0.0141</li>
+</ul>
+
+<p><strong>Validation:</strong></p>
+<ul>
+  <li>Q-Q plot should follow diagonal</li>
+  <li>Histogram should be bell-shaped</li>
+  <li>Mean very close to zero</li>
+  <li>Distribution matches N(0, σ²Δt)</li>
+</ul>
+
+<p><img src="/assets/images/homework11/increment_analysis_sigma_1.0.png" alt="Increment Distribution" /></p>
+
+<p><em>Figure 8: Distribution of increments ΔB showing excellent agreement with theoretical N(0, σ²Δt).</em></p>
+
+<h3 id="46-extrema-analysis">4.6 Extrema Analysis</h3>
+
+<p><strong>Maximum and minimum positions:</strong></p>
+
+<p>For standard Brownian motion B(t) over [0,T]:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>E[max_{0≤t≤T} B(t)] ≈ √(2T/π)
+</code></pre></div></div>
+
+<p><strong>Example (T=1, σ=1):</strong></p>
+<ul>
+  <li>Expected max ≈ 0.798</li>
+  <li>Expected min ≈ -0.798 (by symmetry)</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>Most simulations will show</td>
+          <td>extrema</td>
+          <td>&lt; 2.5</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<p><strong>Reflection principle:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P(max B(t) ≥ a) = 2·P(B(T) ≥ a)
+</code></pre></div></div>
+
+<p>This can be verified by comparing:</p>
+<ul>
+  <li>Frequency of paths reaching level a</li>
+  <li>Theoretical prediction from reflection principle</li>
+</ul>
+
+<p><img src="/assets/images/homework11/extrema_analysis_sigma_1.0.png" alt="Extrema Analysis" /></p>
+
+<p><em>Figure 9: Distribution of maximum and minimum positions showing symmetry and characteristic extrema behavior.</em></p>
+
+<h2 id="mathematical-derivations">Mathematical Derivations</h2>
+
+<h3 id="51-scaling-property">5.1 Scaling Property</h3>
+
+<p><strong>Brownian motion self-similarity:</strong></p>
+
+<p>If B(t) is Brownian motion, then so is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B̃(t) = c·B(t/c²)
+</code></pre></div></div>
+
+<p><strong>Proof:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Var(B̃(t)) = c²·Var(B(t/c²))
+          = c²·(t/c²)
+          = t ✓
+</code></pre></div></div>
+
+<p><strong>Implication:</strong> You can rescale time and space while preserving the Brownian motion property.</p>
+
+<h3 id="52-variance-growth-and-the-t-law">5.2 Variance Growth and the √t Law</h3>
+
+<p><strong>Central Limit Theorem applied to increments:</strong></p>
+
+<p>After n steps with increment variance σ²Δt:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Var(X(T)) = n·Var(ΔX) = n·σ²Δt = n·σ²(T/n) = σ²T
+</code></pre></div></div>
+
+<p>This is why SD(X(T)) = σ√T, giving the characteristic √t scaling.</p>
+
+<p><strong>Why divide by √n in CLT?</strong></p>
+
+<p>For sum of n i.i.d. random variables:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Y = (Σᵢ Xᵢ)/√n ~ N(μ, σ²/n)
+</code></pre></div></div>
+
+<p>The divisor √n controls the variance, ensuring it doesn’t grow to infinity.</p>
+
+<h3 id="53-quadratic-variation">5.3 Quadratic Variation</h3>
+
+<p><strong>Key property distinguishing Brownian motion:</strong></p>
+
+<p>For sample paths, compute:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[B,B](t) = lim_{Δt→0} Σᵢ (B(tᵢ₊₁) - B(tᵢ))²
+</code></pre></div></div>
+
+<p><strong>Result:</strong> <a href="t">B,B</a> = t (deterministic!)</p>
+
+<p><strong>Implication:</strong> While individual increments are random, their squared sum equals time with probability 1. This is crucial for stochastic calculus (Itô’s lemma).</p>
+
+<h3 id="54-connection-to-random-walk">5.4 Connection to Random Walk</h3>
+
+<p><strong>Donsker’s Invariance Principle:</strong></p>
+
+<p>Consider a symmetric random walk:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sₙ = X₁ + X₂ + ... + Xₙ
+where Xᵢ ~ ±1 with equal probability
+</code></pre></div></div>
+
+<p>Rescaled random walk:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B̃ₙ(t) = Sₙ₍ₜₙ₎ / √n
+</code></pre></div></div>
+
+<p><strong>As n → ∞:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B̃ₙ(t) →^d B(t) (convergence in distribution)
+</code></pre></div></div>
+
+<p>The discrete random walk, when properly scaled and rescaled in time, converges to Brownian motion.</p>
+
+<h2 id="applications-and-extensions">Applications and Extensions</h2>
+
+<h3 id="61-financial-applications">6.1 Financial Applications</h3>
+
+<p><strong>Stock price modeling:</strong></p>
+
+<p>Classical geometric Brownian motion (Black-Scholes):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dS(t) = μ·S(t)·dt + σ·S(t)·dB(t)
+</code></pre></div></div>
+
+<p>where:</p>
+<ul>
+  <li>S(t) = stock price</li>
+  <li>μ = drift (expected return)</li>
+  <li>σ = volatility</li>
+  <li>B(t) = Brownian motion</li>
+</ul>
+
+<p>Solution:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S(t) = S₀·exp((μ - σ²/2)t + σB(t))
+</code></pre></div></div>
+
+<h3 id="62-physics-applications">6.2 Physics Applications</h3>
+
+<p><strong>Diffusion processes:</strong></p>
+
+<p>Heat equation and random particle movement modeled by Brownian motion</p>
+
+<p><strong>Brownian particles:</strong></p>
+
+<p>Dust particles, pollen, molecules in fluid - exhibit Brownian motion due to random molecular collisions</p>
+
+<h3 id="63-biology">6.3 Biology</h3>
+
+<p><strong>Neurotransmitter diffusion:</strong> Random walk of molecules across synapses</p>
+
+<p><strong>Population genetics:</strong> Allele frequency changes modeled by Brownian motion</p>
+
+<h3 id="64-generalizations">6.4 Generalizations</h3>
+
+<p><strong>Multi-dimensional Brownian motion:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>B(t) = (B₁(t), B₂(t), ..., Bₐ(t))
+where each component is independent Brownian motion
+</code></pre></div></div>
+
+<p><strong>Correlated Brownian motions:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dX(t) = ρ·dB(t)
+dY(t) = √(1-ρ²)·dB(t)
+with correlation ρ
+</code></pre></div></div>
+
+<p><strong>Ornstein-Uhlenbeck process:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dX(t) = -θ·X(t)·dt + σ·dB(t)
+(Brownian motion with mean reversion)
+</code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This homework has demonstrated that:</p>
+
+<ol>
+  <li>
+    <p><strong>Brownian motion emerges naturally</strong> from discretizing random walks with infinitesimal normally-distributed increments</p>
+  </li>
+  <li>
+    <p><strong>Continuous state space</strong> (unlike discrete random walks) requires careful treatment of variance scaling: Var(X(T)) = σ²T</p>
+  </li>
+  <li><strong>Key properties:</strong>
+    <ul>
+      <li>Independent, stationary increments</li>
+      <li>Normal distribution: B(t) ~ N(0, σ²t)</li>
+      <li>Continuous paths (with probability 1)</li>
+      <li>Nowhere differentiable (infinite variation)</li>
+      <li>Quadratic variation equals time</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Simulation convergence:</strong> As Δt → 0 (n → ∞), discrete approximations converge to true Brownian motion</p>
+  </li>
+  <li>
+    <p><strong>Universality:</strong> The rescaled random walk (Donsker’s principle) converges to Brownian motion, showing its fundamental role in probability theory</p>
+  </li>
+  <li><strong>Practical importance:</strong> Brownian motion is the foundation for:
+    <ul>
+      <li>Stochastic calculus (Itô’s lemma)</li>
+      <li>Option pricing (Black-Scholes)</li>
+      <li>Diffusion processes in physics and biology</li>
+      <li>Machine learning (gradient descent with noise)</li>
+    </ul>
+  </li>
+</ol>
+
+<p>The progression from discrete random walks (Homework 7) → counting processes (Homework 10) → continuous Brownian motion (Homework 11) reveals how fundamental probability concepts naturally extend across discrete and continuous domains.</p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<ol>
+  <li><strong>Merton, R. C.</strong> (1992). <em>Continuous-Time Finance</em>, 2nd ed. Blackwell.</li>
+  <li><strong>Rogers, L. C. G. &amp; Williams, D.</strong> (2000). <em>Diffusions, Markov Processes, and Martingales</em>, Vol. 1. Cambridge University Press.</li>
+  <li><strong>Karatzas, I. &amp; Shreve, S. E.</strong> (1991). <em>Brownian Motion and Stochastic Calculus</em>, 2nd ed. Springer.</li>
+  <li><strong>Øksendal, B.</strong> (2013). <em>Stochastic Differential Equations</em>, 6th ed. Springer.</li>
+  <li><strong>Wilmott, P.</strong> (2013). <em>Paul Wilmott Introduces Quantitative Finance</em>, 2nd ed. Wiley.</li>
+</ol>
+
+</div>
+
+
+<div class="related">
+  <h2>Related posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/homework10/">
+            Homework 10 - Poisson Process Simulation
+            <small>15 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework9/">
+            Homework 9 - Probability Theory and Measure Theory
+            <small>14 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/homework8/">
+            Homework 8 - Comparing Bernoulli and Random Walk Processes
+            <small>09 Nov 2025</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src='/public/js/script.js'></script>
+  </body>
+</html>
