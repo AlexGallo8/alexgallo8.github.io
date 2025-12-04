@@ -1,0 +1,6 @@
+    - Covariance = (ΣiΣj(x_i-µ_x)(y_i-µ_y)) / n for Quantitative
+
+normalization (correlation coefficient): -1 <= R = cov(X, Y) / |max(cov)| <= +1
+where: |max(cov)| = sigma_x*sigma_y
+
+    - Chi-squared = (χ2) for Qualitative
